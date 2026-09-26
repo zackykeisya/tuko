@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TUKO POS</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lucide-static/0.383.0/umd/lucide.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root{--sage:#4A6343;--sage-l:#5B7553;--olive:#8A9B7D;--olive-l:#DCE2D7;--cream:#F5F3EF;--ink:#1E293B;--radius:16px;--red:#c25454;--red-l:#fdeaea;--amber:#b8860b;--amber-l:#fdf6e3;--green:#2e7d32;--green-l:#e8f5e9;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{background:var(--cream);color:var(--ink);font-family:'Segoe UI',ui-sans-serif,system-ui,-apple-system,Roboto,sans-serif;font-size:14px;}
+button{font:inherit;cursor:pointer;border:none;}
+input,select,textarea{font:inherit;}
+img{display:block;max-width:100%;}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-thumb{background:var(--olive-l);border-radius:3px}
+
+.app-shell{display:flex;height:100vh;overflow:hidden;}
+.main-col{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.row{display:flex;flex:1;overflow:hidden;}
+
+/* Sidebar */
+.sidebar{display:none;flex-direction:column;width:250px;flex-shrink:0;background:#fff;border-right:1px solid #e7e3da;padding:20px 16px;overflow-y:auto;}
+.brand{display:flex;align-items:center;gap:10px;margin-bottom:2px;}
+.brand-logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--sage),var(--sage-l));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;flex-shrink:0;}
+.brand-name{font-weight:800;font-size:20px;color:var(--sage);letter-spacing:.3px;}
+.slogan{font-size:11px;color:#a3a390;margin:2px 0 22px 48px;font-style:italic;}
+.slogan-top{font-size:10px;color:#a3a390;margin-top:1px;font-style:italic;}
+.nav-btn{display:flex;align-items:center;gap:11px;padding:11px 12px;border-radius:12px;margin-bottom:4px;background:transparent;color:var(--ink);text-align:left;width:100%;transition:background .15s;position:relative;}
+.nav-btn:hover{background:var(--cream);}
+.nav-btn.active{background:var(--sage);color:#fff;}
+.nav-btn:disabled{opacity:.45;cursor:not-allowed;}
+.nav-btn:disabled:hover{background:transparent;}
+.sidebar-foot{margin-top:auto;padding-top:16px;border-top:1px solid #eee;font-size:12px;color:#9a998e;}
+.link-btn{background:none;color:var(--sage);text-decoration:underline;padding:0;margin-left:4px;}
+
+/* Mobile header */
+.mobile-header{display:block;background:#fff;border-bottom:1px solid #e7e3da;padding:14px 16px;position:sticky;top:0;z-index:20;}
+.mobile-top{display:flex;justify-content:space-between;align-items:center;}
+.mobile-brand{display:flex;align-items:center;gap:9px;}
+.mobile-icons{display:flex;gap:14px;color:#8a8a80;}
+.mobile-cats{display:flex;gap:8px;margin-top:12px;overflow-x:auto;scrollbar-width:none;}
+.mobile-cats::-webkit-scrollbar{display:none;}
+
+/* Content */
+.content{flex:1;overflow-y:auto;padding:18px;}
+.search-box{width:100%;max-width:420px;padding:11px 16px;border-radius:14px;border:1px solid #e7e3da;background:#fff;margin-bottom:16px;display:none;}
+.search-box:focus{outline:2px solid var(--olive-l);}
+
+.chips{display:flex;gap:8px;margin-bottom:18px;overflow-x:auto;scrollbar-width:none;}
+.chips::-webkit-scrollbar{display:none;}
+.chip{background:var(--olive-l);color:var(--sage);border-radius:999px;padding:8px 16px;font-size:12.5px;font-weight:600;white-space:nowrap;flex-shrink:0;transition:all .15s;}
+.chip.active{background:var(--sage);color:#fff;}
+
+.product-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;padding-bottom:90px;}
+.product-card{background:#fff;border-radius:var(--radius);overflow:hidden;border:1px solid #eee6d9;box-shadow:0 2px 10px rgba(74,99,67,.06);position:relative;transition:transform .15s;}
+.product-card:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(74,99,67,.12);}
+.product-img-wrap{position:relative;width:100%;aspect-ratio:4/3;background:var(--olive-l);overflow:hidden;}
+.product-img-wrap img{width:100%;height:100%;object-fit:cover;}
+.badge-teko{position:absolute;top:10px;left:10px;background:var(--sage);color:#fff;font-size:10px;font-weight:700;padding:4px 10px;border-radius:999px;letter-spacing:.3px;box-shadow:0 2px 6px rgba(0,0,0,.15);}
+.product-body{padding:12px 12px 14px;}
+.product-name{font-weight:600;font-size:13.5px;line-height:1.35;min-height:2.6em;margin-bottom:8px;color:var(--ink);}
+.product-foot{display:flex;align-items:center;justify-content:space-between;}
+.product-price{font-weight:800;font-size:15px;color:var(--sage);}
+.add-btn{background:var(--sage);color:#fff;width:34px;height:34px;border-radius:11px;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 8px rgba(74,99,67,.35);transition:background .15s,transform .1s;}
+.add-btn:hover{background:var(--sage-l);}
+.add-btn:active{transform:scale(.92);}
+
+/* Cart */
+.cart-panel{display:none;flex-direction:column;width:340px;flex-shrink:0;background:#fff;border-left:1px solid #e7e3da;}
+.cart-header{padding:18px 18px 14px;border-bottom:1px solid #f0ede4;display:flex;justify-content:space-between;align-items:center;}
+.cart-title{font-weight:700;font-size:16px;}
+.icon-btn{background:none;color:#8a8a80;padding:4px;}
+.cart-customer{padding:14px 18px;border-bottom:1px solid #f0ede4;}
+.field{width:100%;padding:10px 13px;border-radius:11px;border:1px solid #e7e3da;background:var(--cream);font-size:13px;}
+.field:focus{outline:2px solid var(--olive-l);background:#fff;}
+.cart-items{flex:1;overflow-y:auto;padding:14px 18px;display:flex;flex-direction:column;gap:14px;}
+.cart-empty{color:#b3b0a4;text-align:center;padding:50px 0;font-size:13px;}
+.cart-item{display:flex;align-items:center;justify-content:space-between;}
+.ci-name{font-weight:600;font-size:13px;}
+.ci-price{font-size:11.5px;color:#a3a390;margin-top:2px;}
+.qty-ctrl{display:flex;align-items:center;gap:10px;}
+.qty-btn{width:26px;height:26px;border-radius:999px;background:var(--olive-l);color:var(--sage);display:flex;align-items:center;justify-content:center;font-weight:700;}
+.qty-num{width:16px;text-align:center;font-weight:600;}
+.cart-footer{padding:16px 18px 20px;border-top:1px solid #f0ede4;display:flex;flex-direction:column;gap:10px;}
+.row-line{display:flex;justify-content:space-between;font-size:13px;}
+.row-total{display:flex;justify-content:space-between;font-weight:800;font-size:17px;}
+.row-total span:last-child{color:var(--sage);}
+.cart-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px;}
+.btn-outline{border:2px solid var(--sage);color:var(--sage);background:#fff;border-radius:14px;padding:13px 0;font-weight:700;font-size:13.5px;transition:background .15s;}
+.btn-outline:hover{background:var(--cream);}
+.btn-primary{background:var(--sage);color:#fff;border-radius:14px;padding:13px 0;font-weight:700;font-size:13.5px;box-shadow:0 4px 12px rgba(74,99,67,.3);transition:background .15s;}
+.btn-primary:hover{background:var(--sage-l);}
+.btn-primary:disabled,.btn-outline:disabled{opacity:.5;cursor:not-allowed;}
+
+/* Mobile cart bar & drawer */
+.mobile-cart-bar{display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--ink);color:#fff;padding:14px 16px;justify-content:space-between;align-items:center;z-index:30;border-radius:18px 18px 0 0;box-shadow:0 -4px 16px rgba(0,0,0,.2);}
+.mcb-left{display:flex;align-items:center;gap:10px;font-size:13.5px;}
+.mcb-count{background:var(--olive-l);color:var(--sage);font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;}
+.mcb-pay{background:var(--sage);color:#fff;padding:11px 22px;border-radius:13px;font-weight:700;font-size:13.5px;}
+
+.overlay{position:fixed;inset:0;background:rgba(20,20,15,.45);z-index:40;display:flex;align-items:flex-end;justify-content:center;}
+.overlay.center{align-items:center;padding:16px;}
+.drawer{background:var(--cream);width:100%;border-radius:22px 22px 0 0;max-height:88vh;display:flex;flex-direction:column;animation:slideUp .22s ease-out;}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-box{background:#fff;border-radius:20px;width:100%;max-width:380px;padding:22px;animation:pop .15s ease-out;}
+@keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+.modal-title{font-weight:700;font-size:16px;margin-bottom:14px;}
+.pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+.pay-btn{background:var(--olive-l);color:var(--sage);border-radius:13px;padding:14px 0;font-weight:700;}
+.pay-btn.qris{background:var(--sage);color:#fff;}
+.cancel-link{width:100%;text-align:center;background:none;color:#b3b0a4;font-size:12.5px;margin-top:4px;}
+
+.receipt{width:100%;max-width:300px;font-family:'Courier New',monospace;font-size:12px;}
+.receipt-head{text-align:center;margin-bottom:8px;}
+.receipt-head b{font-size:15px;color:var(--sage);}
+.receipt-line{display:flex;justify-content:space-between;padding:2px 0;}
+.dashed{border-top:1px dashed #ccc;margin:8px 0;}
+.receipt-bold{font-weight:700;}
+.print-btn{width:100%;background:var(--sage);color:#fff;border-radius:13px;padding:12px 0;font-weight:700;margin-top:14px;font-family:inherit;}
+.close-link{width:100%;text-align:center;color:#b3b0a4;margin-top:8px;background:none;font-family:inherit;}
+
+.pin-box{text-align:center;}
+.pin-input{width:100%;text-align:center;font-size:26px;letter-spacing:14px;padding:12px 0;border-radius:13px;border:1px solid #e7e3da;background:var(--cream);margin-bottom:14px;}
+.pin-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+.section-title{font-weight:700;font-size:17px;margin-bottom:16px;}
+.card-plain{background:#fff;border-radius:16px;border:1px solid #eee6d9;padding:16px;}
+.tabs-grid{display:grid;gap:12px;}
+.tab-card{background:#fff;border-radius:16px;border:1px solid #eee6d9;padding:16px;display:flex;justify-content:space-between;align-items:center;}
+.tab-name{font-weight:600;}
+.tab-meta{font-size:11.5px;color:#a3a390;margin-top:2px;}
+.tab-total{font-weight:800;color:var(--sage);text-align:right;}
+.tab-resume{background:none;color:var(--sage);text-decoration:underline;font-size:12px;}
+
+.petty-form{display:flex;gap:8px;margin-bottom:18px;}
+.petty-form input:first-child{flex:1;}
+.petty-form input:nth-child(2){width:120px;}
+.petty-form button{background:var(--sage);color:#fff;border-radius:12px;padding:0 16px;display:flex;align-items:center;}
+.petty-list{display:flex;flex-direction:column;gap:8px;}
+.petty-item{background:#fff;border-radius:13px;border:1px solid #eee6d9;padding:12px 14px;display:flex;justify-content:space-between;font-size:13px;}
+.petty-desc-meta{font-size:11px;color:#a3a390;margin-top:2px;}
+.total-line{display:flex;justify-content:space-between;font-weight:700;margin-top:16px;padding-top:12px;border-top:1px solid #e7e3da;}
+
+.shift-label{font-size:11.5px;color:#a3a390;margin-bottom:6px;display:block;}
+.shift-btn{width:100%;background:var(--sage);color:#fff;border-radius:14px;padding:13px 0;font-weight:700;margin-top:6px;}
+.shift-close{width:100%;border:2px solid #e79a9a;color:#c25454;background:#fff;border-radius:14px;padding:12px 0;font-weight:700;margin-top:14px;}
+
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px;}
+.stat-card{background:#fff;border-radius:16px;border:1px solid #eee6d9;padding:14px;}
+.stat-label{font-size:11px;color:#a3a390;margin-bottom:5px;}
+.stat-value{font-weight:800;font-size:15px;color:var(--sage);}
+.chart-card{background:#fff;border-radius:16px;border:1px solid #eee6d9;padding:16px;margin-bottom:20px;}
+.export-row{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+.export-btn{background:var(--sage);color:#fff;border-radius:13px;padding:11px 18px;font-weight:600;display:flex;align-items:center;gap:8px;font-size:13px;}
+.import-btn{background:var(--olive-l);color:var(--sage);border-radius:13px;padding:11px 18px;font-weight:600;display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;}
+.menu-table-wrap{background:#fff;border-radius:16px;border:1px solid #eee6d9;overflow-x:auto;margin-bottom:8px;}
+table{width:100%;border-collapse:collapse;font-size:12.5px;}
+th{text-align:left;color:#a3a390;padding:12px;border-bottom:1px solid #f0ede4;font-weight:600;white-space:nowrap;}
+td{padding:10px 12px;border-bottom:1px solid #f6f4ee;vertical-align:middle;}
+.mini-input{width:90px;padding:6px 8px;border-radius:8px;border:1px solid #e7e3da;}
+.del-link{background:none;color:#c25454;font-weight:600;}
+.log-list{font-size:12px;color:#8a8a80;max-height:220px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;}
+.role-badge{display:flex;align-items:center;gap:4px;}
+
+/* ===== MENU MANAGEMENT ENHANCEMENTS ===== */
+.mm-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;}
+.mm-toolbar h3{font-weight:700;font-size:15px;margin:0;}
+.mm-add-btn{background:var(--sage);color:#fff;border-radius:12px;padding:10px 18px;font-weight:700;font-size:13px;display:flex;align-items:center;gap:8px;box-shadow:0 3px 10px rgba(74,99,67,.3);transition:background .15s,transform .1s;}
+.mm-add-btn:hover{background:var(--sage-l);}
+.mm-add-btn:active{transform:scale(.97);}
+.mm-stats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+.mm-stat-pill{background:var(--olive-l);color:var(--sage);padding:5px 12px;border-radius:999px;font-size:11.5px;font-weight:600;}
+.mm-stat-pill.warn{background:var(--amber-l);color:var(--amber);}
+.mm-stat-pill.off{background:var(--red-l);color:var(--red);}
+
+.mm-thumb{width:48px;height:48px;border-radius:10px;object-fit:cover;background:var(--olive-l);flex-shrink:0;}
+.mm-name-cell{display:flex;align-items:center;gap:10px;min-width:180px;}
+.mm-name{font-weight:600;font-size:13px;line-height:1.3;}
+.mm-badge-tiny{display:inline-block;background:var(--sage);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:6px;margin-left:6px;vertical-align:middle;letter-spacing:.3px;}
+.mm-margin{font-weight:700;color:var(--green);}
+.mm-margin.low{color:var(--amber);}
+.mm-margin.neg{color:var(--red);}
+
+.mm-status{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;cursor:pointer;transition:all .15s;user-select:none;border:none;}
+.mm-status.aktif{background:var(--green-l);color:var(--green);}
+.mm-status.habis{background:var(--red-l);color:var(--red);}
+.mm-status:hover{transform:scale(1.05);}
+
+.mm-actions{display:flex;gap:6px;justify-content:flex-end;}
+.mm-icon-btn{width:32px;height:32px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;transition:all .15s;}
+.mm-icon-btn.edit{background:var(--olive-l);color:var(--sage);}
+.mm-icon-btn.edit:hover{background:var(--sage);color:#fff;}
+.mm-icon-btn.del{background:var(--red-l);color:var(--red);}
+.mm-icon-btn.del:hover{background:var(--red);color:#fff;}
+
+/* ===== PAGINATION ===== */
+.pagination{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 4px;flex-wrap:wrap;margin-bottom:20px;}
+.pg-info{font-size:12px;color:#8a8a80;}
+.pg-controls{display:flex;align-items:center;gap:6px;}
+.pg-btn{min-width:34px;height:34px;padding:0 10px;border-radius:9px;background:#fff;border:1px solid #e7e3da;color:var(--ink);font-size:12.5px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;transition:all .15s;}
+.pg-btn:hover:not(:disabled){background:var(--olive-l);border-color:var(--sage);color:var(--sage);}
+.pg-btn.active{background:var(--sage);border-color:var(--sage);color:#fff;box-shadow:0 2px 8px rgba(74,99,67,.3);}
+.pg-btn:disabled{opacity:.4;cursor:not-allowed;}
+.pg-ellipsis{color:#b3b0a4;padding:0 4px;font-size:12.5px;}
+.pg-size{display:flex;align-items:center;gap:6px;font-size:12px;color:#8a8a80;}
+.pg-size select{padding:6px 10px;border-radius:9px;border:1px solid #e7e3da;background:#fff;font-size:12px;color:var(--ink);cursor:pointer;}
+.pg-size select:focus{outline:2px solid var(--olive-l);}
+
+/* Modal form */
+.form-modal{background:#fff;border-radius:20px;width:100%;max-width:460px;padding:22px;max-height:90vh;overflow-y:auto;animation:pop .15s ease-out;}
+.form-modal h3{font-weight:700;font-size:16px;margin-bottom:18px;color:var(--sage);display:flex;align-items:center;gap:8px;}
+.form-group{margin-bottom:14px;}
+.form-group label{display:block;font-size:12px;font-weight:600;color:#6b6b60;margin-bottom:6px;}
+.form-group label .req{color:var(--red);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.form-img-preview{margin-top:8px;width:100%;height:120px;object-fit:cover;border-radius:12px;background:var(--olive-l);display:none;}
+.form-img-preview.show{display:block;}
+.form-check{display:flex;align-items:center;gap:10px;padding:12px;background:var(--cream);border-radius:12px;cursor:pointer;}
+.form-check input{width:18px;height:18px;accent-color:var(--sage);cursor:pointer;}
+.form-check span{font-size:13px;font-weight:600;}
+.form-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px;}
+.btn-cancel{background:var(--cream);color:#6b6b60;border-radius:13px;padding:12px 0;font-weight:700;font-size:13.5px;}
+.btn-save{background:var(--sage);color:#fff;border-radius:13px;padding:12px 0;font-weight:700;font-size:13.5px;box-shadow:0 3px 10px rgba(74,99,67,.3);}
+.btn-save:hover{background:var(--sage-l);}
+
+/* Delete confirm */
+.confirm-modal{background:#fff;border-radius:20px;width:100%;max-width:360px;padding:24px;text-align:center;animation:pop .15s ease-out;}
+.confirm-icon{width:56px;height:56px;border-radius:50%;background:var(--red-l);color:var(--red);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;}
+.confirm-modal h3{font-weight:700;font-size:16px;margin-bottom:8px;}
+.confirm-modal p{font-size:13px;color:#8a8a80;margin-bottom:20px;line-height:1.5;}
+.confirm-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.btn-danger{background:var(--red);color:#fff;border-radius:13px;padding:12px 0;font-weight:700;font-size:13.5px;}
+
+/* ===== SHIFT LOCK & RECONCILIATION ===== */
+.shift-lock-screen{position:fixed;inset:0;background:linear-gradient(135deg,#4A6343 0%,#5B7553 100%);z-index:60;display:flex;align-items:center;justify-content:center;padding:20px;}
+.shift-lock-box{background:#fff;border-radius:22px;width:100%;max-width:420px;padding:32px 26px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:pop .25s ease-out;}
+.shift-lock-icon{width:72px;height:72px;border-radius:50%;background:var(--olive-l);color:var(--sage);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;}
+.shift-lock-title{font-weight:800;font-size:20px;color:var(--sage);margin-bottom:6px;}
+.shift-lock-sub{font-size:13px;color:#8a8a80;margin-bottom:22px;line-height:1.5;}
+.shift-lock-field{text-align:left;margin-bottom:16px;}
+.shift-lock-field label{display:block;font-size:12px;font-weight:700;color:#6b6b60;margin-bottom:6px;}
+.shift-lock-field input{width:100%;padding:14px 16px;font-size:18px;font-weight:700;text-align:right;border-radius:13px;border:2px solid #e7e3da;background:var(--cream);letter-spacing:.5px;}
+.shift-lock-field input:focus{outline:none;border-color:var(--sage);background:#fff;}
+.shift-open-btn{width:100%;background:var(--sage);color:#fff;border-radius:14px;padding:15px 0;font-weight:800;font-size:15px;box-shadow:0 6px 16px rgba(74,99,67,.35);transition:background .15s,transform .1s;}
+.shift-open-btn:hover{background:var(--sage-l);}
+.shift-open-btn:active{transform:scale(.97);}
+.shift-open-btn:disabled{opacity:.5;cursor:not-allowed;}
+.shift-lock-foot{margin-top:18px;font-size:11.5px;color:#b3b0a4;}
+
+/* Shift active banner */
+.shift-banner{background:linear-gradient(90deg,#e8f5e9 0%,#f5f3ef 100%);border:1px solid #c8e6c9;border-radius:12px;padding:10px 14px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:12px;}
+.shift-banner-left{display:flex;align-items:center;gap:8px;color:var(--green);font-weight:700;}
+.shift-banner-right{display:flex;align-items:center;gap:12px;color:#6b6b60;}
+.shift-banner-pill{background:#fff;border-radius:999px;padding:4px 10px;font-weight:700;color:var(--sage);font-size:11.5px;border:1px solid #c8e6c9;}
+
+/* Closing modal */
+.closing-modal{background:#fff;border-radius:20px;width:100%;max-width:480px;padding:24px;max-height:92vh;overflow-y:auto;animation:pop .15s ease-out;}
+.closing-modal h3{font-weight:800;font-size:17px;margin-bottom:6px;color:var(--sage);display:flex;align-items:center;gap:8px;}
+.closing-modal .sub{font-size:12.5px;color:#8a8a80;margin-bottom:20px;}
+.recon-block{background:var(--cream);border-radius:14px;padding:14px;margin-bottom:14px;}
+.recon-line{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;}
+.recon-line.total{font-weight:800;font-size:15px;padding-top:10px;margin-top:6px;border-top:1px dashed #ccc;}
+.recon-line.total span:last-child{color:var(--sage);}
+.recon-input-block{margin-bottom:14px;}
+.recon-input-block label{display:block;font-size:12px;font-weight:700;color:#6b6b60;margin-bottom:6px;}
+.recon-input-block input{width:100%;padding:14px 16px;font-size:18px;font-weight:800;text-align:right;border-radius:13px;border:2px solid #e7e3da;background:#fff;letter-spacing:.5px;}
+.recon-input-block input:focus{outline:none;border-color:var(--sage);}
+.recon-input-block textarea{width:100%;padding:12px 14px;font-size:13px;border-radius:13px;border:2px solid #e7e3da;background:#fff;min-height:70px;resize:vertical;font-family:inherit;}
+.recon-input-block textarea:focus{outline:none;border-color:var(--sage);}
+.variance-box{border-radius:14px;padding:16px;margin-bottom:16px;text-align:center;}
+.variance-box.ok{background:var(--green-l);border:1px solid #a5d6a7;}
+.variance-box.warn{background:var(--amber-l);border:1px solid #ffe082;}
+.variance-box.bad{background:var(--red-l);border:1px solid #ef9a9a;}
+.variance-label{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;opacity:.8;}
+.variance-value{font-weight:900;font-size:26px;}
+.variance-box.ok .variance-value{color:var(--green);}
+.variance-box.warn .variance-value{color:var(--amber);}
+.variance-box.bad .variance-value{color:var(--red);}
+.variance-status{font-size:12px;margin-top:4px;font-weight:600;}
+.variance-box.ok .variance-status{color:var(--green);}
+.variance-box.warn .variance-status{color:var(--amber);}
+.variance-box.bad .variance-status{color:var(--red);}
+
+/* Shift history card */
+.shift-hist-card{background:#fff;border-radius:14px;border:1px solid #eee6d9;padding:14px;margin-bottom:10px;}
+.shift-hist-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #f0ede4;}
+.shift-hist-id{font-size:11.5px;color:#a3a390;}
+.shift-hist-time{font-weight:700;font-size:13px;color:var(--ink);}
+.shift-hist-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;}
+.shift-hist-grid > div{display:flex;justify-content:space-between;padding:4px 0;}
+.shift-hist-grid .lbl{color:#8a8a80;}
+.shift-hist-grid .val{font-weight:700;color:var(--ink);}
+.shift-hist-note{margin-top:10px;padding:8px 12px;background:var(--amber-l);border-left:3px solid var(--amber);border-radius:6px;font-size:12px;color:#6b5b1f;font-style:italic;}
+
+/* ===== SHIFT CLOSED SUCCESS MODAL ===== */
+.shift-success-modal{background:#fff;border-radius:22px;width:100%;max-width:520px;padding:0;max-height:92vh;overflow-y:auto;animation:pop .2s ease-out;}
+.shift-success-head{background:linear-gradient(135deg,#4A6343 0%,#5B7553 100%);color:#fff;padding:26px 24px;text-align:center;border-radius:22px 22px 0 0;}
+.shift-success-icon{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;}
+.shift-success-title{font-weight:800;font-size:19px;margin-bottom:4px;}
+.shift-success-sub{font-size:12.5px;opacity:.85;}
+.shift-success-body{padding:22px 24px;}
+.shift-success-body .recon-block{background:var(--cream);}
+.shift-success-variance{border-radius:14px;padding:16px;margin-bottom:16px;text-align:center;}
+.shift-success-variance.ok{background:var(--green-l);border:1px solid #a5d6a7;}
+.shift-success-variance.warn{background:var(--amber-l);border:1px solid #ffe082;}
+.shift-success-variance.bad{background:var(--red-l);border:1px solid #ef9a9a;}
+.shift-success-variance .lbl{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;opacity:.85;}
+.shift-success-variance .val{font-weight:900;font-size:24px;}
+.shift-success-variance.ok .val{color:var(--green);}
+.shift-success-variance.warn .val{color:var(--amber);}
+.shift-success-variance.bad .val{color:var(--red);}
+.shift-success-note{margin-top:12px;padding:10px 14px;background:var(--amber-l);border-left:3px solid var(--amber);border-radius:8px;font-size:12.5px;color:#6b5b1f;font-style:italic;}
+.shift-success-foot{padding:0 24px 24px;display:flex;gap:10px;flex-wrap:wrap;}
+.shift-success-btn{flex:1;min-width:160px;background:var(--sage);color:#fff;border-radius:14px;padding:14px 20px;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 12px rgba(74,99,67,.3);transition:background .15s,transform .1s;}
+.shift-success-btn:hover{background:var(--sage-l);}
+.shift-success-btn:active{transform:scale(.98);}
+
+@media(min-width:1024px){
+ .sidebar{display:flex;}
+ .mobile-header{display:none;}
+ .search-box{display:block;}
+ .cart-panel{display:flex;}
+ .product-grid{grid-template-columns:repeat(3,1fr);}
+ .mobile-cart-bar{display:none;}
+ .stat-grid{grid-template-columns:repeat(4,1fr);}
+}
+@media(min-width:1280px){.product-grid{grid-template-columns:repeat(4,1fr);}}
+
+@media(max-width:640px){
+ .form-row{grid-template-columns:1fr;}
+ .mm-toolbar{flex-direction:column;align-items:stretch;}
+ .mm-add-btn{justify-content:center;}
+ .pagination{flex-direction:column;align-items:stretch;}
+ .pg-controls{justify-content:center;flex-wrap:wrap;}
+ .pg-size{justify-content:center;}
+ .shift-hist-grid{grid-template-columns:1fr;}
+ .shift-success-foot{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const LS='tuko_v1';
+const D=()=>JSON.parse(localStorage.getItem(LS));
+const SV=s=>localStorage.setItem(LS,JSON.stringify(s));
+const PH='https://placehold.co/500x400/DCE2D7/4A6343?text=TUKO';
+const CATEGORIES=['Teh/Teko','Kopi','Sate-satean','Gorengan','Kudapan','Makanan','Minuman','Snack','Dessert','Lainnya'];
+
+function seed(){
+ return {
+  role:'kasir', pin:'1234', shift:null, shiftHistory:[], cashierName:'Kasir 1',
+  menu:[
+   {id:1,name:'Teh Poci / Sateko (1 Teko)',price:18000,hpp:7000,cat:'Teh/Teko',badge:true,active:true,img:'https://images.unsplash.com/photo-1571934811356-5cc061b6821f?auto=format&fit=crop&w=500&q=80'},
+   {id:2,name:'Sate-satean Mix',price:25000,hpp:12000,cat:'Sate-satean',badge:false,active:true,img:'https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=500&q=80'},
+   {id:3,name:'Aneka Gorengan (5 pcs)',price:15000,hpp:6000,cat:'Gorengan',badge:false,active:true,img:'https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?auto=format&fit=crop&w=500&q=80'},
+   {id:4,name:'Kopi Tubruk',price:12000,hpp:4000,cat:'Kopi',badge:false,active:true,img:'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=500&q=80'},
+   {id:5,name:'Es Teh Manis',price:8000,hpp:2500,cat:'Teh/Teko',badge:false,active:true,img:'https://images.unsplash.com/photo-1499638673689-79a0b5115d87?auto=format&fit=crop&w=500&q=80'},
+   {id:6,name:'Indomie Rebus Spesial',price:16000,hpp:6500,cat:'Kudapan',badge:false,active:true,img:'https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=500&q=80'},
+  ],
+  cart:[], tableNote:'', discount:0, tabs:[], petty:[], trans:[], log:[],
+ };
+}
+if(!D())SV(seed());
+let S=D();
+
+// Migration
+S.menu.forEach(m=>{if(typeof m.active==='undefined')m.active=true;if(typeof m.badge==='undefined')m.badge=false;});
+if(!Array.isArray(S.shiftHistory))S.shiftHistory=[];
+if(typeof S.shift==='undefined')S.shift=null;
+
+const save=()=>SV(S);
+const rp=n=>'Rp'+Math.round(n).toLocaleString('id-ID');
+const now=()=>new Date().toLocaleString('id-ID',{dateStyle:'short',timeStyle:'short'});
+const nowISO=()=>new Date().toISOString();
+function logA(a){S.log.unshift({a,ts:now()});save();}
+
+let view='pos', cat='Semua', search='', cartOpen=false, adminUnlocked=false, pinModal=null, modal=null;
+let menuModal=null;
+let deleteConfirm=null;
+let shiftClosing=null;
+let shiftClosedSummary=null; // {record} — untuk menampilkan layar sukses sebelum reload
+let openShiftError='';
+
+// Pagination state
+const PG={
+  menu:{page:1,size:5},
+  trans:{page:1,size:5},
+  sold:{page:1,size:5},
+  log:{page:1,size:10},
+  shiftHist:{page:1,size:5},
+};
+
+function pgSlice(arr,key){
+  const p=PG[key];
+  const total=arr.length;
+  const totalPages=Math.max(1,Math.ceil(total/p.size));
+  if(p.page>totalPages)p.page=totalPages;
+  const start=(p.page-1)*p.size;
+  return {items:arr.slice(start,start+p.size),total,totalPages,start};
+}
+function pgGo(key,page){PG[key].page=page;render();}
+function pgSize(key,size){PG[key].size=+size;PG[key].page=1;render();}
+
+/* ===== PAGINATION UI COMPONENT ===== */
+function Pager(key,total,totalPages,start,count){
+  if(total===0)return '';
+  const cur=PG[key].page;
+  const sizes=[5,10,25,50,100];
+  let pages=[];
+  if(totalPages<=7){
+    for(let i=1;i<=totalPages;i++)pages.push(i);
+  }else{
+    pages.push(1);
+    const s=Math.max(2,cur-1), e=Math.min(totalPages-1,cur+1);
+    if(s>2)pages.push('...');
+    for(let i=s;i<=e;i++)pages.push(i);
+    if(e<totalPages-1)pages.push('...');
+    pages.push(totalPages);
+  }
+  const end=start+count;
+  return `<div class="pagination">
+    <div class="pg-info">Menampilkan <b>${start+1}–${end}</b> dari <b>${total}</b> data</div>
+    <div class="pg-controls">
+      <button class="pg-btn" ${cur===1?'disabled':''} onclick="pgGo('${key}',1)" title="Halaman pertama">«</button>
+      <button class="pg-btn" ${cur===1?'disabled':''} onclick="pgGo('${key}',${cur-1})" title="Sebelumnya">‹</button>
+      ${pages.map(p=>p==='...'?`<span class="pg-ellipsis">…</span>`:`<button class="pg-btn ${p===cur?'active':''}" onclick="pgGo('${key}',${p})">${p}</button>`).join('')}
+      <button class="pg-btn" ${cur===totalPages?'disabled':''} onclick="pgGo('${key}',${cur+1})" title="Berikutnya">›</button>
+      <button class="pg-btn" ${cur===totalPages?'disabled':''} onclick="pgGo('${key}',${totalPages})" title="Halaman terakhir">»</button>
+    </div>
+    <div class="pg-size">
+      <span>Per halaman:</span>
+      <select onchange="pgSize('${key}',this.value)">
+        ${sizes.map(s=>`<option value="${s}" ${PG[key].size===s?'selected':''}>${s}</option>`).join('')}
+      </select>
+    </div>
+  </div>`;
+}
+
+/* ===== SHIFT HELPERS ===== */
+function isShiftActive(){return S.shift&&S.shift.status==='active';}
+
+function shiftTrans(){
+  if(!isShiftActive())return [];
+  const start=new Date(S.shift.startedAt).getTime();
+  return S.trans.filter(t=>new Date(t.tsRaw||t.ts).getTime()>=start);
+}
+function shiftPetty(){
+  if(!isShiftActive())return [];
+  const start=new Date(S.shift.startedAt).getTime();
+  return S.petty.filter(p=>new Date(p.tsRaw||p.ts).getTime()>=start);
+}
+function shiftCashSales(){
+  return shiftTrans().filter(t=>t.method==='cash').reduce((a,t)=>a+t.total,0);
+}
+function shiftNonCashSales(){
+  return shiftTrans().filter(t=>t.method!=='cash').reduce((a,t)=>a+t.total,0);
+}
+function shiftPettyTotal(){
+  return shiftPetty().reduce((a,p)=>a+p.amount,0);
+}
+function shiftExpectedCash(){
+  if(!isShiftActive())return 0;
+  return S.shift.openingCash+shiftCashSales()-shiftPettyTotal();
+}
+
+function openShift(){
+  const el=document.getElementById('shiftOpeningInput');
+  const val=+el.value||0;
+  if(val<0){openShiftError='Modal awal tidak boleh negatif.';render();return;}
+  if(val<=0){openShiftError='Modal awal harus lebih dari 0.';render();return;}
+  S.shift={
+    id:'SHIFT-'+Date.now(),
+    startedAt:nowISO(),
+    startedAtLabel:now(),
+    openingCash:val,
+    cashierName:S.cashierName,
+    status:'active',
+  };
+  openShiftError='';
+  window._shiftOpenVal='';
+  logA(`Shift dibuka oleh ${S.cashierName} — Modal awal ${rp(val)}`);
+  save();render();
+}
+
+function startCloseShift(){
+  if(!isShiftActive())return;
+  shiftClosing={actualCash:'',note:''};
+  render();
+}
+function cancelCloseShift(){shiftClosing=null;render();}
+function updateClosingField(f,v){if(shiftClosing)shiftClosing[f]=v;}
+function computeVariance(){
+  if(!shiftClosing)return 0;
+  const actual=+shiftClosing.actualCash||0;
+  return actual-shiftExpectedCash();
+}
+
+/**
+ * KONFIRMASI TUTUP SHIFT
+ * Tidak langsung reload. Simpan record ke shiftHistory, lalu tampilkan layar sukses.
+ * Baru setelah user klik "Selesai & Muat Ulang", data di-reload dan shift jadi null.
+ */
+function confirmCloseShift(){
+  if(!isShiftActive()||!shiftClosing)return;
+  const actual=+shiftClosing.actualCash||0;
+  const expected=shiftExpectedCash();
+  const variance=actual-expected;
+  if(variance!==0 && !(shiftClosing.note||'').trim()){
+    alert('Selisih kas terdeteksi. Mohon isi Catatan / Alasan Selisih Kas.');
+    return;
+  }
+  const closeRec={
+    id:S.shift.id,
+    startedAt:S.shift.startedAt,
+    startedAtLabel:S.shift.startedAtLabel,
+    closedAt:nowISO(),
+    closedAtLabel:now(),
+    cashierName:S.shift.cashierName||S.cashierName,
+    openingCash:S.shift.openingCash,
+    cashSales:shiftCashSales(),
+    nonCashSales:shiftNonCashSales(),
+    pettyCash:shiftPettyTotal(),
+    expectedCash:expected,
+    actualCash:actual,
+    variance:variance,
+    note:(shiftClosing.note||'').trim(),
+    transCount:shiftTrans().length,
+    pettyCount:shiftPetty().length,
+  };
+  // Simpan ke history dulu (tanpa reset shift)
+  S.shiftHistory.unshift(closeRec);
+  logA(`Shift ${closeRec.id} ditutup — Expected ${rp(expected)}, Actual ${rp(actual)}, Variance ${rp(variance)}`);
+  save();
+
+  // Tampilkan layar sukses (bukan langsung reload)
+  shiftClosedSummary=closeRec;
+  shiftClosing=null;
+  render();
+}
+
+/**
+ * Dipanggil saat user klik "Selesai & Muat Ulang" di layar sukses.
+ * Baru pada saat ini shift di-reset & view diarahkan ke lock screen.
+ */
+function finishShiftClose(){
+  if(!shiftClosedSummary)return;
+  // Reset shift → status null, kasir berikutnya wajib buka shift baru
+  S.shift=null;
+  // Bersihkan cart (biar tidak ada sisa transaksi lama)
+  S.cart=[];S.discount=0;S.tableNote='';S.tabs=[];
+  save();
+  shiftClosedSummary=null;
+  view='pos';
+  PG.shiftHist.page=1;
+  render();
+}
+
+function cartTotal(){return S.cart.reduce((a,i)=>a+i.price*i.qty,0)-S.discount;}
+function addItem(id){const m=S.menu.find(x=>x.id===id);if(!m||m.active===false)return;const c=S.cart.find(x=>x.id===id);if(c)c.qty++;else S.cart.push({...m,qty:1});save();render();}
+function chQty(id,d){const c=S.cart.find(x=>x.id===id);if(!c)return;c.qty+=d;if(c.qty<=0)S.cart=S.cart.filter(x=>x.id!==id);save();render();}
+function checkout(method,cashGiven){
+ if(!isShiftActive()){alert('Shift belum dibuka. Buka shift terlebih dahulu.');return;}
+ if(!S.cart.length)return;
+ const total=cartTotal();
+ const t={id:Date.now(),items:[...S.cart],total,method,cash:cashGiven||total,ts:now(),tsRaw:nowISO(),table:S.tableNote,cashier:S.cashierName};
+ S.trans.push(t);logA(`Order baru ${rp(total)} (${method})`);
+ S.cart=[];S.discount=0;S.tableNote='';save();modal={type:'receipt',t};render();
+}
+function saveTab(){
+ if(!isShiftActive()){alert('Shift belum dibuka.');return;}
+ if(!S.cart.length)return;
+ S.tabs.push({id:Date.now(),items:[...S.cart],table:S.tableNote||'Meja',total:cartTotal(),ts:now(),tsRaw:nowISO()});
+ S.cart=[];S.discount=0;S.tableNote='';save();cartOpen=false;render();
+}
+function resumeTab(id){const tb=S.tabs.find(x=>x.id===id);if(!tb)return;S.cart=[...tb.items];S.tableNote=tb.table;S.tabs=S.tabs.filter(x=>x.id!==id);save();view='pos';cartOpen=true;render();}
+function addPetty(desc,amt){
+ if(!isShiftActive()){alert('Shift belum dibuka.');return;}
+ S.petty.push({id:Date.now(),desc,amount:amt,ts:now(),tsRaw:nowISO()});logA(`Pengeluaran: ${desc} ${rp(amt)}`);save();render();
+}
+function exportExcel(){
+ const wb=XLSX.utils.book_new();
+ const menuExport=S.menu.map(m=>({id:m.id,name:m.name,cat:m.cat,price:m.price,hpp:m.hpp,margin:m.price-m.hpp,badge:m.badge,active:m.active,img:m.img}));
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(menuExport),'Menu');
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(S.trans.map(t=>({id:t.id,ts:t.ts,table:t.table,cashier:t.cashier||'',method:t.method,items:itemsLabel(t.items),total:t.total,cash:t.cash}))),'Transaksi');
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(salesBreakdown().map((s,i)=>({rank:i+1,nama:s.name,kategori:s.cat,pcs_terjual:s.qty,total_omzet:s.revenue,total_hpp:s.hpp,laba_bersih:s.profit}))),'ItemTerjual');
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(S.petty),'PettyCash');
+ const shiftRows=S.shiftHistory.map(sh=>({
+   id:sh.id,
+   kasir:sh.cashierName||'-',
+   buka:sh.startedAtLabel,
+   tutup:sh.closedAtLabel,
+   modal_awal:sh.openingCash,
+   penjualan_cash:sh.cashSales,
+   penjualan_non_cash:sh.nonCashSales,
+   petty_cash:sh.pettyCash,
+   kas_diharapkan:sh.expectedCash,
+   kas_aktual:sh.actualCash,
+   selisih:sh.variance,
+   catatan:sh.note||'',
+   jumlah_transaksi:sh.transCount,
+ }));
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(shiftRows.length?shiftRows:[{info:'Belum ada riwayat shift'}]),'ShiftHistory');
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(S.log),'Log');
+ XLSX.writeFile(wb,`TUKO_Data_${Date.now()}.xlsx`);logA('Export data ke Excel');
+}
+function importExcel(file){
+ const r=new FileReader();
+ r.onload=e=>{
+  try{
+   const wb=XLSX.read(new Uint8Array(e.target.result),{type:'array'});
+   if(wb.SheetNames.includes('Menu')){const rows=XLSX.utils.sheet_to_json(wb.Sheets['Menu']);if(rows.length)S.menu=rows.map(r=>({...r,price:+r.price,hpp:+r.hpp,id:+r.id,badge:!!r.badge,active:r.active!==false}));}
+   if(wb.SheetNames.includes('PettyCash')){const rows=XLSX.utils.sheet_to_json(wb.Sheets['PettyCash']);if(rows.length)S.petty=rows.map(r=>({...r,amount:+r.amount,id:+r.id}));}
+   logA('Import data dari Excel');save();adminUnlocked=true;render();alert('Import berhasil');
+  }catch(err){alert('File tidak valid');}
+ };
+ r.readAsArrayBuffer(file);
+}
+function tryAdmin(cb){pinModal={cb,val:''};render();}
+function checkPin(){if(pinModal.val===S.pin){adminUnlocked=true;const cb=pinModal.cb;pinModal=null;render();cb&&cb();}else{alert('PIN salah');pinModal.val='';render();}}
+function cashSalesTotal(){return S.trans.filter(t=>t.method==='cash').reduce((a,t)=>a+t.total,0);}
+function pettyTotal(){return S.petty.reduce((a,p)=>a+p.amount,0);}
+function grossRevenue(){return S.trans.reduce((a,t)=>a+t.total,0);}
+function totalHPP(){return S.trans.reduce((a,t)=>a+t.items.reduce((s,i)=>s+i.hpp*i.qty,0),0);}
+function netProfit(){return grossRevenue()-totalHPP()-pettyTotal();}
+function salesBreakdown(){
+ const agg={};
+ S.trans.forEach(t=>t.items.forEach(i=>{
+  if(!agg[i.id])agg[i.id]={name:i.name,cat:i.cat,qty:0,revenue:0,hpp:0};
+  agg[i.id].qty+=i.qty;agg[i.id].revenue+=i.qty*i.price;agg[i.id].hpp+=i.qty*i.hpp;
+ }));
+ return Object.values(agg).map(x=>({...x,profit:x.revenue-x.hpp})).sort((a,b)=>b.qty-a.qty);
+}
+function itemsLabel(items){return items.map(i=>`${i.qty}x ${i.name}`).join(', ');}
+function reopenReceipt(id){const t=S.trans.find(x=>x.id===id);if(t){modal={type:'receipt',t};render();}}
+function Icon(n,cls){return `<i data-lucide="${n}" class="${cls||''}"></i>`;}
+function Logo(size){return `<div class="brand-logo" style="width:${size}px;height:${size}px;font-size:${size*.42}px">T</div>`;}
+
+/* ===== MENU CRUD FUNCTIONS ===== */
+function openAddMenu(){
+ menuModal={mode:'add',data:{id:null,name:'',cat:'Teh/Teko',price:'',hpp:'',img:'',badge:false,active:true}};
+ render();
+}
+function openEditMenu(id){
+ const m=S.menu.find(x=>x.id===id);if(!m)return;
+ menuModal={mode:'edit',data:{...m,price:m.price,hpp:m.hpp}};
+ render();
+}
+function closeMenuModal(){menuModal=null;render();}
+function saveMenuModal(){
+ const d=menuModal.data;
+ const name=d.name.trim();
+ if(!name){alert('Nama menu wajib diisi.');return;}
+ const price=+d.price||0;
+ const hpp=+d.hpp||0;
+ if(price<=0){alert('Harga jual harus lebih dari 0.');return;}
+ if(hpp<0){alert('HPP tidak boleh negatif.');return;}
+ if(menuModal.mode==='add'){
+  const newId=Date.now();
+  S.menu.push({id:newId,name,cat:d.cat,price,hpp,img:d.img||PH,badge:!!d.badge,active:d.active!==false});
+  logA(`Menu baru ditambahkan: ${name} (${rp(price)})`);
+  PG.menu.page=Math.ceil(S.menu.length/PG.menu.size);
+ }else{
+  const m=S.menu.find(x=>x.id===d.id);if(!m)return;
+  m.name=name;m.cat=d.cat;m.price=price;m.hpp=hpp;m.img=d.img||PH;m.badge=!!d.badge;m.active=d.active!==false;
+  logA(`Menu diupdate: ${name}`);
+ }
+ menuModal=null;save();render();
+}
+function toggleMenuActive(id){
+ const m=S.menu.find(x=>x.id===id);if(!m)return;
+ m.active=!m.active;
+ logA(`Menu "${m.name}" ${m.active?'diaktifkan':'ditandai habis/nonaktif'}`);
+ save();render();
+}
+function askDeleteMenu(id){
+ const m=S.menu.find(x=>x.id===id);if(!m)return;
+ deleteConfirm={id,name:m.name};
+ render();
+}
+function confirmDeleteMenu(){
+ if(!deleteConfirm)return;
+ const m=S.menu.find(x=>x.id===deleteConfirm.id);
+ if(m){S.menu=S.menu.filter(x=>x.id!==deleteConfirm.id);logA(`Menu dihapus: ${m.name}`);}
+ deleteConfirm=null;save();render();
+}
+function cancelDeleteMenu(){deleteConfirm=null;render();}
+function updateMenuField(field,val){
+ if(!menuModal)return;
+ menuModal.data[field]=val;
+ if(field==='img'){const p=document.getElementById('mmImgPreview');if(p){p.src=val||PH;p.classList.toggle('show',!!val);}}
+}
+function handleMenuImgInput(val){
+ if(!menuModal)return;menuModal.data.img=val;
+ const p=document.getElementById('mmImgPreview');
+ if(p){if(val){p.src=val;p.classList.add('show');p.onerror=()=>{p.src=PH;};}else{p.classList.remove('show');}}
+}
+
+/* ===== NAV ===== */
+function Nav(){
+ const items=[['pos','shopping-bag','POS'],['tabs','clipboard-list','Open Tab'],['petty','wallet','Petty Cash'],['admin','shield','Admin & Laporan'],['shift','lock','Shift']];
+ const shiftActive=isShiftActive();
+ return `<div class="sidebar">
+  <div class="brand">${Logo(38)}<span class="brand-name">TUKO</span></div>
+  <div class="slogan">Tuangin · Puterin · Nikmatin</div>
+  ${items.map(([v,ic,l])=>{
+    const blocked=!shiftActive && (v==='pos'||v==='tabs'||v==='petty');
+    return `<button ${blocked?'disabled':''} onclick="view='${v}';render()" class="nav-btn ${view===v?'active':''}">${Icon(ic,'w-4 h-4')}<span>${l}</span></button>`;
+  }).join('')}
+  <div class="sidebar-foot role-badge">Role: <b>${S.role}</b><button class="link-btn" onclick="S.role=S.role==='kasir'?'admin':'kasir';render()">ganti</button></div>
+  <div class="sidebar-foot" style="margin-top:8px;padding-top:0;border:none">Kasir bertugas<input value="${S.cashierName}" onchange="S.cashierName=this.value;save()" class="field" style="margin-top:4px;padding:6px 10px;font-size:12px"></div>
+ </div>`;
+}
+function MobileHeader(){
+ const cats=['pos','tabs','petty','admin','shift'],labels=['POS','Tab','Kas','Admin','Shift'];
+ const shiftActive=isShiftActive();
+ return `<div class="mobile-header">
+  <div class="mobile-top">
+   <div class="mobile-brand">${Logo(34)}<div><div class="brand-name" style="font-size:17px">TUKO</div><div class="slogan-top">Tuangin · Puterin · Nikmatin</div></div></div>
+   <div class="mobile-icons">${Icon('search','w-5 h-5')}${Icon('user','w-5 h-5')}</div>
+  </div>
+  <div class="mobile-cats">${cats.map((v,i)=>{
+    const blocked=!shiftActive && (v==='pos'||v==='tabs'||v==='petty');
+    return `<button ${blocked?'disabled':''} onclick="view='${v}';render()" class="chip ${view===v?'active':''}" style="${blocked?'opacity:.4;cursor:not-allowed':''}">${labels[i]}</button>`;
+  }).join('')}</div>
+ </div>`;
+}
+
+/* ===== SHIFT LOCK SCREEN ===== */
+function ShiftLockScreen(){
+ return `<div class="shift-lock-screen">
+  <div class="shift-lock-box">
+   <div class="shift-lock-icon">${Icon('lock','w-8 h-8')}</div>
+   <div class="shift-lock-title">Shift Belum Dibuka</div>
+   <div class="shift-lock-sub">Masukkan Modal Awal Laci untuk memulai shift.<br>Kasir: <b>${S.cashierName}</b></div>
+   <div class="shift-lock-field">
+    <label>Modal Awal Laci (Rp)</label>
+    <input id="shiftOpeningInput" type="number" min="0" placeholder="0" value="${window._shiftOpenVal||''}" oninput="window._shiftOpenVal=this.value">
+   </div>
+   ${openShiftError?`<div style="color:var(--red);font-size:12.5px;font-weight:600;margin-bottom:12px;text-align:left">${openShiftError}</div>`:''}
+   <button onclick="openShift()" class="shift-open-btn">${Icon('play-circle','w-5 h-5')} Buka Shift Sekarang</button>
+   <div class="shift-lock-foot">Tanggal: ${now()}</div>
+  </div>
+ </div>`;
+}
+
+/* ===== SHIFT BANNER ===== */
+function ShiftBanner(){
+ if(!isShiftActive())return '';
+ return `<div class="shift-banner">
+  <div class="shift-banner-left">${Icon('clock','w-4 h-4')} Shift Aktif · ${S.shift.startedAtLabel} · ${S.shift.cashierName}</div>
+  <div class="shift-banner-right">
+   <span class="shift-banner-pill">Modal: ${rp(S.shift.openingCash)}</span>
+   <span class="shift-banner-pill">Cash: ${rp(shiftCashSales())}</span>
+   <span class="shift-banner-pill">Kas: ${rp(shiftExpectedCash())}</span>
+   <button onclick="view='shift';render()" style="background:var(--sage);color:#fff;border-radius:9px;padding:6px 12px;font-weight:700;font-size:11.5px">Kelola Shift</button>
+  </div>
+ </div>`;
+}
+
+function ProductGrid(){
+ const cats=['Semua',...new Set(S.menu.filter(m=>m.active!==false).map(m=>m.cat))];
+ const items=S.menu.filter(m=>m.active!==false && (cat==='Semua'||m.cat===cat)&&m.name.toLowerCase().includes(search.toLowerCase()));
+ return `<div class="content">
+  ${ShiftBanner()}
+  <input class="search-box" value="${search}" oninput="search=this.value;render()" placeholder="Cari menu...">
+  <div class="chips">${cats.map(c=>`<button onclick="cat='${c}';render()" class="chip ${cat===c?'active':''}">${c}</button>`).join('')}</div>
+  <div class="product-grid">
+   ${items.length?items.map(m=>`<div class="product-card">
+    ${m.badge?`<span class="badge-teko">1 Teko</span>`:''}
+    <div class="product-img-wrap"><img src="${m.img}" onerror="this.onerror=null;this.src='${PH}'" alt="${m.name}"></div>
+    <div class="product-body">
+     <div class="product-name">${m.name}</div>
+     <div class="product-foot"><span class="product-price">${rp(m.price)}</span><button onclick="addItem(${m.id})" class="add-btn">${Icon('plus','w-4 h-4')}</button></div>
+    </div></div>`).join(''):`<div style="grid-column:1/-1;text-align:center;color:#b3b0a4;padding:40px 0">Tidak ada menu tersedia.</div>`}
+  </div>
+ </div>`;
+}
+function CartPanel(mobile){
+ const total=cartTotal();
+ const shiftOK=isShiftActive();
+ const body=`
+  <div class="cart-header"><span class="cart-title">Keranjang</span>${mobile?`<button onclick="cartOpen=false;render()" class="icon-btn">${Icon('x','w-5 h-5')}</button>`:''}</div>
+  <div class="cart-customer"><input class="field" value="${S.tableNote}" oninput="S.tableNote=this.value" placeholder="Nama/Meja pelanggan"></div>
+  <div class="cart-items">
+   ${S.cart.length?S.cart.map(i=>`<div class="cart-item">
+    <div><div class="ci-name">${i.name}</div><div class="ci-price">${rp(i.price)}</div></div>
+    <div class="qty-ctrl"><button onclick="chQty(${i.id},-1);render()" class="qty-btn">−</button><span class="qty-num">${i.qty}</span><button onclick="chQty(${i.id},1);render()" class="qty-btn">+</button></div>
+   </div>`).join(''):`<div class="cart-empty">Keranjang kosong</div>`}
+  </div>
+  <div class="cart-footer">
+   <input type="number" class="field" value="${S.discount}" oninput="S.discount=+this.value||0" placeholder="Diskon (Rp)">
+   <div class="row-line"><span>Subtotal</span><span>${rp(S.cart.reduce((a,i)=>a+i.price*i.qty,0))}</span></div>
+   <div class="row-total"><span>Total</span><span>${rp(total)}</span></div>
+   <div class="cart-actions">
+    <button onclick="saveTab()" class="btn-outline" ${!shiftOK?'disabled':''}>Simpan Tab</button>
+    <button onclick="${shiftOK?"modal={type:'pay'};render()":""}" class="btn-primary" ${!shiftOK?'disabled':''}>Bayar Sekarang</button>
+   </div>
+   ${!shiftOK?`<div style="font-size:11.5px;color:var(--red);text-align:center">Buka shift terlebih dahulu</div>`:''}
+  </div>`;
+ return mobile?`<div class="overlay" onclick="if(event.target===this){cartOpen=false;render()}"><div class="drawer">${body}</div></div>`
+ :`<div class="cart-panel">${body}</div>`;
+}
+function MobileCartBar(){
+ if(!S.cart.length||cartOpen)return'';
+ const n=S.cart.reduce((a,i)=>a+i.qty,0);
+ return `<div class="mobile-cart-bar">
+  <div class="mcb-left">${Icon('shopping-cart','w-5 h-5')}<span class="mcb-count">${n} items</span><span>${rp(cartTotal())}</span></div>
+  <button onclick="cartOpen=true;render()" class="mcb-pay">Bayar / Pay</button>
+ </div>`;
+}
+function PayModal(){
+ const total=cartTotal();const quick=[10000,20000,50000,100000];
+ return `<div class="overlay center" onclick="if(event.target===this){modal=null;render()}">
+  <div class="modal-box">
+   <div class="modal-title">Pembayaran — ${rp(total)}</div>
+   <div class="pay-grid">
+    ${quick.filter(q=>q>=total).map(q=>`<button onclick="checkout('cash',${q})" class="pay-btn">${rp(q)}</button>`).join('')}
+    <button onclick="checkout('cash',${total})" class="pay-btn">Pas / Exact</button>
+    <button onclick="checkout('qris',${total})" class="pay-btn qris">QRIS</button>
+   </div>
+   <button onclick="modal=null;render()" class="cancel-link">Batal</button>
+  </div></div>`;
+}
+function ReceiptModal(t){
+ return `<div class="overlay center" onclick="if(event.target===this){modal=null;render()}">
+  <div class="modal-box receipt">
+   <div class="receipt-head"><b>TUKO</b><div>Tuangin·Puterin·Nikmatin</div><div>${t.ts}</div><div>Kasir: ${t.cashier||'-'} · Meja: ${t.table||'-'}</div></div>
+   <div class="dashed"></div>
+   ${t.items.map(i=>`<div class="receipt-line"><span>${i.qty}x ${i.name}</span><span>${rp(i.price*i.qty)}</span></div>`).join('')}
+   <div class="dashed"></div>
+   <div class="receipt-line receipt-bold"><span>TOTAL</span><span>${rp(t.total)}</span></div>
+   <div class="receipt-line"><span>Bayar (${t.method})</span><span>${rp(t.cash)}</span></div>
+   <div class="receipt-line"><span>Kembali</span><span>${rp(t.cash-t.total)}</span></div>
+   <div style="text-align:center;margin-top:10px">Terima kasih! 🙏</div>
+   <button onclick="window.print()" class="print-btn">Cetak (58mm)</button>
+   <button onclick="modal=null;render()" class="close-link">Tutup</button>
+  </div></div>`;
+}
+function PinModal(){
+ return `<div class="overlay center">
+  <div class="modal-box pin-box">
+   <div class="modal-title">Masukkan PIN Admin</div>
+   <input type="password" maxlength="4" value="${pinModal.val}" oninput="pinModal.val=this.value" class="pin-input" autofocus>
+   <div class="pin-actions"><button onclick="pinModal=null;render()" class="btn-outline">Batal</button><button onclick="checkPin()" class="btn-primary">Buka</button></div>
+  </div></div>`;
+}
+function TabsView(){
+ return `<div class="content">
+  ${ShiftBanner()}
+  <div class="section-title">Open Tab / Bayar Nanti</div>
+  <div class="tabs-grid">
+   ${S.tabs.length?S.tabs.map(t=>`<div class="tab-card">
+    <div><div class="tab-name">${t.table}</div><div class="tab-meta">${t.items.length} item · ${t.ts}</div></div>
+    <div><div class="tab-total">${rp(t.total)}</div><button onclick="resumeTab(${t.id})" class="tab-resume">Lanjutkan</button></div>
+   </div>`).join(''):`<div class="cart-empty">Belum ada tab terbuka.</div>`}
+  </div></div>`;
+}
+function PettyView(){
+ const list=isShiftActive()?shiftPetty():S.petty;
+ return `<div class="content" style="max-width:560px">
+  ${ShiftBanner()}
+  <div class="section-title">Pengeluaran Kasir (Petty Cash)</div>
+  <div class="petty-form">
+   <input id="pd" class="field" placeholder="Keterangan (es batu, gas, parkir...)">
+   <input id="pa" type="number" class="field" placeholder="Nominal">
+   <button onclick="const d=document.getElementById('pd').value,a=+document.getElementById('pa').value;if(d&&a)addPetty(d,a)">${Icon('plus','w-4 h-4')}</button>
+  </div>
+  <div class="petty-list">
+   ${list.length?list.slice().reverse().map(p=>`<div class="petty-item"><span>${p.desc}<div class="petty-desc-meta">${p.ts}</div></span><span style="font-weight:700">-${rp(p.amount)}</span></div>`).join(''):`<div class="cart-empty">Belum ada pengeluaran.</div>`}
+  </div>
+  <div class="total-line"><span>Total Pengeluaran ${isShiftActive()?'(Shift Ini)':''}</span><span>${rp(isShiftActive()?shiftPettyTotal():pettyTotal())}</span></div>
+ </div>`;
+}
+
+/* ===== SHIFT VIEW ===== */
+function ShiftView(){
+ if(!isShiftActive()){
+  return `<div class="content" style="max-width:480px">
+   <div class="section-title">Shift</div>
+   <div class="card-plain" style="text-align:center;padding:36px 24px">
+    <div style="width:64px;height:64px;border-radius:50%;background:var(--olive-l);color:var(--sage);display:flex;align-items:center;justify-content:center;margin:0 auto 14px">${Icon('lock','w-7 h-7')}</div>
+    <div style="font-weight:700;font-size:16px;margin-bottom:6px">Shift Belum Dibuka</div>
+    <div style="font-size:12.5px;color:#8a8a80;margin-bottom:18px">Buka shift untuk mulai melayani transaksi.</div>
+    <button onclick="view='pos';render()" class="shift-btn">Ke Halaman Buka Shift</button>
+   </div>
+  </div>`;
+ }
+ const expected=shiftExpectedCash();
+ const openingTime=new Date(S.shift.startedAt);
+ const nowTime=new Date();
+ const durMin=Math.floor((nowTime-openingTime)/60000);
+ const durStr=durMin<60?`${durMin} menit`:`${Math.floor(durMin/60)}j ${durMin%60}m`;
+ return `<div class="content" style="max-width:720px">
+  <div class="section-title">Shift Aktif</div>
+  <div class="card-plain" style="margin-bottom:16px">
+   <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px">
+    <div>
+     <div style="font-size:11.5px;color:#a3a390">ID SHIFT</div>
+     <div style="font-weight:700;font-size:14px">${S.shift.id}</div>
+    </div>
+    <div style="text-align:right">
+     <div style="font-size:11.5px;color:#a3a390">DURASI</div>
+     <div style="font-weight:700;font-size:14px">${durStr}</div>
+    </div>
+    <div style="text-align:right">
+     <div style="font-size:11.5px;color:#a3a390">MULAI</div>
+     <div style="font-weight:700;font-size:14px">${S.shift.startedAtLabel}</div>
+    </div>
+   </div>
+   <div class="recon-block" style="background:var(--cream);margin-bottom:0">
+    <div class="recon-line"><span>Modal Awal Laci</span><span>${rp(S.shift.openingCash)}</span></div>
+    <div class="recon-line"><span>Penjualan Tunai (Cash)</span><span>+${rp(shiftCashSales())}</span></div>
+    <div class="recon-line"><span>Penjualan Non-Tunai (QRIS)</span><span>${rp(shiftNonCashSales())}</span></div>
+    <div class="recon-line"><span>Petty Cash (Pengeluaran)</span><span>-${rp(shiftPettyTotal())}</span></div>
+    <div class="recon-line total"><span>Kas Diharapkan</span><span>${rp(expected)}</span></div>
+   </div>
+  </div>
+  <div class="section-title" style="font-size:14px;margin-bottom:10px">Aktivitas Shift Ini</div>
+  <div class="stat-grid" style="margin-bottom:20px">
+   <div class="stat-card"><div class="stat-label">Transaksi</div><div class="stat-value">${shiftTrans().length}</div></div>
+   <div class="stat-card"><div class="stat-label">Petty Cash</div><div class="stat-value">${shiftPetty().length}</div></div>
+   <div class="stat-card"><div class="stat-label">Cash Sales</div><div class="stat-value">${rp(shiftCashSales())}</div></div>
+   <div class="stat-card"><div class="stat-label">Non-Cash Sales</div><div class="stat-value">${rp(shiftNonCashSales())}</div></div>
+  </div>
+  <button onclick="startCloseShift()" class="shift-close">${Icon('lock','w-4 h-4')} Tutup Shift & Rekonsiliasi Kas</button>
+ </div>`;
+}
+
+/* ===== CLOSING MODAL ===== */
+function ClosingShiftModal(){
+ if(!shiftClosing)return '';
+ const expected=shiftExpectedCash();
+ const actual=+shiftClosing.actualCash||0;
+ const variance=actual-expected;
+ let varCls='ok';
+ if(variance!==0){
+   varCls=Math.abs(variance)>50000?'bad':'warn';
+ }
+ const needNote=variance!==0;
+ return `<div class="overlay center" onclick="if(event.target===this)cancelCloseShift()">
+  <div class="closing-modal">
+   <h3>${Icon('clipboard-check','w-5 h-5')} Rekonsiliasi Tutup Shift</h3>
+   <div class="sub">Hitung uang fisik di laci, lalu masukkan jumlahnya untuk verifikasi.</div>
+
+   <div class="recon-block">
+    <div class="recon-line"><span>Modal Awal</span><span>${rp(S.shift.openingCash)}</span></div>
+    <div class="recon-line"><span>Penjualan Tunai</span><span>+${rp(shiftCashSales())}</span></div>
+    <div class="recon-line"><span>Petty Cash</span><span>-${rp(shiftPettyTotal())}</span></div>
+    <div class="recon-line total"><span>Kas Diharapkan</span><span>${rp(expected)}</span></div>
+   </div>
+
+   <div class="recon-input-block">
+    <label>Uang Fisik di Laci (Rp) <span style="color:var(--red)">*</span></label>
+    <input type="number" min="0" value="${shiftClosing.actualCash}" oninput="updateClosingField('actualCash',this.value);render()" placeholder="0" autofocus>
+   </div>
+
+   <div class="variance-box ${varCls}">
+    <div class="variance-label">Selisih Kas</div>
+    <div class="variance-value">${variance>0?'+':''}${rp(variance)}</div>
+    <div class="variance-status">${variance===0?'✓ Kas Sesuai':(variance>0?'⚠ Kas Berlebih':'⚠ Kas Kurang')}</div>
+   </div>
+
+   ${needNote?`
+    <div class="recon-input-block">
+     <label>Catatan / Alasan Selisih Kas <span style="color:var(--red)">*</span></label>
+     <textarea placeholder="Contoh: Uang kembalian kurang, tip, kesalahan input, dll." oninput="updateClosingField('note',this.value)">${shiftClosing.note||''}</textarea>
+    </div>
+   `:''}
+
+   <div class="form-actions">
+    <button onclick="cancelCloseShift()" class="btn-cancel">Batal</button>
+    <button onclick="confirmCloseShift()" class="btn-save" ${needNote&&!(shiftClosing.note||'').trim()?'disabled style="opacity:.5;cursor:not-allowed"':''}>Konfirmasi Tutup Shift</button>
+   </div>
+  </div>
+ </div>`;
+}
+
+/* ===== SHIFT CLOSED SUCCESS SCREEN ===== */
+function ShiftClosedSuccessModal(){
+ if(!shiftClosedSummary)return '';
+ const r=shiftClosedSummary;
+ const vCls=r.variance===0?'ok':(Math.abs(r.variance)>50000?'bad':'warn');
+ const vStatus=r.variance===0?'✓ Kas Sesuai':(r.variance>0?'⚠ Kas Berlebih':'⚠ Kas Kurang');
+ return `<div class="overlay center">
+  <div class="shift-success-modal">
+   <div class="shift-success-head">
+    <div class="shift-success-icon">${Icon('check-circle','w-8 h-8')}</div>
+    <div class="shift-success-title">Shift Berhasil Ditutup</div>
+    <div class="shift-success-sub">${r.id} · Ditutup ${r.closedAtLabel}</div>
+   </div>
+   <div class="shift-success-body">
+    <div class="recon-block">
+     <div class="recon-line"><span>Kasir</span><span>${r.cashierName||'-'}</span></div>
+     <div class="recon-line"><span>Waktu Buka</span><span>${r.startedAtLabel}</span></div>
+     <div class="recon-line"><span>Waktu Tutup</span><span>${r.closedAtLabel}</span></div>
+    </div>
+    <div class="recon-block">
+     <div class="recon-line"><span>Modal Awal</span><span>${rp(r.openingCash)}</span></div>
+     <div class="recon-line"><span>Penjualan Tunai (Cash)</span><span>+${rp(r.cashSales)}</span></div>
+     <div class="recon-line"><span>Penjualan Non-Tunai</span><span>${rp(r.nonCashSales)}</span></div>
+     <div class="recon-line"><span>Petty Cash</span><span>-${rp(r.pettyCash)}</span></div>
+     <div class="recon-line total"><span>Kas Diharapkan</span><span>${rp(r.expectedCash)}</span></div>
+     <div class="recon-line"><span>Uang Fisik di Laci</span><span style="font-weight:700">${rp(r.actualCash)}</span></div>
+    </div>
+
+    <div class="shift-success-variance ${vCls}">
+     <div class="lbl">Selisih Kas</div>
+     <div class="val">${r.variance>0?'+':''}${rp(r.variance)}</div>
+     <div style="font-size:12px;font-weight:600;margin-top:4px">${vStatus}</div>
+    </div>
+
+    ${r.note?`<div class="shift-success-note">📝 <b>Catatan:</b> ${r.note}</div>`:''}
+
+    <div style="margin-top:16px;padding:12px 14px;background:var(--olive-l);border-radius:12px;font-size:12px;color:var(--sage);font-weight:600;text-align:center">
+     ${Icon('info','w-4 h-4')} Klik "Selesai & Muat Ulang" untuk memulai sesi kasir berikutnya.
+    </div>
+   </div>
+   <div class="shift-success-foot">
+    <button onclick="finishShiftClose()" class="shift-success-btn">
+     ${Icon('refresh-cw','w-4 h-4')} Selesai & Muat Ulang
+    </button>
+   </div>
+  </div>
+ </div>`;
+}
+
+/* ===== MENU MANAGEMENT VIEW ===== */
+function MenuManagement(){
+ const totalMenu=S.menu.length;
+ const activeMenu=S.menu.filter(m=>m.active!==false).length;
+ const inactiveMenu=totalMenu-activeMenu;
+ const avgMargin=S.menu.length?Math.round(S.menu.reduce((a,m)=>a+(m.price-m.hpp),0)/S.menu.length):0;
+
+ const pg=pgSlice(S.menu,'menu');
+
+ return `
+ <div class="section-title" style="font-size:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+  <span>Manajemen Menu</span>
+ </div>
+ <div class="mm-toolbar">
+  <div>
+   <h3>Daftar Menu (${totalMenu} item)</h3>
+   <div class="mm-stats">
+    <span class="mm-stat-pill">Aktif: ${activeMenu}</span>
+    ${inactiveMenu?`<span class="mm-stat-pill off">Habis/Nonaktif: ${inactiveMenu}</span>`:''}
+    <span class="mm-stat-pill warn">Rata-rata Margin: ${rp(avgMargin)}/pcs</span>
+   </div>
+  </div>
+  <button onclick="openAddMenu()" class="mm-add-btn">${Icon('plus-circle','w-4 h-4')}Tambah Menu Baru</button>
+ </div>
+ <div class="menu-table-wrap">
+  <table>
+   <thead><tr>
+    <th style="width:60px">Foto</th>
+    <th>Nama Menu</th>
+    <th>Kategori</th>
+    <th>Harga Jual</th>
+    <th>HPP (Modal)</th>
+    <th>Margin/Pcs</th>
+    <th>Status</th>
+    <th style="text-align:right">Aksi</th>
+   </tr></thead>
+   <tbody>
+    ${pg.items.length?pg.items.map(m=>{
+     const margin=m.price-m.hpp;
+     const marginCls=margin<0?'neg':(margin<0.2*m.price?'low':'');
+     const isActive=m.active!==false;
+     return `<tr>
+      <td><img src="${m.img||PH}" onerror="this.onerror=null;this.src='${PH}'" class="mm-thumb" alt="${m.name}"></td>
+      <td>
+       <div class="mm-name-cell">
+        <div>
+         <div class="mm-name">${m.name}${m.badge?'<span class="mm-badge-tiny">1 TEKO</span>':''}</div>
+        </div>
+       </div>
+      </td>
+      <td><span style="font-size:11.5px;color:#8a8a80">${m.cat}</span></td>
+      <td style="font-weight:700">${rp(m.price)}</td>
+      <td style="color:#8a8a80">${rp(m.hpp)}</td>
+      <td><span class="mm-margin ${marginCls}">${margin>=0?'+':''}${rp(margin)}</span></td>
+      <td>
+       <button onclick="toggleMenuActive(${m.id})" class="mm-status ${isActive?'aktif':'habis'}" title="Klik untuk ${isActive?'tandai habis':'aktifkan'}">
+        ${Icon(isActive?'check-circle':'x-circle','w-3 h-3')}${isActive?'Aktif':'Habis'}
+       </button>
+      </td>
+      <td>
+       <div class="mm-actions">
+        <button onclick="openEditMenu(${m.id})" class="mm-icon-btn edit" title="Edit menu">${Icon('pencil','w-3.5 h-3.5')}</button>
+        <button onclick="askDeleteMenu(${m.id})" class="mm-icon-btn del" title="Hapus menu">${Icon('trash-2','w-3.5 h-3.5')}</button>
+       </div>
+      </td>
+     </tr>`;
+    }).join(''):`<tr><td colspan="8" style="color:#b3b0a4;text-align:center;padding:30px">Belum ada menu. Klik "Tambah Menu Baru" untuk menambahkan.</td></tr>`}
+   </tbody>
+  </table>
+ </div>
+ ${Pager('menu',pg.total,pg.totalPages,pg.start,pg.items.length)}
+ `;
+}
+
+/* ===== MENU FORM MODAL ===== */
+function MenuFormModal(){
+ const d=menuModal.data;
+ const isEdit=menuModal.mode==='edit';
+ return `<div class="overlay center" onclick="if(event.target===this)closeMenuModal()">
+  <div class="form-modal">
+   <h3>${Icon(isEdit?'pencil':'plus-circle','w-5 h-5')} ${isEdit?'Edit Menu':'Tambah Menu Baru'}</h3>
+
+   <div class="form-group">
+    <label>Nama Menu <span class="req">*</span></label>
+    <input class="field" id="mmName" value="${d.name}" oninput="updateMenuField('name',this.value)" placeholder="Contoh: Teh Poci / Sateko (1 Teko)">
+   </div>
+
+   <div class="form-row">
+    <div class="form-group">
+     <label>Kategori <span class="req">*</span></label>
+     <select class="field" id="mmCat" onchange="updateMenuField('cat',this.value)">
+      ${CATEGORIES.map(c=>`<option value="${c}" ${d.cat===c?'selected':''}>${c}</option>`).join('')}
+     </select>
+    </div>
+    <div class="form-group">
+     <label>URL Foto Produk</label>
+     <input class="field" id="mmImg" value="${d.img||''}" oninput="handleMenuImgInput(this.value)" placeholder="https://...">
+    </div>
+   </div>
+
+   <div class="form-row">
+    <div class="form-group">
+     <label>Harga Jual (Rp) <span class="req">*</span></label>
+     <input class="field" id="mmPrice" type="number" min="0" value="${d.price}" oninput="updateMenuField('price',this.value)" placeholder="18000">
+    </div>
+    <div class="form-group">
+     <label>HPP / Modal (Rp) <span class="req">*</span></label>
+     <input class="field" id="mmHpp" type="number" min="0" value="${d.hpp}" oninput="updateMenuField('hpp',this.value)" placeholder="7000">
+    </div>
+   </div>
+
+   <img id="mmImgPreview" class="form-img-preview ${d.img?'show':''}" src="${d.img||PH}" onerror="this.onerror=null;this.src='${PH}';">
+
+   <div class="form-group">
+    <label class="form-check">
+     <input type="checkbox" id="mmBadge" ${d.badge?'checked':''} onchange="updateMenuField('badge',this.checked)">
+     <span>Badge "1 Teko"</span>
+    </label>
+   </div>
+
+   <div class="form-group">
+    <label class="form-check">
+     <input type="checkbox" id="mmActive" ${d.active!==false?'checked':''} onchange="updateMenuField('active',this.checked)">
+     <span>Menu Aktif (tampil di POS)</span>
+    </label>
+   </div>
+
+   <div class="form-actions">
+    <button onclick="closeMenuModal()" class="btn-cancel">Batal</button>
+    <button onclick="saveMenuModal()" class="btn-save">${isEdit?'Simpan Perubahan':'Simpan Menu'}</button>
+   </div>
+  </div>
+ </div>`;
+}
+
+/* ===== DELETE CONFIRM MODAL ===== */
+function DeleteConfirmModal(){
+ return `<div class="overlay center" onclick="if(event.target===this)cancelDeleteMenu()">
+  <div class="confirm-modal">
+   <div class="confirm-icon">${Icon('trash-2','w-7 h-7')}</div>
+   <h3>Hapus Menu?</h3>
+   <p>Menu <b>"${deleteConfirm.name}"</b> akan dihapus permanen dari daftar. Tindakan ini tidak dapat dibatalkan.</p>
+   <div class="confirm-actions">
+    <button onclick="cancelDeleteMenu()" class="btn-cancel">Batal</button>
+    <button onclick="confirmDeleteMenu()" class="btn-danger">Ya, Hapus</button>
+   </div>
+  </div>
+ </div>`;
+}
+
+/* ===== SHIFT HISTORY SECTION (Admin) ===== */
+function ShiftHistorySection(){
+ const hist=S.shiftHistory;
+ const pg=pgSlice(hist,'shiftHist');
+ return `
+ <div class="section-title" style="font-size:14px">Riwayat Shift (Rekonsiliasi Kas)</div>
+ ${hist.length?`
+  ${pg.items.map(sh=>{
+   return `<div class="shift-hist-card">
+    <div class="shift-hist-head">
+     <div>
+      <div class="shift-hist-time">${sh.closedAtLabel}</div>
+      <div class="shift-hist-id">${sh.id} · Kasir: ${sh.cashierName||'-'}</div>
+     </div>
+     <div style="text-align:right">
+      <div style="font-size:11.5px;color:#a3a390">Selisih Kas</div>
+      <div style="font-weight:800;font-size:15px;color:${sh.variance===0?'var(--green)':(Math.abs(sh.variance)>50000?'var(--red)':'var(--amber)')}">${sh.variance>0?'+':''}${rp(sh.variance)}</div>
+     </div>
+    </div>
+    <div class="shift-hist-grid">
+     <div><span class="lbl">Modal Awal</span><span class="val">${rp(sh.openingCash)}</span></div>
+     <div><span class="lbl">Penjualan Cash</span><span class="val">${rp(sh.cashSales)}</span></div>
+     <div><span class="lbl">Petty Cash</span><span class="val">-${rp(sh.pettyCash)}</span></div>
+     <div><span class="lbl">Kas Diharapkan</span><span class="val">${rp(sh.expectedCash)}</span></div>
+     <div><span class="lbl">Uang Fisik</span><span class="val">${rp(sh.actualCash)}</span></div>
+     <div><span class="lbl">Transaksi</span><span class="val">${sh.transCount||0}</span></div>
+    </div>
+    ${sh.note?`<div class="shift-hist-note">📝 ${sh.note}</div>`:''}
+   </div>`;
+  }).join('')}
+  ${Pager('shiftHist',pg.total,pg.totalPages,pg.start,pg.items.length)}
+ `:`<div class="cart-empty">Belum ada riwayat shift.</div>`}
+ `;
+}
+
+/* ===== ADMIN VIEW ===== */
+function AdminView(){
+ if(!adminUnlocked){tryAdmin(null);return `<div class="content" style="color:#b3b0a4">Menunggu PIN...</div>`;}
+
+ const soldData=salesBreakdown();
+ const soldPg=pgSlice(soldData,'sold');
+
+ const transData=S.trans.slice().reverse();
+ const transPg=pgSlice(transData,'trans');
+
+ const logPg=pgSlice(S.log,'log');
+
+ return `<div class="content">
+  <div class="section-title">Admin & Laporan Keuangan</div>
+  <div class="stat-grid">
+   ${[['Omzet Kotor',grossRevenue()],['Total HPP',totalHPP()],['Pengeluaran',pettyTotal()],['Laba Bersih',netProfit()]].map(([l,v])=>`<div class="stat-card"><div class="stat-label">${l}</div><div class="stat-value">${rp(v)}</div></div>`).join('')}
+  </div>
+  <div class="chart-card"><canvas id="profitChart" height="90"></canvas></div>
+  <div class="export-row">
+   <button onclick="exportExcel()" class="export-btn">${Icon('download','w-4 h-4')}Export Excel</button>
+   <label class="import-btn">${Icon('upload','w-4 h-4')}Import Excel<input type="file" accept=".xlsx" style="display:none" onchange="if(this.files[0])importExcel(this.files[0])"></label>
+  </div>
+
+  ${ShiftHistorySection()}
+
+  <div class="section-title" style="font-size:14px">Rincian Item Terjual (Best Seller)</div>
+  <div class="menu-table-wrap">
+   <table><thead><tr><th>#</th><th>Nama Item</th><th>Kategori</th><th>Pcs Terjual</th><th>Total Omzet</th><th>Total HPP</th><th>Laba Bersih</th></tr></thead>
+   <tbody>${soldPg.items.length?soldPg.items.map((s,idx)=>`<tr>
+    <td>${soldPg.start+idx+1}</td><td>${s.name}</td><td>${s.cat}</td><td style="font-weight:700">${s.qty}</td>
+    <td>${rp(s.revenue)}</td><td>${rp(s.hpp)}</td><td style="color:var(--sage);font-weight:700">${rp(s.profit)}</td>
+   </tr>`).join(''):`<tr><td colspan="7" style="color:#b3b0a4;text-align:center;padding:20px">Belum ada transaksi.</td></tr>`}</tbody></table>
+  </div>
+  ${Pager('sold',soldPg.total,soldPg.totalPages,soldPg.start,soldPg.items.length)}
+
+  ${MenuManagement()}
+
+  <div class="section-title" style="font-size:14px">Riwayat Transaksi</div>
+  <div class="tabs-grid" style="margin-bottom:12px">
+   ${transPg.items.length?transPg.items.map(t=>`<div class="tab-card" style="align-items:flex-start;flex-wrap:wrap;gap:8px">
+    <div style="flex:1;min-width:220px">
+     <div class="tab-name">${t.table||'Tanpa nama/meja'} <span style="font-weight:400;color:#a3a390;font-size:11.5px">· ${t.method.toUpperCase()} · ${t.cashier||'-'}</span></div>
+     <div class="tab-meta">${itemsLabel(t.items)}</div>
+     <div class="tab-meta">${t.ts}</div>
+    </div>
+    <div style="text-align:right">
+     <div class="tab-total">${rp(t.total)}</div>
+     <button onclick="reopenReceipt(${t.id})" class="tab-resume">Detail / Lihat Struk</button>
+    </div>
+   </div>`).join(''):`<div class="cart-empty">Belum ada transaksi.</div>`}
+  </div>
+  ${Pager('trans',transPg.total,transPg.totalPages,transPg.start,transPg.items.length)}
+
+  <div class="section-title" style="font-size:14px">Log Aktivitas</div>
+  <div class="log-list">${logPg.items.length?logPg.items.map(l=>`<div>[${l.ts}] ${l.a}</div>`).join(''):'Belum ada log.'}</div>
+  ${Pager('log',logPg.total,logPg.totalPages,logPg.start,logPg.items.length)}
+ </div>`;
+}
+
+/* ===== MAIN RENDER ===== */
+function render(){
+ window.m=S.menu;
+ const shiftActive=isShiftActive();
+
+ // Kalau shift belum aktif dan view butuh shift → paksa ke shift
+ if(!shiftActive && (view==='pos'||view==='tabs'||view==='petty')){
+   view='shift';
+ }
+
+ let content;
+ if(view==='pos')content=ProductGrid();
+ else if(view==='tabs')content=TabsView();
+ else if(view==='petty')content=PettyView();
+ else if(view==='admin')content=AdminView();
+ else if(view==='shift')content=ShiftView();
+
+ // Tampilkan lock screen kalau shift belum aktif DAN tidak sedang menampilkan summary sukses
+ const showLock=!shiftActive && !shiftClosedSummary;
+
+ document.getElementById('app').innerHTML=`
+  <div class="app-shell">
+   ${Nav()}
+   <div class="main-col">
+    ${MobileHeader()}
+    <div class="row">${content}${view==='pos'?CartPanel(false):''}</div>
+   </div>
+  </div>
+  ${view==='pos'?MobileCartBar():''}
+  ${cartOpen?CartPanel(true):''}
+  ${modal&&modal.type==='pay'?PayModal():''}
+  ${modal&&modal.type==='receipt'?ReceiptModal(modal.t):''}
+  ${pinModal?PinModal():''}
+  ${menuModal?MenuFormModal():''}
+  ${deleteConfirm?DeleteConfirmModal():''}
+  ${shiftClosing?ClosingShiftModal():''}
+  ${shiftClosedSummary?ShiftClosedSuccessModal():''}
+  ${showLock?ShiftLockScreen():''}
+ `;
+ lucide.createIcons();
+ if(view==='admin'&&adminUnlocked){
+  const ctx=document.getElementById('profitChart');
+  if(ctx){if(window._chart)window._chart.destroy();
+   window._chart=new Chart(ctx,{type:'bar',data:{labels:['Omzet Kotor','Total HPP','Pengeluaran','Laba Bersih'],datasets:[{data:[grossRevenue(),totalHPP(),pettyTotal(),netProfit()],backgroundColor:['#8A9B7D','#DCE2D7','#c9b8a3','#4A6343'],borderRadius:6}]},options:{plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'Rp'+(v/1000)+'rb'}}}}});
+  }
+ }
+}
+render();
+</script>
+</body>
+</html>
