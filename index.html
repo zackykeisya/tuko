@@ -27,21 +27,38 @@ img{display:block;max-width:100%;}
 .brand{display:flex;align-items:center;gap:10px;margin-bottom:2px;}
 .brand-logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--sage),var(--sage-l));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;flex-shrink:0;}
 .brand-name{font-weight:800;font-size:20px;color:var(--sage);letter-spacing:.3px;}
-.slogan{font-size:11px;color:#a3a390;margin:2px 0 22px 48px;font-style:italic;}
+.slogan{font-size:11px;color:#a3a390;margin:2px 0 16px 48px;font-style:italic;}
 .slogan-top{font-size:10px;color:#a3a390;margin-top:1px;font-style:italic;}
 .nav-btn{display:flex;align-items:center;gap:11px;padding:11px 12px;border-radius:12px;margin-bottom:4px;background:transparent;color:var(--ink);text-align:left;width:100%;transition:background .15s;position:relative;}
 .nav-btn:hover{background:var(--cream);}
 .nav-btn.active{background:var(--sage);color:#fff;}
-.nav-btn:disabled{opacity:.45;cursor:not-allowed;}
-.nav-btn:disabled:hover{background:transparent;}
 .sidebar-foot{margin-top:auto;padding-top:16px;border-top:1px solid #eee;font-size:12px;color:#9a998e;}
 .link-btn{background:none;color:var(--sage);text-decoration:underline;padding:0;margin-left:4px;}
 
+/* Shift Badge Indicator */
+.shift-badge{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;margin-bottom:14px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;border:1px solid transparent;}
+.shift-badge.none{background:var(--amber-l);color:var(--amber);border-color:#ffe082;}
+.shift-badge.none:hover{background:#fceec2;}
+.shift-badge.active{background:var(--green-l);color:var(--green);border-color:#a5d6a7;}
+.shift-badge.active:hover{background:#d4edda;}
+.shift-badge-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;animation:pulse 1.8s infinite;}
+.shift-badge.none .shift-badge-dot{background:var(--amber);}
+.shift-badge.active .shift-badge-dot{background:var(--green);}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.55;transform:scale(1.25)}}
+.shift-badge-info{flex:1;min-width:0;overflow:hidden;}
+.shift-badge-name{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.shift-badge-sub{font-size:10px;opacity:.75;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
 /* Mobile header */
 .mobile-header{display:block;background:#fff;border-bottom:1px solid #e7e3da;padding:14px 16px;position:sticky;top:0;z-index:20;}
-.mobile-top{display:flex;justify-content:space-between;align-items:center;}
+.mobile-top{display:flex;justify-content:space-between;align-items:center;gap:10px;}
 .mobile-brand{display:flex;align-items:center;gap:9px;}
-.mobile-icons{display:flex;gap:14px;color:#8a8a80;}
+.mobile-shift-badge{display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;}
+.mobile-shift-badge.none{background:var(--amber-l);color:var(--amber);}
+.mobile-shift-badge.active{background:var(--green-l);color:var(--green);}
+.mobile-shift-badge .dot{width:7px;height:7px;border-radius:50%;}
+.mobile-shift-badge.none .dot{background:var(--amber);}
+.mobile-shift-badge.active .dot{background:var(--green);animation:pulse 1.8s infinite;}
 .mobile-cats{display:flex;gap:8px;margin-top:12px;overflow-x:auto;scrollbar-width:none;}
 .mobile-cats::-webkit-scrollbar{display:none;}
 
@@ -68,6 +85,7 @@ img{display:block;max-width:100%;}
 .add-btn{background:var(--sage);color:#fff;width:34px;height:34px;border-radius:11px;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 8px rgba(74,99,67,.35);transition:background .15s,transform .1s;}
 .add-btn:hover{background:var(--sage-l);}
 .add-btn:active{transform:scale(.92);}
+.add-btn:disabled{background:#b3b0a4;cursor:not-allowed;opacity:.55;}
 
 /* Cart */
 .cart-panel{display:none;flex-direction:column;width:340px;flex-shrink:0;background:#fff;border-left:1px solid #e7e3da;}
@@ -140,6 +158,7 @@ img{display:block;max-width:100%;}
 .petty-form input:first-child{flex:1;}
 .petty-form input:nth-child(2){width:120px;}
 .petty-form button{background:var(--sage);color:#fff;border-radius:12px;padding:0 16px;display:flex;align-items:center;}
+.petty-form button:disabled{background:#b3b0a4;cursor:not-allowed;opacity:.55;}
 .petty-list{display:flex;flex-direction:column;gap:8px;}
 .petty-item{background:#fff;border-radius:13px;border:1px solid #eee6d9;padding:12px 14px;display:flex;justify-content:space-between;font-size:13px;}
 .petty-desc-meta{font-size:11px;color:#a3a390;margin-top:2px;}
@@ -235,89 +254,95 @@ td{padding:10px 12px;border-bottom:1px solid #f6f4ee;vertical-align:middle;}
 .confirm-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .btn-danger{background:var(--red);color:#fff;border-radius:13px;padding:12px 0;font-weight:700;font-size:13.5px;}
 
-/* ===== SHIFT LOCK & RECONCILIATION ===== */
-.shift-lock-screen{position:fixed;inset:0;background:linear-gradient(135deg,#4A6343 0%,#5B7553 100%);z-index:60;display:flex;align-items:center;justify-content:center;padding:20px;}
-.shift-lock-box{background:#fff;border-radius:22px;width:100%;max-width:420px;padding:32px 26px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:pop .25s ease-out;}
-.shift-lock-icon{width:72px;height:72px;border-radius:50%;background:var(--olive-l);color:var(--sage);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;}
-.shift-lock-title{font-weight:800;font-size:20px;color:var(--sage);margin-bottom:6px;}
-.shift-lock-sub{font-size:13px;color:#8a8a80;margin-bottom:22px;line-height:1.5;}
-.shift-lock-field{text-align:left;margin-bottom:16px;}
-.shift-lock-field label{display:block;font-size:12px;font-weight:700;color:#6b6b60;margin-bottom:6px;}
-.shift-lock-field input{width:100%;padding:14px 16px;font-size:18px;font-weight:700;text-align:right;border-radius:13px;border:2px solid #e7e3da;background:var(--cream);letter-spacing:.5px;}
-.shift-lock-field input:focus{outline:none;border-color:var(--sage);background:#fff;}
-.shift-open-btn{width:100%;background:var(--sage);color:#fff;border-radius:14px;padding:15px 0;font-weight:800;font-size:15px;box-shadow:0 6px 16px rgba(74,99,67,.35);transition:background .15s,transform .1s;}
-.shift-open-btn:hover{background:var(--sage-l);}
-.shift-open-btn:active{transform:scale(.97);}
-.shift-open-btn:disabled{opacity:.5;cursor:not-allowed;}
-.shift-lock-foot{margin-top:18px;font-size:11.5px;color:#b3b0a4;}
+/* ===== SHIFT SESSION CARD ===== */
+.session-modal{background:#fff;border-radius:22px;width:100%;max-width:520px;padding:0;max-height:92vh;overflow-y:auto;animation:pop .2s ease-out;}
+.session-head{background:linear-gradient(135deg,#4A6343 0%,#5B7553 100%);color:#fff;padding:24px;border-radius:22px 22px 0 0;position:relative;}
+.session-head .close-x{position:absolute;top:16px;right:16px;background:rgba(255,255,255,.15);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:#fff;transition:background .15s;}
+.session-head .close-x:hover{background:rgba(255,255,255,.3);}
+.session-head-icon{width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+.session-head-title{font-weight:800;font-size:20px;margin-bottom:4px;}
+.session-head-sub{font-size:12.5px;opacity:.85;line-height:1.4;}
+.session-body{padding:22px 24px;}
+.session-info-block{background:var(--cream);border-radius:14px;padding:14px;margin-bottom:16px;}
+.session-info-line{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;}
+.session-info-line.total{font-weight:800;font-size:15px;padding-top:10px;margin-top:6px;border-top:1px dashed #ccc;}
+.session-info-line.total span:last-child{color:var(--sage);}
+.session-input-block{margin-bottom:14px;}
+.session-input-block label{display:block;font-size:12px;font-weight:700;color:#6b6b60;margin-bottom:6px;}
+.session-input-block input{width:100%;padding:14px 16px;font-size:17px;font-weight:800;text-align:right;border-radius:13px;border:2px solid #e7e3da;background:#fff;letter-spacing:.5px;}
+.session-input-block input:focus{outline:none;border-color:var(--sage);}
+.session-input-block textarea{width:100%;padding:12px 14px;font-size:13px;border-radius:13px;border:2px solid #e7e3da;background:#fff;min-height:70px;resize:vertical;font-family:inherit;}
+.session-input-block textarea:focus{outline:none;border-color:var(--sage);}
+.session-text-input{width:100%;padding:11px 14px;font-size:13px;border-radius:12px;border:2px solid #e7e3da;background:#fff;}
+.session-text-input:focus{outline:none;border-color:var(--sage);}
+.session-variance{border-radius:14px;padding:16px;margin-bottom:16px;text-align:center;}
+.session-variance.ok{background:var(--green-l);border:1px solid #a5d6a7;}
+.session-variance.warn{background:var(--amber-l);border:1px solid #ffe082;}
+.session-variance.bad{background:var(--red-l);border:1px solid #ef9a9a;}
+.session-variance .lbl{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;opacity:.8;}
+.session-variance .val{font-weight:900;font-size:26px;}
+.session-variance.ok .val{color:var(--green);}
+.session-variance.warn .val{color:var(--amber);}
+.session-variance.bad .val{color:var(--red);}
+.session-variance .st{font-size:12px;margin-top:4px;font-weight:600;}
+.session-variance.ok .st{color:var(--green);}
+.session-variance.warn .st{color:var(--amber);}
+.session-variance.bad .st{color:var(--red);}
+.session-foot{padding:0 24px 24px;display:flex;gap:10px;flex-wrap:wrap;}
+.session-btn{flex:1;min-width:140px;background:var(--sage);color:#fff;border-radius:14px;padding:14px 20px;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 12px rgba(74,99,67,.3);transition:background .15s,transform .1s;}
+.session-btn:hover{background:var(--sage-l);}
+.session-btn:active{transform:scale(.98);}
+.session-btn:disabled{opacity:.5;cursor:not-allowed;box-shadow:none;}
+.session-btn.secondary{background:var(--cream);color:#6b6b60;box-shadow:none;}
+.session-btn.secondary:hover{background:#e8e4da;}
 
-/* Shift active banner */
-.shift-banner{background:linear-gradient(90deg,#e8f5e9 0%,#f5f3ef 100%);border:1px solid #c8e6c9;border-radius:12px;padding:10px 14px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:12px;}
-.shift-banner-left{display:flex;align-items:center;gap:8px;color:var(--green);font-weight:700;}
-.shift-banner-right{display:flex;align-items:center;gap:12px;color:#6b6b60;}
-.shift-banner-pill{background:#fff;border-radius:999px;padding:4px 10px;font-weight:700;color:var(--sage);font-size:11.5px;border:1px solid #c8e6c9;}
-
-/* Closing modal */
-.closing-modal{background:#fff;border-radius:20px;width:100%;max-width:480px;padding:24px;max-height:92vh;overflow-y:auto;animation:pop .15s ease-out;}
-.closing-modal h3{font-weight:800;font-size:17px;margin-bottom:6px;color:var(--sage);display:flex;align-items:center;gap:8px;}
-.closing-modal .sub{font-size:12.5px;color:#8a8a80;margin-bottom:20px;}
-.recon-block{background:var(--cream);border-radius:14px;padding:14px;margin-bottom:14px;}
-.recon-line{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;}
-.recon-line.total{font-weight:800;font-size:15px;padding-top:10px;margin-top:6px;border-top:1px dashed #ccc;}
-.recon-line.total span:last-child{color:var(--sage);}
-.recon-input-block{margin-bottom:14px;}
-.recon-input-block label{display:block;font-size:12px;font-weight:700;color:#6b6b60;margin-bottom:6px;}
-.recon-input-block input{width:100%;padding:14px 16px;font-size:18px;font-weight:800;text-align:right;border-radius:13px;border:2px solid #e7e3da;background:#fff;letter-spacing:.5px;}
-.recon-input-block input:focus{outline:none;border-color:var(--sage);}
-.recon-input-block textarea{width:100%;padding:12px 14px;font-size:13px;border-radius:13px;border:2px solid #e7e3da;background:#fff;min-height:70px;resize:vertical;font-family:inherit;}
-.recon-input-block textarea:focus{outline:none;border-color:var(--sage);}
-.variance-box{border-radius:14px;padding:16px;margin-bottom:16px;text-align:center;}
-.variance-box.ok{background:var(--green-l);border:1px solid #a5d6a7;}
-.variance-box.warn{background:var(--amber-l);border:1px solid #ffe082;}
-.variance-box.bad{background:var(--red-l);border:1px solid #ef9a9a;}
-.variance-label{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;opacity:.8;}
-.variance-value{font-weight:900;font-size:26px;}
-.variance-box.ok .variance-value{color:var(--green);}
-.variance-box.warn .variance-value{color:var(--amber);}
-.variance-box.bad .variance-value{color:var(--red);}
-.variance-status{font-size:12px;margin-top:4px;font-weight:600;}
-.variance-box.ok .variance-status{color:var(--green);}
-.variance-box.warn .variance-status{color:var(--amber);}
-.variance-box.bad .variance-status{color:var(--red);}
-
-/* Shift history card */
-.shift-hist-card{background:#fff;border-radius:14px;border:1px solid #eee6d9;padding:14px;margin-bottom:10px;}
-.shift-hist-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #f0ede4;}
-.shift-hist-id{font-size:11.5px;color:#a3a390;}
-.shift-hist-time{font-weight:700;font-size:13px;color:var(--ink);}
-.shift-hist-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;}
-.shift-hist-grid > div{display:flex;justify-content:space-between;padding:4px 0;}
+/* ===== SHIFT HISTORY CARD ===== */
+.shift-hist-card{background:#fff;border-radius:16px;border:1px solid #eee6d9;padding:16px;margin-bottom:12px;transition:transform .15s,box-shadow .15s;}
+.shift-hist-card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(74,99,67,.08);}
+.shift-hist-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #f0ede4;}
+.shift-hist-title{font-weight:700;font-size:14px;color:var(--ink);margin-bottom:3px;}
+.shift-hist-id{font-size:11px;color:#a3a390;font-family:monospace;}
+.shift-hist-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;font-size:10.5px;font-weight:700;}
+.shift-hist-badge.ok{background:var(--green-l);color:var(--green);}
+.shift-hist-badge.warn{background:var(--amber-l);color:var(--amber);}
+.shift-hist-badge.bad{background:var(--red-l);color:var(--red);}
+.shift-hist-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px 16px;font-size:12px;margin-bottom:12px;}
+.shift-hist-grid > div{display:flex;justify-content:space-between;padding:3px 0;}
 .shift-hist-grid .lbl{color:#8a8a80;}
 .shift-hist-grid .val{font-weight:700;color:var(--ink);}
-.shift-hist-note{margin-top:10px;padding:8px 12px;background:var(--amber-l);border-left:3px solid var(--amber);border-radius:6px;font-size:12px;color:#6b5b1f;font-style:italic;}
+.shift-hist-actions{display:flex;gap:8px;padding-top:12px;border-top:1px solid #f0ede4;}
+.shift-hist-detail-btn{flex:1;background:var(--olive-l);color:var(--sage);border-radius:10px;padding:9px 14px;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s;}
+.shift-hist-detail-btn:hover{background:var(--sage);color:#fff;}
+.shift-hist-note{margin-top:10px;padding:8px 12px;background:var(--amber-l);border-left:3px solid var(--amber);border-radius:6px;font-size:11.5px;color:#6b5b1f;font-style:italic;}
 
-/* ===== SHIFT CLOSED SUCCESS MODAL ===== */
-.shift-success-modal{background:#fff;border-radius:22px;width:100%;max-width:520px;padding:0;max-height:92vh;overflow-y:auto;animation:pop .2s ease-out;}
-.shift-success-head{background:linear-gradient(135deg,#4A6343 0%,#5B7553 100%);color:#fff;padding:26px 24px;text-align:center;border-radius:22px 22px 0 0;}
-.shift-success-icon{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;}
-.shift-success-title{font-weight:800;font-size:19px;margin-bottom:4px;}
-.shift-success-sub{font-size:12.5px;opacity:.85;}
-.shift-success-body{padding:22px 24px;}
-.shift-success-body .recon-block{background:var(--cream);}
-.shift-success-variance{border-radius:14px;padding:16px;margin-bottom:16px;text-align:center;}
-.shift-success-variance.ok{background:var(--green-l);border:1px solid #a5d6a7;}
-.shift-success-variance.warn{background:var(--amber-l);border:1px solid #ffe082;}
-.shift-success-variance.bad{background:var(--red-l);border:1px solid #ef9a9a;}
-.shift-success-variance .lbl{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;opacity:.85;}
-.shift-success-variance .val{font-weight:900;font-size:24px;}
-.shift-success-variance.ok .val{color:var(--green);}
-.shift-success-variance.warn .val{color:var(--amber);}
-.shift-success-variance.bad .val{color:var(--red);}
-.shift-success-note{margin-top:12px;padding:10px 14px;background:var(--amber-l);border-left:3px solid var(--amber);border-radius:8px;font-size:12.5px;color:#6b5b1f;font-style:italic;}
-.shift-success-foot{padding:0 24px 24px;display:flex;gap:10px;flex-wrap:wrap;}
-.shift-success-btn{flex:1;min-width:160px;background:var(--sage);color:#fff;border-radius:14px;padding:14px 20px;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 12px rgba(74,99,67,.3);transition:background .15s,transform .1s;}
-.shift-success-btn:hover{background:var(--sage-l);}
-.shift-success-btn:active{transform:scale(.98);}
+/* Metric card accent */
+.metric-accent{background:linear-gradient(135deg,#4A6343 0%,#5B7553 100%);color:#fff;border-radius:16px;padding:16px;}
+.metric-accent .stat-label{color:rgba(255,255,255,.8);}
+.metric-accent .stat-value{color:#fff;font-size:17px;}
+.metric-accent .metric-sub{font-size:10.5px;color:rgba(255,255,255,.7);margin-top:3px;}
+
+/* Detail shift modal */
+.detail-modal{background:#fff;border-radius:22px;width:100%;max-width:600px;padding:0;max-height:92vh;overflow-y:auto;animation:pop .2s ease-out;}
+.detail-head{background:linear-gradient(135deg,#4A6343 0%,#5B7553 100%);color:#fff;padding:22px 24px;border-radius:22px 22px 0 0;position:relative;}
+.detail-body{padding:22px 24px;}
+.detail-section-title{font-size:12px;font-weight:700;color:#a3a390;text-transform:uppercase;letter-spacing:.5px;margin:16px 0 10px;}
+.detail-section-title:first-child{margin-top:0;}
+.detail-item-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f6f4ee;font-size:12.5px;gap:8px;}
+.detail-item-row:last-child{border-bottom:none;}
+.detail-item-name{font-weight:600;flex:1;min-width:0;}
+.detail-item-qty{color:#8a8a80;font-size:11.5px;margin-top:2px;}
+.detail-item-total{font-weight:700;color:var(--sage);white-space:nowrap;}
+
+/* Empty state */
+.empty-state-card{background:#fff;border-radius:16px;border:1px dashed #d6d0c2;padding:40px 20px;text-align:center;}
+.empty-state-icon{width:64px;height:64px;border-radius:50%;background:var(--olive-l);color:var(--sage);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;}
+.empty-state-title{font-weight:700;font-size:15px;color:var(--ink);margin-bottom:6px;}
+.empty-state-sub{font-size:12.5px;color:#8a8a80;max-width:320px;margin:0 auto;line-height:1.5;}
+
+/* Filter bar */
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.filter-bar input,.filter-bar select{padding:9px 12px;border-radius:11px;border:1px solid #e7e3da;background:#fff;font-size:12.5px;flex:1;min-width:140px;}
+.filter-bar input:focus,.filter-bar select:focus{outline:2px solid var(--olive-l);}
 
 @media(min-width:1024px){
  .sidebar{display:flex;}
@@ -338,29 +363,37 @@ td{padding:10px 12px;border-bottom:1px solid #f6f4ee;vertical-align:middle;}
  .pg-controls{justify-content:center;flex-wrap:wrap;}
  .pg-size{justify-content:center;}
  .shift-hist-grid{grid-template-columns:1fr;}
- .shift-success-foot{flex-direction:column;}
+ .session-foot{flex-direction:column;}
+ .session-btn{min-width:100%;}
 }
 </style>
 </head>
 <body>
 <div id="app"></div>
 <script>
-const LS='tuko_v1';
+const LS='tuko_v2';
 const D=()=>JSON.parse(localStorage.getItem(LS));
 const SV=s=>localStorage.setItem(LS,JSON.stringify(s));
 const PH='https://placehold.co/500x400/DCE2D7/4A6343?text=TUKO';
-const CATEGORIES=['Teh/Teko','Kopi','Sate-satean','Gorengan','Kudapan','Makanan','Minuman','Snack','Dessert','Lainnya'];
+const CATEGORIES=['Teh/Teko','Sate-satean','Kopi','Gorengan','Kudapan','Makanan','Minuman','Snack','Dessert','Lainnya'];
+
+function defaultShiftName(){
+ const d=new Date();
+ const bulan=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+ return `Shift - ${d.getDate()} ${bulan[d.getMonth()]} ${d.getFullYear()}`;
+}
 
 function seed(){
  return {
   role:'kasir', pin:'1234', shift:null, shiftHistory:[], cashierName:'Kasir 1',
   menu:[
-   {id:1,name:'Teh Poci / Sateko (1 Teko)',price:18000,hpp:7000,cat:'Teh/Teko',badge:true,active:true,img:'https://images.unsplash.com/photo-1571934811356-5cc061b6821f?auto=format&fit=crop&w=500&q=80'},
-   {id:2,name:'Sate-satean Mix',price:25000,hpp:12000,cat:'Sate-satean',badge:false,active:true,img:'https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=500&q=80'},
-   {id:3,name:'Aneka Gorengan (5 pcs)',price:15000,hpp:6000,cat:'Gorengan',badge:false,active:true,img:'https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?auto=format&fit=crop&w=500&q=80'},
-   {id:4,name:'Kopi Tubruk',price:12000,hpp:4000,cat:'Kopi',badge:false,active:true,img:'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=500&q=80'},
-   {id:5,name:'Es Teh Manis',price:8000,hpp:2500,cat:'Teh/Teko',badge:false,active:true,img:'https://images.unsplash.com/photo-1499638673689-79a0b5115d87?auto=format&fit=crop&w=500&q=80'},
-   {id:6,name:'Indomie Rebus Spesial',price:16000,hpp:6500,cat:'Kudapan',badge:false,active:true,img:'https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=500&q=80'},
+   {id:1,name:'Tuko Original (1 Teko)',price:13000,hpp:4000,cat:'Teh/Teko',badge:true,active:true,img:'https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=500'},
+   {id:2,name:'Tuko Leci (1 Teko)',price:16000,hpp:5500,cat:'Teh/Teko',badge:true,active:true,img:'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=500'},
+   {id:3,name:'Tuko Lemon (1 Teko)',price:16000,hpp:5500,cat:'Teh/Teko',badge:true,active:true,img:'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=500'},
+   {id:4,name:'Tuko Beer (1 Teko)',price:18000,hpp:6500,cat:'Teh/Teko',badge:true,active:true,img:'https://images.unsplash.com/photo-1538488881523-230f65e23cb2?w=500'},
+   {id:5,name:'Sate Telur Puyuh',price:4000,hpp:2000,cat:'Sate-satean',badge:false,active:true,img:'https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=500'},
+   {id:6,name:'Sate Ati Ampela',price:3000,hpp:1500,cat:'Sate-satean',badge:false,active:true,img:'https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=500'},
+   {id:7,name:'Sate Usus',price:3000,hpp:1500,cat:'Sate-satean',badge:false,active:true,img:'https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=500'},
   ],
   cart:[], tableNote:'', discount:0, tabs:[], petty:[], trans:[], log:[],
  };
@@ -382,11 +415,10 @@ function logA(a){S.log.unshift({a,ts:now()});save();}
 let view='pos', cat='Semua', search='', cartOpen=false, adminUnlocked=false, pinModal=null, modal=null;
 let menuModal=null;
 let deleteConfirm=null;
-let shiftClosing=null;
-let shiftClosedSummary=null; // {record} — untuk menampilkan layar sukses sebelum reload
-let openShiftError='';
+let sessionModal=null;
+let detailShift=null;
+let historyFilter={date:'',cashier:'',search:''};
 
-// Pagination state
 const PG={
   menu:{page:1,size:5},
   trans:{page:1,size:5},
@@ -441,7 +473,7 @@ function Pager(key,total,totalPages,start,count){
   </div>`;
 }
 
-/* ===== SHIFT HELPERS ===== */
+/* ===== SHIFT SESSION HELPERS ===== */
 function isShiftActive(){return S.shift&&S.shift.status==='active';}
 
 function shiftTrans(){
@@ -457,9 +489,10 @@ function shiftPetty(){
 function shiftCashSales(){
   return shiftTrans().filter(t=>t.method==='cash').reduce((a,t)=>a+t.total,0);
 }
-function shiftNonCashSales(){
-  return shiftTrans().filter(t=>t.method!=='cash').reduce((a,t)=>a+t.total,0);
+function shiftQrisSales(){
+  return shiftTrans().filter(t=>t.method==='qris').reduce((a,t)=>a+t.total,0);
 }
+function shiftNonCashSales(){return shiftQrisSales();}
 function shiftPettyTotal(){
   return shiftPetty().reduce((a,p)=>a+p.amount,0);
 }
@@ -467,108 +500,176 @@ function shiftExpectedCash(){
   if(!isShiftActive())return 0;
   return S.shift.openingCash+shiftCashSales()-shiftPettyTotal();
 }
+function shiftHPP(){
+  return shiftTrans().reduce((a,t)=>a+t.items.reduce((s,i)=>s+i.hpp*i.qty,0),0);
+}
+function shiftNetProfit(){
+  return shiftTrans().reduce((a,t)=>a+t.total,0)-shiftHPP()-shiftPettyTotal();
+}
 
-function openShift(){
-  const el=document.getElementById('shiftOpeningInput');
-  const val=+el.value||0;
-  if(val<0){openShiftError='Modal awal tidak boleh negatif.';render();return;}
-  if(val<=0){openShiftError='Modal awal harus lebih dari 0.';render();return;}
+function transInShift(rec){
+  const start=new Date(rec.startedAt).getTime();
+  const end=new Date(rec.closedAt).getTime();
+  return S.trans.filter(t=>{
+    const ts=new Date(t.tsRaw||t.ts).getTime();
+    return ts>=start && ts<=end;
+  });
+}
+function pettyInShift(rec){
+  const start=new Date(rec.startedAt).getTime();
+  const end=new Date(rec.closedAt).getTime();
+  return S.petty.filter(p=>{
+    const ts=new Date(p.tsRaw||p.ts).getTime();
+    return ts>=start && ts<=end;
+  });
+}
+function shiftRecHPP(rec){
+  return transInShift(rec).reduce((a,t)=>a+t.items.reduce((s,i)=>s+i.hpp*i.qty,0),0);
+}
+function shiftRecCashSales(rec){
+  return transInShift(rec).filter(t=>t.method==='cash').reduce((a,t)=>a+t.total,0);
+}
+function shiftRecQrisSales(rec){
+  return transInShift(rec).filter(t=>t.method==='qris').reduce((a,t)=>a+t.total,0);
+}
+function shiftRecGrossRevenue(rec){
+  return transInShift(rec).reduce((a,t)=>a+t.total,0);
+}
+function shiftRecPettyTotal(rec){
+  return pettyInShift(rec).reduce((a,p)=>a+p.amount,0);
+}
+function shiftRecNetProfit(rec){
+  return shiftRecGrossRevenue(rec)-shiftRecHPP(rec)-shiftRecPettyTotal(rec);
+}
+function shiftRecItemBreakdown(rec){
+  const agg={};
+  transInShift(rec).forEach(t=>t.items.forEach(i=>{
+    if(!agg[i.id])agg[i.id]={name:i.name,cat:i.cat,qty:0,revenue:0,hpp:0};
+    agg[i.id].qty+=i.qty;agg[i.id].revenue+=i.qty*i.price;agg[i.id].hpp+=i.qty*i.hpp;
+  }));
+  return Object.values(agg).map(x=>({...x,profit:x.revenue-x.hpp})).sort((a,b)=>b.qty-a.qty);
+}
+
+/* ===== OPEN SHIFT ===== */
+function showOpenShiftModal(){
+  sessionModal={mode:'open',data:{
+    name:defaultShiftName(),
+    cashier:S.cashierName||'',
+    openingCash:'',
+  }};
+  render();
+}
+function updateOpenShiftField(f,v){
+  if(!sessionModal)return;
+  sessionModal.data[f]=v;
+}
+function submitOpenShift(){
+  if(!sessionModal||sessionModal.mode!=='open')return;
+  const d=sessionModal.data;
+  const name=(d.name||'').trim();
+  const cashier=(d.cashier||'').trim();
+  const openingCash=+d.openingCash||0;
+  if(!name){alert('Nama Shift wajib diisi.');return;}
+  if(!cashier){alert('Nama Kasir wajib diisi.');return;}
+  if(openingCash<=0){alert('Modal Awal Laci harus lebih dari 0.');return;}
   S.shift={
     id:'SHIFT-'+Date.now(),
+    name:name,
     startedAt:nowISO(),
     startedAtLabel:now(),
-    openingCash:val,
-    cashierName:S.cashierName,
+    openingCash:openingCash,
+    cashierName:cashier,
     status:'active',
   };
-  openShiftError='';
-  window._shiftOpenVal='';
-  logA(`Shift dibuka oleh ${S.cashierName} — Modal awal ${rp(val)}`);
+  S.cashierName=cashier;
+  logA(`Shift "${name}" dibuka oleh ${cashier} — Modal awal ${rp(openingCash)}`);
+  sessionModal=null;
   save();render();
 }
 
-function startCloseShift(){
+/* ===== CLOSE SHIFT ===== */
+function showCloseShiftModal(){
   if(!isShiftActive())return;
-  shiftClosing={actualCash:'',note:''};
+  sessionModal={mode:'close',data:{
+    actualCash:'',
+    note:'',
+  }};
   render();
 }
-function cancelCloseShift(){shiftClosing=null;render();}
-function updateClosingField(f,v){if(shiftClosing)shiftClosing[f]=v;}
-function computeVariance(){
-  if(!shiftClosing)return 0;
-  const actual=+shiftClosing.actualCash||0;
-  return actual-shiftExpectedCash();
+function updateCloseField(f,v){
+  if(!sessionModal)return;
+  sessionModal.data[f]=v;
 }
-
-/**
- * KONFIRMASI TUTUP SHIFT
- * Tidak langsung reload. Simpan record ke shiftHistory, lalu tampilkan layar sukses.
- * Baru setelah user klik "Selesai & Muat Ulang", data di-reload dan shift jadi null.
- */
-function confirmCloseShift(){
-  if(!isShiftActive()||!shiftClosing)return;
-  const actual=+shiftClosing.actualCash||0;
+function submitCloseShift(){
+  if(!isShiftActive()||!sessionModal||sessionModal.mode!=='close')return;
+  const actual=+sessionModal.data.actualCash||0;
   const expected=shiftExpectedCash();
   const variance=actual-expected;
-  if(variance!==0 && !(shiftClosing.note||'').trim()){
+  if(variance!==0 && !(sessionModal.data.note||'').trim()){
     alert('Selisih kas terdeteksi. Mohon isi Catatan / Alasan Selisih Kas.');
     return;
   }
-  const closeRec={
+  const rec={
     id:S.shift.id,
+    name:S.shift.name,
+    cashierName:S.shift.cashierName,
     startedAt:S.shift.startedAt,
     startedAtLabel:S.shift.startedAtLabel,
     closedAt:nowISO(),
     closedAtLabel:now(),
-    cashierName:S.shift.cashierName||S.cashierName,
     openingCash:S.shift.openingCash,
     cashSales:shiftCashSales(),
-    nonCashSales:shiftNonCashSales(),
+    qrisSales:shiftQrisSales(),
     pettyCash:shiftPettyTotal(),
     expectedCash:expected,
     actualCash:actual,
     variance:variance,
-    note:(shiftClosing.note||'').trim(),
+    note:(sessionModal.data.note||'').trim(),
+    hpp:shiftHPP(),
+    netProfit:shiftNetProfit(),
+    grossRevenue:shiftTrans().reduce((a,t)=>a+t.total,0),
     transCount:shiftTrans().length,
     pettyCount:shiftPetty().length,
   };
-  // Simpan ke history dulu (tanpa reset shift)
-  S.shiftHistory.unshift(closeRec);
-  logA(`Shift ${closeRec.id} ditutup — Expected ${rp(expected)}, Actual ${rp(actual)}, Variance ${rp(variance)}`);
+  S.shiftHistory.unshift(rec);
+  logA(`Shift "${rec.name}" ditutup — Expected ${rp(expected)}, Actual ${rp(actual)}, Variance ${rp(variance)}`);
   save();
-
-  // Tampilkan layar sukses (bukan langsung reload)
-  shiftClosedSummary=closeRec;
-  shiftClosing=null;
+  sessionModal={mode:'success',data:rec};
   render();
 }
-
-/**
- * Dipanggil saat user klik "Selesai & Muat Ulang" di layar sukses.
- * Baru pada saat ini shift di-reset & view diarahkan ke lock screen.
- */
-function finishShiftClose(){
-  if(!shiftClosedSummary)return;
-  // Reset shift → status null, kasir berikutnya wajib buka shift baru
+function finishCloseShift(){
+  if(!sessionModal||sessionModal.mode!=='success')return;
   S.shift=null;
-  // Bersihkan cart (biar tidak ada sisa transaksi lama)
   S.cart=[];S.discount=0;S.tableNote='';S.tabs=[];
   save();
-  shiftClosedSummary=null;
-  view='pos';
+  sessionModal=null;
   PG.shiftHist.page=1;
   render();
 }
+function closeSessionModal(){sessionModal=null;render();}
 
+/* ===== SHIFT DETAIL ===== */
+function openShiftDetail(id){
+  const rec=S.shiftHistory.find(x=>x.id===id);
+  if(!rec)return;
+  detailShift=rec;render();
+}
+function closeShiftDetail(){detailShift=null;render();}
+
+/* ===== TRANSACTION HELPERS ===== */
 function cartTotal(){return S.cart.reduce((a,i)=>a+i.price*i.qty,0)-S.discount;}
-function addItem(id){const m=S.menu.find(x=>x.id===id);if(!m||m.active===false)return;const c=S.cart.find(x=>x.id===id);if(c)c.qty++;else S.cart.push({...m,qty:1});save();render();}
+function addItem(id){
+ if(!isShiftActive()){alert('Buka shift terlebih dahulu untuk mulai transaksi.');return;}
+ const m=S.menu.find(x=>x.id===id);if(!m||m.active===false)return;
+ const c=S.cart.find(x=>x.id===id);if(c)c.qty++;else S.cart.push({...m,qty:1});save();render();
+}
 function chQty(id,d){const c=S.cart.find(x=>x.id===id);if(!c)return;c.qty+=d;if(c.qty<=0)S.cart=S.cart.filter(x=>x.id!==id);save();render();}
 function checkout(method,cashGiven){
  if(!isShiftActive()){alert('Shift belum dibuka. Buka shift terlebih dahulu.');return;}
  if(!S.cart.length)return;
  const total=cartTotal();
- const t={id:Date.now(),items:[...S.cart],total,method,cash:cashGiven||total,ts:now(),tsRaw:nowISO(),table:S.tableNote,cashier:S.cashierName};
- S.trans.push(t);logA(`Order baru ${rp(total)} (${method})`);
+ const t={id:Date.now(),items:[...S.cart],total,method,cash:cashGiven||total,ts:now(),tsRaw:nowISO(),table:S.tableNote,cashier:S.cashierName,shiftId:S.shift.id,shiftName:S.shift.name};
+ S.trans.push(t);logA(`Order baru ${rp(total)} (${method}) — Shift "${S.shift.name}"`);
  S.cart=[];S.discount=0;S.tableNote='';save();modal={type:'receipt',t};render();
 }
 function saveTab(){
@@ -579,32 +680,36 @@ function saveTab(){
 }
 function resumeTab(id){const tb=S.tabs.find(x=>x.id===id);if(!tb)return;S.cart=[...tb.items];S.tableNote=tb.table;S.tabs=S.tabs.filter(x=>x.id!==id);save();view='pos';cartOpen=true;render();}
 function addPetty(desc,amt){
- if(!isShiftActive()){alert('Shift belum dibuka.');return;}
+ if(!isShiftActive()){alert('Buka shift terlebih dahulu untuk mencatat pengeluaran.');return;}
  S.petty.push({id:Date.now(),desc,amount:amt,ts:now(),tsRaw:nowISO()});logA(`Pengeluaran: ${desc} ${rp(amt)}`);save();render();
 }
+
+/* ===== EXCEL EXPORT ===== */
 function exportExcel(){
  const wb=XLSX.utils.book_new();
  const menuExport=S.menu.map(m=>({id:m.id,name:m.name,cat:m.cat,price:m.price,hpp:m.hpp,margin:m.price-m.hpp,badge:m.badge,active:m.active,img:m.img}));
  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(menuExport),'Menu');
- XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(S.trans.map(t=>({id:t.id,ts:t.ts,table:t.table,cashier:t.cashier||'',method:t.method,items:itemsLabel(t.items),total:t.total,cash:t.cash}))),'Transaksi');
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(S.trans.map(t=>({id:t.id,ts:t.ts,shift:t.shiftName||'-',table:t.table,cashier:t.cashier||'',method:t.method,items:itemsLabel(t.items),total:t.total,cash:t.cash}))),'Transaksi');
  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(salesBreakdown().map((s,i)=>({rank:i+1,nama:s.name,kategori:s.cat,pcs_terjual:s.qty,total_omzet:s.revenue,total_hpp:s.hpp,laba_bersih:s.profit}))),'ItemTerjual');
  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(S.petty),'PettyCash');
  const shiftRows=S.shiftHistory.map(sh=>({
-   id:sh.id,
-   kasir:sh.cashierName||'-',
-   buka:sh.startedAtLabel,
-   tutup:sh.closedAtLabel,
+   id_shift:sh.id,
+   nama_shift:sh.name||'-',
+   nama_kasir:sh.cashierName||'-',
+   tanggal_buka:sh.startedAtLabel,
+   tanggal_tutup:sh.closedAtLabel,
    modal_awal:sh.openingCash,
-   penjualan_cash:sh.cashSales,
-   penjualan_non_cash:sh.nonCashSales,
-   petty_cash:sh.pettyCash,
+   total_penjualan_cash:sh.cashSales,
+   total_qris:sh.qrisSales,
+   total_pengeluaran:sh.pettyCash,
    kas_diharapkan:sh.expectedCash,
-   kas_aktual:sh.actualCash,
-   selisih:sh.variance,
+   uang_fisik:sh.actualCash,
+   selisih_kas:sh.variance,
+   total_hpp:sh.hpp,
+   laba_bersih_shift:sh.netProfit,
    catatan:sh.note||'',
-   jumlah_transaksi:sh.transCount,
  }));
- XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(shiftRows.length?shiftRows:[{info:'Belum ada riwayat shift'}]),'ShiftHistory');
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(shiftRows.length?shiftRows:[{info:'Belum ada riwayat shift'}]),'Laporan_Shift');
  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(S.log),'Log');
  XLSX.writeFile(wb,`TUKO_Data_${Date.now()}.xlsx`);logA('Export data ke Excel');
 }
@@ -640,7 +745,7 @@ function reopenReceipt(id){const t=S.trans.find(x=>x.id===id);if(t){modal={type:
 function Icon(n,cls){return `<i data-lucide="${n}" class="${cls||''}"></i>`;}
 function Logo(size){return `<div class="brand-logo" style="width:${size}px;height:${size}px;font-size:${size*.42}px">T</div>`;}
 
-/* ===== MENU CRUD FUNCTIONS ===== */
+/* ===== MENU CRUD ===== */
 function openAddMenu(){
  menuModal={mode:'add',data:{id:null,name:'',cat:'Teh/Teko',price:'',hpp:'',img:'',badge:false,active:true}};
  render();
@@ -679,8 +784,7 @@ function toggleMenuActive(id){
 }
 function askDeleteMenu(id){
  const m=S.menu.find(x=>x.id===id);if(!m)return;
- deleteConfirm={id,name:m.name};
- render();
+ deleteConfirm={id,name:m.name};render();
 }
 function confirmDeleteMenu(){
  if(!deleteConfirm)return;
@@ -700,73 +804,72 @@ function handleMenuImgInput(val){
  if(p){if(val){p.src=val;p.classList.add('show');p.onerror=()=>{p.src=PH;};}else{p.classList.remove('show');}}
 }
 
-/* ===== NAV ===== */
+/* ===== SHIFT BADGE ===== */
+function ShiftBadge(){
+ if(isShiftActive()){
+  const s=S.shift;
+  return `<div class="shift-badge active" onclick="view='shift';render()" title="Klik untuk kelola shift">
+   <span class="shift-badge-dot"></span>
+   <div class="shift-badge-info">
+    <div class="shift-badge-name">${s.name}</div>
+    <div class="shift-badge-sub">Kasir: ${s.cashierName}</div>
+   </div>
+  </div>`;
+ }
+ return `<div class="shift-badge none" onclick="showOpenShiftModal()" title="Klik untuk buka shift baru">
+  <span class="shift-badge-dot"></span>
+  <div class="shift-badge-info">
+   <div class="shift-badge-name">Belum Buka Shift</div>
+   <div class="shift-badge-sub">Klik untuk mulai sesi kasir</div>
+  </div>
+ </div>`;
+}
+
 function Nav(){
- const items=[['pos','shopping-bag','POS'],['tabs','clipboard-list','Open Tab'],['petty','wallet','Petty Cash'],['admin','shield','Admin & Laporan'],['shift','lock','Shift']];
- const shiftActive=isShiftActive();
+ const items=[['pos','shopping-bag','POS'],['tabs','clipboard-list','Open Tab'],['petty','wallet','Petty Cash'],['admin','shield','Admin & Laporan'],['shift','clock','Kelola Shift']];
  return `<div class="sidebar">
   <div class="brand">${Logo(38)}<span class="brand-name">TUKO</span></div>
   <div class="slogan">Tuangin · Puterin · Nikmatin</div>
-  ${items.map(([v,ic,l])=>{
-    const blocked=!shiftActive && (v==='pos'||v==='tabs'||v==='petty');
-    return `<button ${blocked?'disabled':''} onclick="view='${v}';render()" class="nav-btn ${view===v?'active':''}">${Icon(ic,'w-4 h-4')}<span>${l}</span></button>`;
-  }).join('')}
+  ${ShiftBadge()}
+  ${items.map(([v,ic,l])=>`<button onclick="view='${v}';render()" class="nav-btn ${view===v?'active':''}">${Icon(ic,'w-4 h-4')}<span>${l}</span></button>`).join('')}
   <div class="sidebar-foot role-badge">Role: <b>${S.role}</b><button class="link-btn" onclick="S.role=S.role==='kasir'?'admin':'kasir';render()">ganti</button></div>
-  <div class="sidebar-foot" style="margin-top:8px;padding-top:0;border:none">Kasir bertugas<input value="${S.cashierName}" onchange="S.cashierName=this.value;save()" class="field" style="margin-top:4px;padding:6px 10px;font-size:12px"></div>
  </div>`;
 }
+
+function MobileShiftBadge(){
+ if(isShiftActive()){
+  const s=S.shift;
+  return `<div class="mobile-shift-badge active" onclick="view='shift';render()" title="${s.name} - ${s.cashierName}">
+   <span class="dot"></span>
+   <span style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${s.cashierName}</span>
+  </div>`;
+ }
+ return `<div class="mobile-shift-badge none" onclick="showOpenShiftModal()">
+  <span class="dot"></span>
+  <span>Buka Shift</span>
+ </div>`;
+}
+
 function MobileHeader(){
  const cats=['pos','tabs','petty','admin','shift'],labels=['POS','Tab','Kas','Admin','Shift'];
- const shiftActive=isShiftActive();
  return `<div class="mobile-header">
   <div class="mobile-top">
    <div class="mobile-brand">${Logo(34)}<div><div class="brand-name" style="font-size:17px">TUKO</div><div class="slogan-top">Tuangin · Puterin · Nikmatin</div></div></div>
-   <div class="mobile-icons">${Icon('search','w-5 h-5')}${Icon('user','w-5 h-5')}</div>
+   ${MobileShiftBadge()}
   </div>
-  <div class="mobile-cats">${cats.map((v,i)=>{
-    const blocked=!shiftActive && (v==='pos'||v==='tabs'||v==='petty');
-    return `<button ${blocked?'disabled':''} onclick="view='${v}';render()" class="chip ${view===v?'active':''}" style="${blocked?'opacity:.4;cursor:not-allowed':''}">${labels[i]}</button>`;
-  }).join('')}</div>
- </div>`;
-}
-
-/* ===== SHIFT LOCK SCREEN ===== */
-function ShiftLockScreen(){
- return `<div class="shift-lock-screen">
-  <div class="shift-lock-box">
-   <div class="shift-lock-icon">${Icon('lock','w-8 h-8')}</div>
-   <div class="shift-lock-title">Shift Belum Dibuka</div>
-   <div class="shift-lock-sub">Masukkan Modal Awal Laci untuk memulai shift.<br>Kasir: <b>${S.cashierName}</b></div>
-   <div class="shift-lock-field">
-    <label>Modal Awal Laci (Rp)</label>
-    <input id="shiftOpeningInput" type="number" min="0" placeholder="0" value="${window._shiftOpenVal||''}" oninput="window._shiftOpenVal=this.value">
-   </div>
-   ${openShiftError?`<div style="color:var(--red);font-size:12.5px;font-weight:600;margin-bottom:12px;text-align:left">${openShiftError}</div>`:''}
-   <button onclick="openShift()" class="shift-open-btn">${Icon('play-circle','w-5 h-5')} Buka Shift Sekarang</button>
-   <div class="shift-lock-foot">Tanggal: ${now()}</div>
-  </div>
- </div>`;
-}
-
-/* ===== SHIFT BANNER ===== */
-function ShiftBanner(){
- if(!isShiftActive())return '';
- return `<div class="shift-banner">
-  <div class="shift-banner-left">${Icon('clock','w-4 h-4')} Shift Aktif · ${S.shift.startedAtLabel} · ${S.shift.cashierName}</div>
-  <div class="shift-banner-right">
-   <span class="shift-banner-pill">Modal: ${rp(S.shift.openingCash)}</span>
-   <span class="shift-banner-pill">Cash: ${rp(shiftCashSales())}</span>
-   <span class="shift-banner-pill">Kas: ${rp(shiftExpectedCash())}</span>
-   <button onclick="view='shift';render()" style="background:var(--sage);color:#fff;border-radius:9px;padding:6px 12px;font-weight:700;font-size:11.5px">Kelola Shift</button>
-  </div>
+  <div class="mobile-cats">${cats.map((v,i)=>`<button onclick="view='${v}';render()" class="chip ${view===v?'active':''}">${labels[i]}</button>`).join('')}</div>
  </div>`;
 }
 
 function ProductGrid(){
  const cats=['Semua',...new Set(S.menu.filter(m=>m.active!==false).map(m=>m.cat))];
  const items=S.menu.filter(m=>m.active!==false && (cat==='Semua'||m.cat===cat)&&m.name.toLowerCase().includes(search.toLowerCase()));
+ const noShift=!isShiftActive();
  return `<div class="content">
-  ${ShiftBanner()}
+  ${noShift?`<div style="background:var(--amber-l);border:1px solid #ffe082;border-radius:14px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+   <div style="color:var(--amber);font-weight:700;display:flex;align-items:center;gap:8px;flex:1;min-width:200px">${Icon('info','w-4 h-4')} Belum ada shift aktif. Buka shift dulu untuk mulai transaksi.</div>
+   <button onclick="showOpenShiftModal()" style="background:var(--amber);color:#fff;border-radius:10px;padding:9px 16px;font-weight:700;font-size:12.5px;display:flex;align-items:center;gap:6px">${Icon('play-circle','w-4 h-4')} Buka Shift</button>
+  </div>`:''}
   <input class="search-box" value="${search}" oninput="search=this.value;render()" placeholder="Cari menu...">
   <div class="chips">${cats.map(c=>`<button onclick="cat='${c}';render()" class="chip ${cat===c?'active':''}">${c}</button>`).join('')}</div>
   <div class="product-grid">
@@ -775,17 +878,18 @@ function ProductGrid(){
     <div class="product-img-wrap"><img src="${m.img}" onerror="this.onerror=null;this.src='${PH}'" alt="${m.name}"></div>
     <div class="product-body">
      <div class="product-name">${m.name}</div>
-     <div class="product-foot"><span class="product-price">${rp(m.price)}</span><button onclick="addItem(${m.id})" class="add-btn">${Icon('plus','w-4 h-4')}</button></div>
+     <div class="product-foot"><span class="product-price">${rp(m.price)}</span><button onclick="addItem(${m.id})" class="add-btn" ${noShift?'disabled title="Buka shift dulu"':''}>${Icon('plus','w-4 h-4')}</button></div>
     </div></div>`).join(''):`<div style="grid-column:1/-1;text-align:center;color:#b3b0a4;padding:40px 0">Tidak ada menu tersedia.</div>`}
   </div>
  </div>`;
 }
+
 function CartPanel(mobile){
  const total=cartTotal();
  const shiftOK=isShiftActive();
  const body=`
   <div class="cart-header"><span class="cart-title">Keranjang</span>${mobile?`<button onclick="cartOpen=false;render()" class="icon-btn">${Icon('x','w-5 h-5')}</button>`:''}</div>
-  <div class="cart-customer"><input class="field" value="${S.tableNote}" oninput="S.tableNote=this.value" placeholder="Nama/Meja pelanggan"></div>
+  <div class="cart-customer"><input class="field" value="${S.tableNote}" oninput="S.tableNote=this.value" placeholder="Nama/Meja pelanggan" ${!shiftOK?'disabled':''}></div>
   <div class="cart-items">
    ${S.cart.length?S.cart.map(i=>`<div class="cart-item">
     <div><div class="ci-name">${i.name}</div><div class="ci-price">${rp(i.price)}</div></div>
@@ -793,18 +897,19 @@ function CartPanel(mobile){
    </div>`).join(''):`<div class="cart-empty">Keranjang kosong</div>`}
   </div>
   <div class="cart-footer">
-   <input type="number" class="field" value="${S.discount}" oninput="S.discount=+this.value||0" placeholder="Diskon (Rp)">
+   <input type="number" class="field" value="${S.discount}" oninput="S.discount=+this.value||0" placeholder="Diskon (Rp)" ${!shiftOK?'disabled':''}>
    <div class="row-line"><span>Subtotal</span><span>${rp(S.cart.reduce((a,i)=>a+i.price*i.qty,0))}</span></div>
    <div class="row-total"><span>Total</span><span>${rp(total)}</span></div>
    <div class="cart-actions">
     <button onclick="saveTab()" class="btn-outline" ${!shiftOK?'disabled':''}>Simpan Tab</button>
     <button onclick="${shiftOK?"modal={type:'pay'};render()":""}" class="btn-primary" ${!shiftOK?'disabled':''}>Bayar Sekarang</button>
    </div>
-   ${!shiftOK?`<div style="font-size:11.5px;color:var(--red);text-align:center">Buka shift terlebih dahulu</div>`:''}
+   ${!shiftOK?`<div style="font-size:11.5px;color:var(--amber);text-align:center;font-weight:600">Buka shift dulu untuk transaksi</div>`:''}
   </div>`;
  return mobile?`<div class="overlay" onclick="if(event.target===this){cartOpen=false;render()}"><div class="drawer">${body}</div></div>`
  :`<div class="cart-panel">${body}</div>`;
 }
+
 function MobileCartBar(){
  if(!S.cart.length||cartOpen)return'';
  const n=S.cart.reduce((a,i)=>a+i.qty,0);
@@ -813,6 +918,7 @@ function MobileCartBar(){
   <button onclick="cartOpen=true;render()" class="mcb-pay">Bayar / Pay</button>
  </div>`;
 }
+
 function PayModal(){
  const total=cartTotal();const quick=[10000,20000,50000,100000];
  return `<div class="overlay center" onclick="if(event.target===this){modal=null;render()}">
@@ -826,10 +932,11 @@ function PayModal(){
    <button onclick="modal=null;render()" class="cancel-link">Batal</button>
   </div></div>`;
 }
+
 function ReceiptModal(t){
  return `<div class="overlay center" onclick="if(event.target===this){modal=null;render()}">
   <div class="modal-box receipt">
-   <div class="receipt-head"><b>TUKO</b><div>Tuangin·Puterin·Nikmatin</div><div>${t.ts}</div><div>Kasir: ${t.cashier||'-'} · Meja: ${t.table||'-'}</div></div>
+   <div class="receipt-head"><b>TUKO</b><div>Tuangin·Puterin·Nikmatin</div><div>${t.ts}</div><div>Kasir: ${t.cashier||'-'} · Meja: ${t.table||'-'}</div>${t.shiftName?`<div style="font-size:10.5px;color:#8a8a80;margin-top:2px">${t.shiftName}</div>`:''}</div>
    <div class="dashed"></div>
    ${t.items.map(i=>`<div class="receipt-line"><span>${i.qty}x ${i.name}</span><span>${rp(i.price*i.qty)}</span></div>`).join('')}
    <div class="dashed"></div>
@@ -841,6 +948,7 @@ function ReceiptModal(t){
    <button onclick="modal=null;render()" class="close-link">Tutup</button>
   </div></div>`;
 }
+
 function PinModal(){
  return `<div class="overlay center">
   <div class="modal-box pin-box">
@@ -849,9 +957,9 @@ function PinModal(){
    <div class="pin-actions"><button onclick="pinModal=null;render()" class="btn-outline">Batal</button><button onclick="checkPin()" class="btn-primary">Buka</button></div>
   </div></div>`;
 }
+
 function TabsView(){
  return `<div class="content">
-  ${ShiftBanner()}
   <div class="section-title">Open Tab / Bayar Nanti</div>
   <div class="tabs-grid">
    ${S.tabs.length?S.tabs.map(t=>`<div class="tab-card">
@@ -860,64 +968,71 @@ function TabsView(){
    </div>`).join(''):`<div class="cart-empty">Belum ada tab terbuka.</div>`}
   </div></div>`;
 }
+
 function PettyView(){
  const list=isShiftActive()?shiftPetty():S.petty;
+ const active=isShiftActive();
  return `<div class="content" style="max-width:560px">
-  ${ShiftBanner()}
   <div class="section-title">Pengeluaran Kasir (Petty Cash)</div>
+  ${!active?`<div style="background:var(--amber-l);border:1px solid #ffe082;border-radius:14px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+   <div style="color:var(--amber);font-weight:700;display:flex;align-items:center;gap:8px;flex:1;min-width:200px">${Icon('info','w-4 h-4')} Buka shift dulu untuk mencatat pengeluaran shift.</div>
+   <button onclick="showOpenShiftModal()" style="background:var(--amber);color:#fff;border-radius:10px;padding:9px 16px;font-weight:700;font-size:12.5px">Buka Shift</button>
+  </div>`:''}
   <div class="petty-form">
-   <input id="pd" class="field" placeholder="Keterangan (es batu, gas, parkir...)">
-   <input id="pa" type="number" class="field" placeholder="Nominal">
-   <button onclick="const d=document.getElementById('pd').value,a=+document.getElementById('pa').value;if(d&&a)addPetty(d,a)">${Icon('plus','w-4 h-4')}</button>
+   <input id="pd" class="field" placeholder="Keterangan (es batu, gas, parkir...)" ${!active?'disabled':''}>
+   <input id="pa" type="number" class="field" placeholder="Nominal" ${!active?'disabled':''}>
+   <button onclick="const d=document.getElementById('pd').value,a=+document.getElementById('pa').value;if(d&&a)addPetty(d,a)" ${!active?'disabled':''}>${Icon('plus','w-4 h-4')}</button>
   </div>
   <div class="petty-list">
    ${list.length?list.slice().reverse().map(p=>`<div class="petty-item"><span>${p.desc}<div class="petty-desc-meta">${p.ts}</div></span><span style="font-weight:700">-${rp(p.amount)}</span></div>`).join(''):`<div class="cart-empty">Belum ada pengeluaran.</div>`}
   </div>
-  <div class="total-line"><span>Total Pengeluaran ${isShiftActive()?'(Shift Ini)':''}</span><span>${rp(isShiftActive()?shiftPettyTotal():pettyTotal())}</span></div>
+  <div class="total-line"><span>Total Pengeluaran ${active?'(Shift Ini)':''}</span><span>${rp(active?shiftPettyTotal():pettyTotal())}</span></div>
  </div>`;
 }
 
-/* ===== SHIFT VIEW ===== */
 function ShiftView(){
  if(!isShiftActive()){
-  return `<div class="content" style="max-width:480px">
-   <div class="section-title">Shift</div>
-   <div class="card-plain" style="text-align:center;padding:36px 24px">
-    <div style="width:64px;height:64px;border-radius:50%;background:var(--olive-l);color:var(--sage);display:flex;align-items:center;justify-content:center;margin:0 auto 14px">${Icon('lock','w-7 h-7')}</div>
-    <div style="font-weight:700;font-size:16px;margin-bottom:6px">Shift Belum Dibuka</div>
-    <div style="font-size:12.5px;color:#8a8a80;margin-bottom:18px">Buka shift untuk mulai melayani transaksi.</div>
-    <button onclick="view='pos';render()" class="shift-btn">Ke Halaman Buka Shift</button>
+  return `<div class="content" style="max-width:520px">
+   <div class="section-title">Kelola Shift</div>
+   <div class="empty-state-card">
+    <div class="empty-state-icon">${Icon('clock','w-7 h-7')}</div>
+    <div class="empty-state-title">Belum Ada Shift Aktif</div>
+    <div class="empty-state-sub">Buka shift baru untuk mulai sesi kasir hari ini. Semua transaksi akan terikat otomatis ke shift tersebut.</div>
+    <button onclick="showOpenShiftModal()" class="session-btn" style="max-width:280px;margin:18px auto 0;display:flex">
+     ${Icon('plus-circle','w-4 h-4')} Buka Shift Baru
+    </button>
    </div>
   </div>`;
  }
  const expected=shiftExpectedCash();
- const openingTime=new Date(S.shift.startedAt);
+ const s=S.shift;
+ const openingTime=new Date(s.startedAt);
  const nowTime=new Date();
  const durMin=Math.floor((nowTime-openingTime)/60000);
  const durStr=durMin<60?`${durMin} menit`:`${Math.floor(durMin/60)}j ${durMin%60}m`;
  return `<div class="content" style="max-width:720px">
   <div class="section-title">Shift Aktif</div>
-  <div class="card-plain" style="margin-bottom:16px">
+  <div class="card-plain" style="margin-bottom:16px;border-left:4px solid var(--green)">
    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px">
     <div>
-     <div style="font-size:11.5px;color:#a3a390">ID SHIFT</div>
-     <div style="font-weight:700;font-size:14px">${S.shift.id}</div>
+     <div style="display:inline-flex;align-items:center;gap:6px;background:var(--green-l);color:var(--green);padding:4px 10px;border-radius:999px;font-size:10.5px;font-weight:700;margin-bottom:8px">
+      <span style="width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 1.8s infinite"></span> AKTIF
+     </div>
+     <div style="font-weight:800;font-size:17px;color:var(--ink);margin-bottom:3px">${s.name}</div>
+     <div style="font-size:12.5px;color:#8a8a80">Kasir: <b>${s.cashierName}</b></div>
     </div>
     <div style="text-align:right">
-     <div style="font-size:11.5px;color:#a3a390">DURASI</div>
+     <div style="font-size:11px;color:#a3a390">DURASI</div>
      <div style="font-weight:700;font-size:14px">${durStr}</div>
-    </div>
-    <div style="text-align:right">
-     <div style="font-size:11.5px;color:#a3a390">MULAI</div>
-     <div style="font-weight:700;font-size:14px">${S.shift.startedAtLabel}</div>
+     <div style="font-size:11px;color:#a3a390;margin-top:4px">${s.startedAtLabel}</div>
     </div>
    </div>
-   <div class="recon-block" style="background:var(--cream);margin-bottom:0">
-    <div class="recon-line"><span>Modal Awal Laci</span><span>${rp(S.shift.openingCash)}</span></div>
-    <div class="recon-line"><span>Penjualan Tunai (Cash)</span><span>+${rp(shiftCashSales())}</span></div>
-    <div class="recon-line"><span>Penjualan Non-Tunai (QRIS)</span><span>${rp(shiftNonCashSales())}</span></div>
-    <div class="recon-line"><span>Petty Cash (Pengeluaran)</span><span>-${rp(shiftPettyTotal())}</span></div>
-    <div class="recon-line total"><span>Kas Diharapkan</span><span>${rp(expected)}</span></div>
+   <div class="session-info-block" style="margin-bottom:0">
+    <div class="session-info-line"><span>Modal Awal Laci</span><span>${rp(s.openingCash)}</span></div>
+    <div class="session-info-line"><span>Penjualan Tunai (Cash)</span><span>+${rp(shiftCashSales())}</span></div>
+    <div class="session-info-line"><span>Penjualan QRIS</span><span>${rp(shiftQrisSales())}</span></div>
+    <div class="session-info-line"><span>Petty Cash (Pengeluaran)</span><span>-${rp(shiftPettyTotal())}</span></div>
+    <div class="session-info-line total"><span>Kas Diharapkan</span><span>${rp(expected)}</span></div>
    </div>
   </div>
   <div class="section-title" style="font-size:14px;margin-bottom:10px">Aktivitas Shift Ini</div>
@@ -925,119 +1040,304 @@ function ShiftView(){
    <div class="stat-card"><div class="stat-label">Transaksi</div><div class="stat-value">${shiftTrans().length}</div></div>
    <div class="stat-card"><div class="stat-label">Petty Cash</div><div class="stat-value">${shiftPetty().length}</div></div>
    <div class="stat-card"><div class="stat-label">Cash Sales</div><div class="stat-value">${rp(shiftCashSales())}</div></div>
-   <div class="stat-card"><div class="stat-label">Non-Cash Sales</div><div class="stat-value">${rp(shiftNonCashSales())}</div></div>
+   <div class="stat-card"><div class="stat-label">QRIS Sales</div><div class="stat-value">${rp(shiftQrisSales())}</div></div>
   </div>
-  <button onclick="startCloseShift()" class="shift-close">${Icon('lock','w-4 h-4')} Tutup Shift & Rekonsiliasi Kas</button>
+  <button onclick="showCloseShiftModal()" class="shift-close">${Icon('lock','w-4 h-4')} Tutup Shift & Rekonsiliasi Kas</button>
  </div>`;
 }
 
-/* ===== CLOSING MODAL ===== */
-function ClosingShiftModal(){
- if(!shiftClosing)return '';
+function OpenShiftModal(){
+ const d=sessionModal.data;
+ return `<div class="overlay center" onclick="if(event.target===this)closeSessionModal()">
+  <div class="session-modal">
+   <div class="session-head">
+    <button onclick="closeSessionModal()" class="close-x">${Icon('x','w-4 h-4')}</button>
+    <div class="session-head-icon">${Icon('play-circle','w-6 h-6')}</div>
+    <div class="session-head-title">Buka Shift Baru</div>
+    <div class="session-head-sub">Mulai sesi kasir hari ini. Semua transaksi akan terikat otomatis ke shift ini.</div>
+   </div>
+   <div class="session-body">
+    <div class="session-input-block">
+     <label>Nama Shift / Tanggal <span style="color:var(--red)">*</span></label>
+     <input type="text" class="session-text-input" value="${d.name}" oninput="updateOpenShiftField('name',this.value)" placeholder="Shift - 27 September 2026">
+    </div>
+    <div class="session-input-block">
+     <label>Nama Kasir <span style="color:var(--red)">*</span></label>
+     <input type="text" class="session-text-input" value="${d.cashier}" oninput="updateOpenShiftField('cashier',this.value)" placeholder="Contoh: Budi / Kasir 1">
+    </div>
+    <div class="session-input-block">
+     <label>Modal Awal Laci (Rp) <span style="color:var(--red)">*</span></label>
+     <input type="number" min="0" value="${d.openingCash}" oninput="updateOpenShiftField('openingCash',this.value)" placeholder="0">
+    </div>
+    <div style="padding:12px 14px;background:var(--olive-l);border-radius:12px;font-size:12px;color:var(--sage);font-weight:600;display:flex;align-items:flex-start;gap:8px;margin-top:6px">
+     ${Icon('info','w-4 h-4')} Setelah shift dibuka, semua transaksi (tunai, QRIS) dan pengeluaran petty cash akan tercatat ke shift ini.
+    </div>
+   </div>
+   <div class="session-foot">
+    <button onclick="closeSessionModal()" class="session-btn secondary">Batal</button>
+    <button onclick="submitOpenShift()" class="session-btn">${Icon('play-circle','w-4 h-4')} Mulai Shift</button>
+   </div>
+  </div>
+ </div>`;
+}
+
+function CloseShiftModal(){
+ const s=S.shift;
  const expected=shiftExpectedCash();
- const actual=+shiftClosing.actualCash||0;
+ const actual=+sessionModal.data.actualCash||0;
  const variance=actual-expected;
  let varCls='ok';
- if(variance!==0){
-   varCls=Math.abs(variance)>50000?'bad':'warn';
- }
+ if(variance!==0){varCls=Math.abs(variance)>50000?'bad':'warn';}
  const needNote=variance!==0;
- return `<div class="overlay center" onclick="if(event.target===this)cancelCloseShift()">
-  <div class="closing-modal">
-   <h3>${Icon('clipboard-check','w-5 h-5')} Rekonsiliasi Tutup Shift</h3>
-   <div class="sub">Hitung uang fisik di laci, lalu masukkan jumlahnya untuk verifikasi.</div>
-
-   <div class="recon-block">
-    <div class="recon-line"><span>Modal Awal</span><span>${rp(S.shift.openingCash)}</span></div>
-    <div class="recon-line"><span>Penjualan Tunai</span><span>+${rp(shiftCashSales())}</span></div>
-    <div class="recon-line"><span>Petty Cash</span><span>-${rp(shiftPettyTotal())}</span></div>
-    <div class="recon-line total"><span>Kas Diharapkan</span><span>${rp(expected)}</span></div>
+ return `<div class="overlay center" onclick="if(event.target===this)closeSessionModal()">
+  <div class="session-modal">
+   <div class="session-head" style="background:linear-gradient(135deg,#8B4A4A 0%,#A85B5B 100%)">
+    <button onclick="closeSessionModal()" class="close-x">${Icon('x','w-4 h-4')}</button>
+    <div class="session-head-icon">${Icon('clipboard-check','w-6 h-6')}</div>
+    <div class="session-head-title">Tutup Shift & Rekonsiliasi</div>
+    <div class="session-head-sub">${s.name} · Kasir: ${s.cashierName}</div>
    </div>
-
-   <div class="recon-input-block">
-    <label>Uang Fisik di Laci (Rp) <span style="color:var(--red)">*</span></label>
-    <input type="number" min="0" value="${shiftClosing.actualCash}" oninput="updateClosingField('actualCash',this.value);render()" placeholder="0" autofocus>
-   </div>
-
-   <div class="variance-box ${varCls}">
-    <div class="variance-label">Selisih Kas</div>
-    <div class="variance-value">${variance>0?'+':''}${rp(variance)}</div>
-    <div class="variance-status">${variance===0?'✓ Kas Sesuai':(variance>0?'⚠ Kas Berlebih':'⚠ Kas Kurang')}</div>
-   </div>
-
-   ${needNote?`
-    <div class="recon-input-block">
-     <label>Catatan / Alasan Selisih Kas <span style="color:var(--red)">*</span></label>
-     <textarea placeholder="Contoh: Uang kembalian kurang, tip, kesalahan input, dll." oninput="updateClosingField('note',this.value)">${shiftClosing.note||''}</textarea>
+   <div class="session-body">
+    <div class="session-info-block">
+     <div class="session-info-line"><span>Waktu Buka</span><span>${s.startedAtLabel}</span></div>
+     <div class="session-info-line"><span>Waktu Tutup</span><span>${now()}</span></div>
+     <div class="session-info-line"><span>Jumlah Transaksi</span><span>${shiftTrans().length}</span></div>
     </div>
-   `:''}
-
-   <div class="form-actions">
-    <button onclick="cancelCloseShift()" class="btn-cancel">Batal</button>
-    <button onclick="confirmCloseShift()" class="btn-save" ${needNote&&!(shiftClosing.note||'').trim()?'disabled style="opacity:.5;cursor:not-allowed"':''}>Konfirmasi Tutup Shift</button>
+    <div class="session-info-block">
+     <div class="session-info-line"><span>Modal Awal</span><span>${rp(s.openingCash)}</span></div>
+     <div class="session-info-line"><span>Penjualan Tunai</span><span>+${rp(shiftCashSales())}</span></div>
+     <div class="session-info-line"><span>Penjualan QRIS</span><span>${rp(shiftQrisSales())}</span></div>
+     <div class="session-info-line"><span>Petty Cash</span><span>-${rp(shiftPettyTotal())}</span></div>
+     <div class="session-info-line total"><span>Kas Diharapkan</span><span>${rp(expected)}</span></div>
+    </div>
+    <div class="session-input-block">
+     <label>Uang Fisik di Laci (Rp) <span style="color:var(--red)">*</span></label>
+     <input type="number" min="0" value="${sessionModal.data.actualCash}" oninput="updateCloseField('actualCash',this.value);render()" placeholder="0" autofocus>
+    </div>
+    <div class="session-variance ${varCls}">
+     <div class="lbl">Selisih Kas</div>
+     <div class="val">${variance>0?'+':''}${rp(variance)}</div>
+     <div class="st">${variance===0?'✓ Kas Sesuai':(variance>0?'⚠ Kas Berlebih':'⚠ Kas Kurang')}</div>
+    </div>
+    ${needNote?`
+     <div class="session-input-block">
+      <label>Catatan / Alasan Selisih Kas <span style="color:var(--red)">*</span></label>
+      <textarea placeholder="Contoh: Uang kembalian kurang, tip, kesalahan input, dll." oninput="updateCloseField('note',this.value)">${sessionModal.data.note||''}</textarea>
+     </div>
+    `:''}
+   </div>
+   <div class="session-foot">
+    <button onclick="closeSessionModal()" class="session-btn secondary">Batal</button>
+    <button onclick="submitCloseShift()" class="session-btn" ${needNote&&!(sessionModal.data.note||'').trim()?'disabled':''}>${Icon('lock','w-4 h-4')} Konfirmasi Tutup Shift</button>
    </div>
   </div>
  </div>`;
 }
 
-/* ===== SHIFT CLOSED SUCCESS SCREEN ===== */
-function ShiftClosedSuccessModal(){
- if(!shiftClosedSummary)return '';
- const r=shiftClosedSummary;
+function ShiftSuccessModal(){
+ const r=sessionModal.data;
  const vCls=r.variance===0?'ok':(Math.abs(r.variance)>50000?'bad':'warn');
  const vStatus=r.variance===0?'✓ Kas Sesuai':(r.variance>0?'⚠ Kas Berlebih':'⚠ Kas Kurang');
  return `<div class="overlay center">
-  <div class="shift-success-modal">
-   <div class="shift-success-head">
-    <div class="shift-success-icon">${Icon('check-circle','w-8 h-8')}</div>
-    <div class="shift-success-title">Shift Berhasil Ditutup</div>
-    <div class="shift-success-sub">${r.id} · Ditutup ${r.closedAtLabel}</div>
+  <div class="session-modal">
+   <div class="session-head" style="background:linear-gradient(135deg,#4A6343 0%,#5B7553 100%)">
+    <div class="session-head-icon" style="background:rgba(255,255,255,.22)">${Icon('check-circle','w-7 h-7')}</div>
+    <div class="session-head-title">Shift Berhasil Ditutup</div>
+    <div class="session-head-sub">${r.name} · ${r.closedAtLabel}</div>
    </div>
-   <div class="shift-success-body">
-    <div class="recon-block">
-     <div class="recon-line"><span>Kasir</span><span>${r.cashierName||'-'}</span></div>
-     <div class="recon-line"><span>Waktu Buka</span><span>${r.startedAtLabel}</span></div>
-     <div class="recon-line"><span>Waktu Tutup</span><span>${r.closedAtLabel}</span></div>
+   <div class="session-body">
+    <div class="session-info-block">
+     <div class="session-info-line"><span>Kasir</span><span>${r.cashierName||'-'}</span></div>
+     <div class="session-info-line"><span>Waktu Buka</span><span>${r.startedAtLabel}</span></div>
+     <div class="session-info-line"><span>Waktu Tutup</span><span>${r.closedAtLabel}</span></div>
+     <div class="session-info-line"><span>Transaksi</span><span>${r.transCount}</span></div>
     </div>
-    <div class="recon-block">
-     <div class="recon-line"><span>Modal Awal</span><span>${rp(r.openingCash)}</span></div>
-     <div class="recon-line"><span>Penjualan Tunai (Cash)</span><span>+${rp(r.cashSales)}</span></div>
-     <div class="recon-line"><span>Penjualan Non-Tunai</span><span>${rp(r.nonCashSales)}</span></div>
-     <div class="recon-line"><span>Petty Cash</span><span>-${rp(r.pettyCash)}</span></div>
-     <div class="recon-line total"><span>Kas Diharapkan</span><span>${rp(r.expectedCash)}</span></div>
-     <div class="recon-line"><span>Uang Fisik di Laci</span><span style="font-weight:700">${rp(r.actualCash)}</span></div>
+    <div class="session-info-block">
+     <div class="session-info-line"><span>Modal Awal</span><span>${rp(r.openingCash)}</span></div>
+     <div class="session-info-line"><span>Penjualan Tunai (Cash)</span><span>+${rp(r.cashSales)}</span></div>
+     <div class="session-info-line"><span>Penjualan QRIS</span><span>${rp(r.qrisSales)}</span></div>
+     <div class="session-info-line"><span>Petty Cash</span><span>-${rp(r.pettyCash)}</span></div>
+     <div class="session-info-line total"><span>Kas Diharapkan</span><span>${rp(r.expectedCash)}</span></div>
+     <div class="session-info-line"><span>Uang Fisik di Laci</span><span style="font-weight:700">${rp(r.actualCash)}</span></div>
     </div>
-
-    <div class="shift-success-variance ${vCls}">
+    <div class="session-variance ${vCls}">
      <div class="lbl">Selisih Kas</div>
      <div class="val">${r.variance>0?'+':''}${rp(r.variance)}</div>
-     <div style="font-size:12px;font-weight:600;margin-top:4px">${vStatus}</div>
+     <div class="st">${vStatus}</div>
     </div>
-
-    ${r.note?`<div class="shift-success-note">📝 <b>Catatan:</b> ${r.note}</div>`:''}
-
-    <div style="margin-top:16px;padding:12px 14px;background:var(--olive-l);border-radius:12px;font-size:12px;color:var(--sage);font-weight:600;text-align:center">
-     ${Icon('info','w-4 h-4')} Klik "Selesai & Muat Ulang" untuk memulai sesi kasir berikutnya.
+    ${r.note?`<div style="padding:10px 14px;background:var(--amber-l);border-left:3px solid var(--amber);border-radius:8px;font-size:12.5px;color:#6b5b1f;font-style:italic;margin-bottom:14px">📝 <b>Catatan:</b> ${r.note}</div>`:''}
+    <div style="padding:12px 14px;background:var(--olive-l);border-radius:12px;font-size:12px;color:var(--sage);font-weight:600;text-align:center">
+     ${Icon('info','w-4 h-4')} Klik "Selesai" untuk mengakhiri sesi kasir ini.
     </div>
    </div>
-   <div class="shift-success-foot">
-    <button onclick="finishShiftClose()" class="shift-success-btn">
-     ${Icon('refresh-cw','w-4 h-4')} Selesai & Muat Ulang
-    </button>
+   <div class="session-foot">
+    <button onclick="finishCloseShift()" class="session-btn">${Icon('refresh-cw','w-4 h-4')} Selesai</button>
    </div>
   </div>
  </div>`;
 }
 
-/* ===== MENU MANAGEMENT VIEW ===== */
+function ShiftHistorySection(){
+ const allHist=S.shiftHistory;
+ const filtered=allHist.filter(sh=>{
+   if(historyFilter.date){
+     const d=new Date(sh.closedAt);
+     const yyyy=d.getFullYear();
+     const mm=String(d.getMonth()+1).padStart(2,'0');
+     const dd=String(d.getDate()).padStart(2,'0');
+     if(`${yyyy}-${mm}-${dd}`!==historyFilter.date) return false;
+   }
+   if(historyFilter.cashier && !(sh.cashierName||'').toLowerCase().includes(historyFilter.cashier.toLowerCase())) return false;
+   if(historyFilter.search){
+     const q=historyFilter.search.toLowerCase();
+     const hay=(sh.name+' '+(sh.cashierName||'')+' '+sh.id).toLowerCase();
+     if(!hay.includes(q)) return false;
+   }
+   return true;
+ });
+ const pg=pgSlice(filtered,'shiftHist');
+ const totalLaba=allHist.reduce((a,sh)=>a+(sh.netProfit||0),0);
+ const totalCash=allHist.reduce((a,sh)=>a+(sh.cashSales||0),0);
+ const totalQris=allHist.reduce((a,sh)=>a+(sh.qrisSales||0),0);
+ const totalSelisih=allHist.reduce((a,sh)=>a+(sh.variance||0),0);
+
+ return `
+ <div class="section-title" style="font-size:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+  <span>Riwayat Shift / Laporan Harian</span>
+  <span style="font-size:11.5px;color:#a3a390;font-weight:500">${allHist.length} shift tersimpan</span>
+ </div>
+
+ <div class="stat-grid" style="margin-bottom:14px">
+  <div class="stat-card metric-accent">
+   <div class="stat-label">Total Laba Bersih (Semua Shift)</div>
+   <div class="stat-value">${rp(totalLaba)}</div>
+   <div class="metric-sub">Akumulasi dari ${allHist.length} shift selesai</div>
+  </div>
+  <div class="stat-card">
+   <div class="stat-label">Total Penjualan Tunai</div>
+   <div class="stat-value">${rp(totalCash)}</div>
+  </div>
+  <div class="stat-card">
+   <div class="stat-label">Total Penjualan QRIS</div>
+   <div class="stat-value">${rp(totalQris)}</div>
+  </div>
+  <div class="stat-card">
+   <div class="stat-label">Akumulasi Selisih Kas</div>
+   <div class="stat-value" style="color:${totalSelisih===0?'var(--green)':(totalSelisih>0?'var(--amber)':'var(--red)')}">${totalSelisih>0?'+':''}${rp(totalSelisih)}</div>
+  </div>
+ </div>
+
+ <div class="filter-bar">
+  <input type="date" value="${historyFilter.date}" oninput="historyFilter.date=this.value;PG.shiftHist.page=1;render()" placeholder="Filter tanggal">
+  <input type="text" value="${historyFilter.cashier}" oninput="historyFilter.cashier=this.value;PG.shiftHist.page=1;render()" placeholder="Filter nama kasir...">
+  <input type="text" value="${historyFilter.search}" oninput="historyFilter.search=this.value;PG.shiftHist.page=1;render()" placeholder="Cari nama shift / ID...">
+  ${(historyFilter.date||historyFilter.cashier||historyFilter.search)?`<button onclick="historyFilter={date:'',cashier:'',search:''};render()" style="background:var(--red-l);color:var(--red);border-radius:11px;padding:9px 14px;font-weight:700;font-size:12.5px">Reset Filter</button>`:''}
+ </div>
+
+ ${filtered.length?`
+  ${pg.items.map(sh=>{
+   const vCls=sh.variance===0?'ok':(Math.abs(sh.variance)>50000?'bad':'warn');
+   const vIcon=sh.variance===0?'check-circle':(sh.variance>0?'trending-up':'trending-down');
+   return `<div class="shift-hist-card">
+    <div class="shift-hist-head">
+     <div>
+      <div class="shift-hist-title">${sh.name||'Shift'}</div>
+      <div class="shift-hist-id">${sh.id} · Kasir: ${sh.cashierName||'-'}</div>
+      <div style="font-size:11px;color:#a3a390;margin-top:3px">${sh.startedAtLabel} → ${sh.closedAtLabel}</div>
+     </div>
+     <div class="shift-hist-badge ${vCls}">
+      ${Icon(vIcon,'w-3 h-3')} ${sh.variance>0?'+':''}${rp(sh.variance)}
+     </div>
+    </div>
+    <div class="shift-hist-grid">
+     <div><span class="lbl">Modal Awal</span><span class="val">${rp(sh.openingCash)}</span></div>
+     <div><span class="lbl">Cash Sales</span><span class="val">${rp(sh.cashSales)}</span></div>
+     <div><span class="lbl">QRIS Sales</span><span class="val">${rp(sh.qrisSales||0)}</span></div>
+     <div><span class="lbl">Petty Cash</span><span class="val">-${rp(sh.pettyCash)}</span></div>
+     <div><span class="lbl">Kas Diharapkan</span><span class="val">${rp(sh.expectedCash)}</span></div>
+     <div><span class="lbl">Laba Bersih</span><span class="val" style="color:var(--sage)">${rp(sh.netProfit||0)}</span></div>
+    </div>
+    ${sh.note?`<div class="shift-hist-note">📝 ${sh.note}</div>`:''}
+    <div class="shift-hist-actions">
+     <button onclick="openShiftDetail('${sh.id}')" class="shift-hist-detail-btn">
+      ${Icon('list','w-3.5 h-3.5')} Detail Item Terjual (${transInShift(sh).length} transaksi)
+     </button>
+    </div>
+   </div>`;
+  }).join('')}
+  ${Pager('shiftHist',pg.total,pg.totalPages,pg.start,pg.items.length)}
+ `:`<div class="empty-state-card" style="padding:32px 20px">
+  <div class="empty-state-icon">${Icon('clipboard-list','w-6 h-6')}</div>
+  <div class="empty-state-title">${allHist.length?'Tidak Ada Hasil':'Belum Ada Riwayat Shift'}</div>
+  <div class="empty-state-sub">${allHist.length?'Coba ubah filter pencarian Anda.':'Riwayat shift akan muncul di sini setelah kasir menutup shift.'}</div>
+ </div>`}
+ `;
+}
+
+function ShiftDetailModal(){
+ const rec=detailShift;
+ if(!rec)return '';
+ const items=shiftRecItemBreakdown(rec);
+ const trans=transInShift(rec);
+ const petty=pettyInShift(rec);
+ return `<div class="overlay center" onclick="if(event.target===this)closeShiftDetail()">
+  <div class="detail-modal">
+   <div class="detail-head">
+    <button onclick="closeShiftDetail()" class="close-x">${Icon('x','w-4 h-4')}</button>
+    <div style="font-weight:800;font-size:18px;margin-bottom:3px">${rec.name}</div>
+    <div style="font-size:12px;opacity:.85">${rec.id} · Kasir: ${rec.cashierName}</div>
+    <div style="font-size:11.5px;opacity:.75;margin-top:3px">${rec.startedAtLabel} → ${rec.closedAtLabel}</div>
+   </div>
+   <div class="detail-body">
+    <div class="detail-section-title">Rincian Keuangan Shift</div>
+    <div class="session-info-block" style="margin-bottom:0">
+     <div class="session-info-line"><span>Modal Awal</span><span>${rp(rec.openingCash)}</span></div>
+     <div class="session-info-line"><span>Penjualan Tunai</span><span>+${rp(rec.cashSales)}</span></div>
+     <div class="session-info-line"><span>Penjualan QRIS</span><span>${rp(rec.qrisSales||0)}</span></div>
+     <div class="session-info-line"><span>Petty Cash</span><span>-${rp(rec.pettyCash)}</span></div>
+     <div class="session-info-line"><span>Total HPP</span><span>${rp(rec.hpp||0)}</span></div>
+     <div class="session-info-line total"><span>Laba Bersih Shift</span><span>${rp(rec.netProfit||0)}</span></div>
+    </div>
+
+    <div class="detail-section-title">Item Terjual (${items.length} jenis)</div>
+    ${items.length?items.map(it=>`<div class="detail-item-row">
+     <div style="flex:1;min-width:0">
+      <div class="detail-item-name">${it.name}</div>
+      <div class="detail-item-qty">${it.qty} pcs · ${it.cat} · margin ${rp(it.profit)}</div>
+     </div>
+     <div class="detail-item-total">${rp(it.revenue)}</div>
+    </div>`).join(''):`<div style="color:#b3b0a4;font-size:12.5px;padding:12px 0;text-align:center">Tidak ada item terjual di shift ini.</div>`}
+
+    <div class="detail-section-title">Daftar Transaksi (${trans.length})</div>
+    ${trans.length?trans.slice().reverse().map(t=>`<div class="detail-item-row">
+     <div style="flex:1;min-width:0">
+      <div class="detail-item-name">${t.table||'Tanpa nama/meja'}</div>
+      <div class="detail-item-qty">${t.method.toUpperCase()} · ${t.ts} · ${itemsLabel(t.items)}</div>
+     </div>
+     <div class="detail-item-total">${rp(t.total)}</div>
+    </div>`).join(''):`<div style="color:#b3b0a4;font-size:12.5px;padding:12px 0;text-align:center">Tidak ada transaksi.</div>`}
+
+    ${petty.length?`
+     <div class="detail-section-title">Pengeluaran Petty Cash (${petty.length})</div>
+     ${petty.slice().reverse().map(p=>`<div class="detail-item-row">
+      <div style="flex:1;min-width:0">
+       <div class="detail-item-name">${p.desc}</div>
+       <div class="detail-item-qty">${p.ts}</div>
+      </div>
+      <div class="detail-item-total" style="color:var(--red)">-${rp(p.amount)}</div>
+     </div>`).join('')}
+    `:''}
+   </div>
+  </div>
+ </div>`;
+}
+
 function MenuManagement(){
  const totalMenu=S.menu.length;
  const activeMenu=S.menu.filter(m=>m.active!==false).length;
  const inactiveMenu=totalMenu-activeMenu;
  const avgMargin=S.menu.length?Math.round(S.menu.reduce((a,m)=>a+(m.price-m.hpp),0)/S.menu.length):0;
-
  const pg=pgSlice(S.menu,'menu');
-
  return `
  <div class="section-title" style="font-size:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
   <span>Manajemen Menu</span>
@@ -1072,13 +1372,7 @@ function MenuManagement(){
      const isActive=m.active!==false;
      return `<tr>
       <td><img src="${m.img||PH}" onerror="this.onerror=null;this.src='${PH}'" class="mm-thumb" alt="${m.name}"></td>
-      <td>
-       <div class="mm-name-cell">
-        <div>
-         <div class="mm-name">${m.name}${m.badge?'<span class="mm-badge-tiny">1 TEKO</span>':''}</div>
-        </div>
-       </div>
-      </td>
+      <td><div class="mm-name-cell"><div><div class="mm-name">${m.name}${m.badge?'<span class="mm-badge-tiny">1 TEKO</span>':''}</div></div></div></td>
       <td><span style="font-size:11.5px;color:#8a8a80">${m.cat}</span></td>
       <td style="font-weight:700">${rp(m.price)}</td>
       <td style="color:#8a8a80">${rp(m.hpp)}</td>
@@ -1088,12 +1382,10 @@ function MenuManagement(){
         ${Icon(isActive?'check-circle':'x-circle','w-3 h-3')}${isActive?'Aktif':'Habis'}
        </button>
       </td>
-      <td>
-       <div class="mm-actions">
-        <button onclick="openEditMenu(${m.id})" class="mm-icon-btn edit" title="Edit menu">${Icon('pencil','w-3.5 h-3.5')}</button>
-        <button onclick="askDeleteMenu(${m.id})" class="mm-icon-btn del" title="Hapus menu">${Icon('trash-2','w-3.5 h-3.5')}</button>
-       </div>
-      </td>
+      <td><div class="mm-actions">
+       <button onclick="openEditMenu(${m.id})" class="mm-icon-btn edit" title="Edit menu">${Icon('pencil','w-3.5 h-3.5')}</button>
+       <button onclick="askDeleteMenu(${m.id})" class="mm-icon-btn del" title="Hapus menu">${Icon('trash-2','w-3.5 h-3.5')}</button>
+      </div></td>
      </tr>`;
     }).join(''):`<tr><td colspan="8" style="color:#b3b0a4;text-align:center;padding:30px">Belum ada menu. Klik "Tambah Menu Baru" untuk menambahkan.</td></tr>`}
    </tbody>
@@ -1103,19 +1395,16 @@ function MenuManagement(){
  `;
 }
 
-/* ===== MENU FORM MODAL ===== */
 function MenuFormModal(){
  const d=menuModal.data;
  const isEdit=menuModal.mode==='edit';
  return `<div class="overlay center" onclick="if(event.target===this)closeMenuModal()">
   <div class="form-modal">
    <h3>${Icon(isEdit?'pencil':'plus-circle','w-5 h-5')} ${isEdit?'Edit Menu':'Tambah Menu Baru'}</h3>
-
    <div class="form-group">
     <label>Nama Menu <span class="req">*</span></label>
-    <input class="field" id="mmName" value="${d.name}" oninput="updateMenuField('name',this.value)" placeholder="Contoh: Teh Poci / Sateko (1 Teko)">
+    <input class="field" id="mmName" value="${d.name}" oninput="updateMenuField('name',this.value)" placeholder="Contoh: Tuko Original (1 Teko)">
    </div>
-
    <div class="form-row">
     <div class="form-group">
      <label>Kategori <span class="req">*</span></label>
@@ -1128,34 +1417,29 @@ function MenuFormModal(){
      <input class="field" id="mmImg" value="${d.img||''}" oninput="handleMenuImgInput(this.value)" placeholder="https://...">
     </div>
    </div>
-
    <div class="form-row">
     <div class="form-group">
      <label>Harga Jual (Rp) <span class="req">*</span></label>
-     <input class="field" id="mmPrice" type="number" min="0" value="${d.price}" oninput="updateMenuField('price',this.value)" placeholder="18000">
+     <input class="field" id="mmPrice" type="number" min="0" value="${d.price}" oninput="updateMenuField('price',this.value)" placeholder="13000">
     </div>
     <div class="form-group">
      <label>HPP / Modal (Rp) <span class="req">*</span></label>
-     <input class="field" id="mmHpp" type="number" min="0" value="${d.hpp}" oninput="updateMenuField('hpp',this.value)" placeholder="7000">
+     <input class="field" id="mmHpp" type="number" min="0" value="${d.hpp}" oninput="updateMenuField('hpp',this.value)" placeholder="4000">
     </div>
    </div>
-
    <img id="mmImgPreview" class="form-img-preview ${d.img?'show':''}" src="${d.img||PH}" onerror="this.onerror=null;this.src='${PH}';">
-
    <div class="form-group">
     <label class="form-check">
      <input type="checkbox" id="mmBadge" ${d.badge?'checked':''} onchange="updateMenuField('badge',this.checked)">
      <span>Badge "1 Teko"</span>
     </label>
    </div>
-
    <div class="form-group">
     <label class="form-check">
      <input type="checkbox" id="mmActive" ${d.active!==false?'checked':''} onchange="updateMenuField('active',this.checked)">
      <span>Menu Aktif (tampil di POS)</span>
     </label>
    </div>
-
    <div class="form-actions">
     <button onclick="closeMenuModal()" class="btn-cancel">Batal</button>
     <button onclick="saveMenuModal()" class="btn-save">${isEdit?'Simpan Perubahan':'Simpan Menu'}</button>
@@ -1164,13 +1448,12 @@ function MenuFormModal(){
  </div>`;
 }
 
-/* ===== DELETE CONFIRM MODAL ===== */
 function DeleteConfirmModal(){
  return `<div class="overlay center" onclick="if(event.target===this)cancelDeleteMenu()">
   <div class="confirm-modal">
    <div class="confirm-icon">${Icon('trash-2','w-7 h-7')}</div>
    <h3>Hapus Menu?</h3>
-   <p>Menu <b>"${deleteConfirm.name}"</b> akan dihapus permanen dari daftar. Tindakan ini tidak dapat dibatalkan.</p>
+   <p>Menu <b>"${deleteConfirm.name}"</b> akan dihapus permanen. Tindakan ini tidak dapat dibatalkan.</p>
    <div class="confirm-actions">
     <button onclick="cancelDeleteMenu()" class="btn-cancel">Batal</button>
     <button onclick="confirmDeleteMenu()" class="btn-danger">Ya, Hapus</button>
@@ -1179,51 +1462,12 @@ function DeleteConfirmModal(){
  </div>`;
 }
 
-/* ===== SHIFT HISTORY SECTION (Admin) ===== */
-function ShiftHistorySection(){
- const hist=S.shiftHistory;
- const pg=pgSlice(hist,'shiftHist');
- return `
- <div class="section-title" style="font-size:14px">Riwayat Shift (Rekonsiliasi Kas)</div>
- ${hist.length?`
-  ${pg.items.map(sh=>{
-   return `<div class="shift-hist-card">
-    <div class="shift-hist-head">
-     <div>
-      <div class="shift-hist-time">${sh.closedAtLabel}</div>
-      <div class="shift-hist-id">${sh.id} · Kasir: ${sh.cashierName||'-'}</div>
-     </div>
-     <div style="text-align:right">
-      <div style="font-size:11.5px;color:#a3a390">Selisih Kas</div>
-      <div style="font-weight:800;font-size:15px;color:${sh.variance===0?'var(--green)':(Math.abs(sh.variance)>50000?'var(--red)':'var(--amber)')}">${sh.variance>0?'+':''}${rp(sh.variance)}</div>
-     </div>
-    </div>
-    <div class="shift-hist-grid">
-     <div><span class="lbl">Modal Awal</span><span class="val">${rp(sh.openingCash)}</span></div>
-     <div><span class="lbl">Penjualan Cash</span><span class="val">${rp(sh.cashSales)}</span></div>
-     <div><span class="lbl">Petty Cash</span><span class="val">-${rp(sh.pettyCash)}</span></div>
-     <div><span class="lbl">Kas Diharapkan</span><span class="val">${rp(sh.expectedCash)}</span></div>
-     <div><span class="lbl">Uang Fisik</span><span class="val">${rp(sh.actualCash)}</span></div>
-     <div><span class="lbl">Transaksi</span><span class="val">${sh.transCount||0}</span></div>
-    </div>
-    ${sh.note?`<div class="shift-hist-note">📝 ${sh.note}</div>`:''}
-   </div>`;
-  }).join('')}
-  ${Pager('shiftHist',pg.total,pg.totalPages,pg.start,pg.items.length)}
- `:`<div class="cart-empty">Belum ada riwayat shift.</div>`}
- `;
-}
-
-/* ===== ADMIN VIEW ===== */
 function AdminView(){
  if(!adminUnlocked){tryAdmin(null);return `<div class="content" style="color:#b3b0a4">Menunggu PIN...</div>`;}
-
  const soldData=salesBreakdown();
  const soldPg=pgSlice(soldData,'sold');
-
  const transData=S.trans.slice().reverse();
  const transPg=pgSlice(transData,'trans');
-
  const logPg=pgSlice(S.log,'log');
 
  return `<div class="content">
@@ -1233,7 +1477,7 @@ function AdminView(){
   </div>
   <div class="chart-card"><canvas id="profitChart" height="90"></canvas></div>
   <div class="export-row">
-   <button onclick="exportExcel()" class="export-btn">${Icon('download','w-4 h-4')}Export Excel</button>
+   <button onclick="exportExcel()" class="export-btn">${Icon('download','w-4 h-4')}Export Excel (Laporan_Shift)</button>
    <label class="import-btn">${Icon('upload','w-4 h-4')}Import Excel<input type="file" accept=".xlsx" style="display:none" onchange="if(this.files[0])importExcel(this.files[0])"></label>
   </div>
 
@@ -1257,7 +1501,7 @@ function AdminView(){
     <div style="flex:1;min-width:220px">
      <div class="tab-name">${t.table||'Tanpa nama/meja'} <span style="font-weight:400;color:#a3a390;font-size:11.5px">· ${t.method.toUpperCase()} · ${t.cashier||'-'}</span></div>
      <div class="tab-meta">${itemsLabel(t.items)}</div>
-     <div class="tab-meta">${t.ts}</div>
+     <div class="tab-meta">${t.ts}${t.shiftName?` · <span style="color:var(--sage);font-weight:600">${t.shiftName}</span>`:''}</div>
     </div>
     <div style="text-align:right">
      <div class="tab-total">${rp(t.total)}</div>
@@ -1273,25 +1517,14 @@ function AdminView(){
  </div>`;
 }
 
-/* ===== MAIN RENDER ===== */
 function render(){
  window.m=S.menu;
- const shiftActive=isShiftActive();
-
- // Kalau shift belum aktif dan view butuh shift → paksa ke shift
- if(!shiftActive && (view==='pos'||view==='tabs'||view==='petty')){
-   view='shift';
- }
-
  let content;
  if(view==='pos')content=ProductGrid();
  else if(view==='tabs')content=TabsView();
  else if(view==='petty')content=PettyView();
  else if(view==='admin')content=AdminView();
  else if(view==='shift')content=ShiftView();
-
- // Tampilkan lock screen kalau shift belum aktif DAN tidak sedang menampilkan summary sukses
- const showLock=!shiftActive && !shiftClosedSummary;
 
  document.getElementById('app').innerHTML=`
   <div class="app-shell">
@@ -1308,9 +1541,10 @@ function render(){
   ${pinModal?PinModal():''}
   ${menuModal?MenuFormModal():''}
   ${deleteConfirm?DeleteConfirmModal():''}
-  ${shiftClosing?ClosingShiftModal():''}
-  ${shiftClosedSummary?ShiftClosedSuccessModal():''}
-  ${showLock?ShiftLockScreen():''}
+  ${sessionModal&&sessionModal.mode==='open'?OpenShiftModal():''}
+  ${sessionModal&&sessionModal.mode==='close'?CloseShiftModal():''}
+  ${sessionModal&&sessionModal.mode==='success'?ShiftSuccessModal():''}
+  ${detailShift?ShiftDetailModal():''}
  `;
  lucide.createIcons();
  if(view==='admin'&&adminUnlocked){
