@@ -8,7 +8,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
-:root{--sage:#4A6343;--sage-l:#5B7553;--olive:#8A9B7D;--olive-l:#DCE2D7;--cream:#F5F3EF;--ink:#1E293B;--radius:16px;--red:#c25454;--red-l:#fdeaea;--amber:#b8860b;--amber-l:#fdf6e3;--green:#2e7d32;--green-l:#e8f5e9;}
+:root{--sage:#4A6343;--sage-l:#5B7553;--olive:#8A9B7D;--olive-l:#DCE2D7;--cream:#F5F3EF;--ink:#1E293B;--radius:16px;--red:#c25454;--red-l:#fdeaea;--amber:#b8860b;--amber-l:#fdf6e3;--green:#2e7d32;--green-l:#e8f5e9;--blue:#1565c0;--blue-l:#e3f2fd;}
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;}
 body{background:var(--cream);color:var(--ink);font-family:'Segoe UI',ui-sans-serif,system-ui,-apple-system,Roboto,sans-serif;font-size:14px;}
@@ -154,20 +154,6 @@ img{display:block;max-width:100%;}
 .tab-total{font-weight:800;color:var(--sage);text-align:right;}
 .tab-resume{background:none;color:var(--sage);text-decoration:underline;font-size:12px;}
 
-.petty-form{display:flex;gap:8px;margin-bottom:18px;}
-.petty-form input:first-child{flex:1;}
-.petty-form input:nth-child(2){width:120px;}
-.petty-form button{background:var(--sage);color:#fff;border-radius:12px;padding:0 16px;display:flex;align-items:center;}
-.petty-form button:disabled{background:#b3b0a4;cursor:not-allowed;opacity:.55;}
-.petty-list{display:flex;flex-direction:column;gap:8px;}
-.petty-item{background:#fff;border-radius:13px;border:1px solid #eee6d9;padding:12px 14px;display:flex;justify-content:space-between;font-size:13px;}
-.petty-desc-meta{font-size:11px;color:#a3a390;margin-top:2px;}
-.total-line{display:flex;justify-content:space-between;font-weight:700;margin-top:16px;padding-top:12px;border-top:1px solid #e7e3da;}
-
-.shift-label{font-size:11.5px;color:#a3a390;margin-bottom:6px;display:block;}
-.shift-btn{width:100%;background:var(--sage);color:#fff;border-radius:14px;padding:13px 0;font-weight:700;margin-top:6px;}
-.shift-close{width:100%;border:2px solid #e79a9a;color:#c25454;background:#fff;border-radius:14px;padding:12px 0;font-weight:700;margin-top:14px;}
-
 .stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px;}
 .stat-card{background:#fff;border-radius:16px;border:1px solid #eee6d9;padding:14px;}
 .stat-label{font-size:11px;color:#a3a390;margin-bottom:5px;}
@@ -200,9 +186,6 @@ td{padding:10px 12px;border-bottom:1px solid #f6f4ee;vertical-align:middle;}
 .mm-name-cell{display:flex;align-items:center;gap:10px;min-width:180px;}
 .mm-name{font-weight:600;font-size:13px;line-height:1.3;}
 .mm-badge-tiny{display:inline-block;background:var(--sage);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:6px;margin-left:6px;vertical-align:middle;letter-spacing:.3px;}
-.mm-margin{font-weight:700;color:var(--green);}
-.mm-margin.low{color:var(--amber);}
-.mm-margin.neg{color:var(--red);}
 
 .mm-status{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;cursor:pointer;transition:all .15s;user-select:none;border:none;}
 .mm-status.aktif{background:var(--green-l);color:var(--green);}
@@ -253,6 +236,12 @@ td{padding:10px 12px;border-bottom:1px solid #f6f4ee;vertical-align:middle;}
 .confirm-modal p{font-size:13px;color:#8a8a80;margin-bottom:20px;line-height:1.5;}
 .confirm-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .btn-danger{background:var(--red);color:#fff;border-radius:13px;padding:12px 0;font-weight:700;font-size:13.5px;}
+
+/* ===== EXPENSE CATEGORY BADGES ===== */
+.cat-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:999px;font-size:10.5px;font-weight:700;letter-spacing:.2px;}
+.cat-badge.bahan{background:#fff3e0;color:#e65100;}
+.cat-badge.ops{background:var(--blue-l);color:var(--blue);}
+.cat-badge.lainnya{background:#f3e5f5;color:#6a1b9a;}
 
 /* ===== SHIFT SESSION CARD ===== */
 .session-modal{background:#fff;border-radius:22px;width:100%;max-width:520px;padding:0;max-height:92vh;overflow-y:auto;animation:pop .2s ease-out;}
@@ -320,9 +309,12 @@ td{padding:10px 12px;border-bottom:1px solid #f6f4ee;vertical-align:middle;}
 .metric-accent .stat-label{color:rgba(255,255,255,.8);}
 .metric-accent .stat-value{color:#fff;font-size:17px;}
 .metric-accent .metric-sub{font-size:10.5px;color:rgba(255,255,255,.7);margin-top:3px;}
+.metric-accent.blue{background:linear-gradient(135deg,#1565c0 0%,#1976d2 100%);}
+.metric-accent.red{background:linear-gradient(135deg,#b71c1c 0%,#d32f2f 100%);}
+.metric-accent.amber{background:linear-gradient(135deg,#e65100 0%,#ef6c00 100%);}
 
 /* Detail shift modal */
-.detail-modal{background:#fff;border-radius:22px;width:100%;max-width:600px;padding:0;max-height:92vh;overflow-y:auto;animation:pop .2s ease-out;}
+.detail-modal{background:#fff;border-radius:22px;width:100%;max-width:640px;padding:0;max-height:92vh;overflow-y:auto;animation:pop .2s ease-out;}
 .detail-head{background:linear-gradient(135deg,#4A6343 0%,#5B7553 100%);color:#fff;padding:22px 24px;border-radius:22px 22px 0 0;position:relative;}
 .detail-body{padding:22px 24px;}
 .detail-section-title{font-size:12px;font-weight:700;color:#a3a390;text-transform:uppercase;letter-spacing:.5px;margin:16px 0 10px;}
@@ -344,6 +336,56 @@ td{padding:10px 12px;border-bottom:1px solid #f6f4ee;vertical-align:middle;}
 .filter-bar input,.filter-bar select{padding:9px 12px;border-radius:11px;border:1px solid #e7e3da;background:#fff;font-size:12.5px;flex:1;min-width:140px;}
 .filter-bar input:focus,.filter-bar select:focus{outline:2px solid var(--olive-l);}
 
+/* ===== EXPENSE / BELANJA VIEW ===== */
+.exp-form-card{background:#fff;border-radius:16px;border:1px solid #eee6d9;padding:18px;margin-bottom:20px;}
+.exp-form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.exp-form-row.full{grid-template-columns:1fr;}
+.exp-form-row label{display:block;font-size:11.5px;font-weight:700;color:#6b6b60;margin-bottom:5px;}
+.exp-submit-btn{width:100%;background:var(--sage);color:#fff;border-radius:13px;padding:13px 0;font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 3px 10px rgba(74,99,67,.3);transition:background .15s;}
+.exp-submit-btn:hover{background:var(--sage-l);}
+.exp-submit-btn:disabled{opacity:.5;cursor:not-allowed;}
+
+.exp-list{display:flex;flex-direction:column;gap:8px;}
+.exp-item{background:#fff;border-radius:13px;border:1px solid #eee6d9;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px;}
+.exp-item-info{flex:1;min-width:0;}
+.exp-item-desc{font-weight:600;}
+.exp-item-meta{font-size:11px;color:#a3a390;margin-top:3px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.exp-item-amount{font-weight:800;color:var(--red);white-space:nowrap;}
+.exp-item-del{background:var(--red-l);color:var(--red);width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.exp-item-del:hover{background:var(--red);color:#fff;}
+
+.exp-summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px;}
+.exp-summary-card{background:#fff;border-radius:12px;border:1px solid #eee6d9;padding:12px;}
+.exp-summary-label{font-size:10.5px;color:#a3a390;text-transform:uppercase;letter-spacing:.3px;font-weight:700;}
+.exp-summary-value{font-weight:800;font-size:14px;margin-top:4px;}
+
+/* ===== MONTHLY REPORT ===== */
+.month-card{background:#fff;border-radius:16px;border:1px solid #eee6d9;padding:18px;margin-bottom:16px;}
+.month-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;}
+.month-name{font-weight:800;font-size:16px;color:var(--sage);}
+.month-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;}
+.month-item{background:var(--cream);border-radius:12px;padding:12px;}
+.month-item .lbl{font-size:10.5px;color:#8a8a80;text-transform:uppercase;font-weight:700;letter-spacing:.3px;}
+.month-item .val{font-weight:800;font-size:15px;margin-top:4px;color:var(--ink);}
+.month-item .val.green{color:var(--green);}
+.month-item .val.red{color:var(--red);}
+.month-item .val.blue{color:var(--blue);}
+
+.dividend-block{background:linear-gradient(135deg,#4A6343 0%,#5B7553 100%);border-radius:14px;padding:16px;color:#fff;margin-top:14px;}
+.dividend-title{font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;font-weight:700;opacity:.85;margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+.dividend-row{display:flex;justify-content:space-between;padding:8px 0;font-size:13.5px;}
+.dividend-row.highlight{font-size:16px;font-weight:800;border-top:1px solid rgba(255,255,255,.25);margin-top:6px;padding-top:12px;}
+.dividend-slider{display:flex;align-items:center;gap:10px;margin:12px 0;background:rgba(255,255,255,.12);padding:10px 14px;border-radius:10px;}
+.dividend-slider input[type=range]{flex:1;accent-color:#fff;}
+.dividend-slider .pct{font-weight:800;font-size:14px;min-width:45px;text-align:right;}
+
+.daily-table td.num{text-align:right;font-weight:600;font-variant-numeric:tabular-nums;}
+.daily-table td.pos{color:var(--green);font-weight:700;}
+.daily-table td.neg{color:var(--red);font-weight:700;}
+.daily-table tr.weekend{background:#fafaf6;}
+.daily-table tr.total-row{background:var(--olive-l);font-weight:800;}
+.daily-table tr.total-row td{border-top:2px solid var(--sage);}
+
 @media(min-width:1024px){
  .sidebar{display:flex;}
  .mobile-header{display:none;}
@@ -357,6 +399,7 @@ td{padding:10px 12px;border-bottom:1px solid #f6f4ee;vertical-align:middle;}
 
 @media(max-width:640px){
  .form-row{grid-template-columns:1fr;}
+ .exp-form-row{grid-template-columns:1fr;}
  .mm-toolbar{flex-direction:column;align-items:stretch;}
  .mm-add-btn{justify-content:center;}
  .pagination{flex-direction:column;align-items:stretch;}
@@ -365,17 +408,25 @@ td{padding:10px 12px;border-bottom:1px solid #f6f4ee;vertical-align:middle;}
  .shift-hist-grid{grid-template-columns:1fr;}
  .session-foot{flex-direction:column;}
  .session-btn{min-width:100%;}
+ .exp-summary-grid{grid-template-columns:1fr;}
+ .month-grid{grid-template-columns:1fr;}
 }
 </style>
 </head>
 <body>
 <div id="app"></div>
 <script>
-const LS='tuko_v2';
+const LS='tuko_v3';
 const D=()=>JSON.parse(localStorage.getItem(LS));
 const SV=s=>localStorage.setItem(LS,JSON.stringify(s));
 const PH='https://placehold.co/500x400/DCE2D7/4A6343?text=TUKO';
 const CATEGORIES=['Teh/Teko','Sate-satean','Kopi','Gorengan','Kudapan','Makanan','Minuman','Snack','Dessert','Lainnya'];
+const EXPENSE_CATEGORIES=[
+  {id:'bahan',label:'Belanja Bahan Baku',icon:'package',hint:'Teh, sate, gas, gula, es, dll'},
+  {id:'ops',label:'Operasional',icon:'zap',hint:'Listrik, kebersihan, parkir, transport'},
+  {id:'lainnya',label:'Lainnya',icon:'more-horizontal',hint:'Lain-lain / tak terduga'},
+];
+const CAT_LABEL={bahan:'Bahan Baku',ops:'Operasional',lainnya:'Lainnya'};
 
 function defaultShiftName(){
  const d=new Date();
@@ -386,25 +437,43 @@ function defaultShiftName(){
 function seed(){
  return {
   role:'kasir', pin:'1234', shift:null, shiftHistory:[], cashierName:'Kasir 1',
+  dividendPct:30, // default 30% dibagikan
   menu:[
-   {id:1,name:'Tuko Original (1 Teko)',price:13000,hpp:4000,cat:'Teh/Teko',badge:true,active:true,img:'https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=500'},
-   {id:2,name:'Tuko Leci (1 Teko)',price:16000,hpp:5500,cat:'Teh/Teko',badge:true,active:true,img:'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=500'},
-   {id:3,name:'Tuko Lemon (1 Teko)',price:16000,hpp:5500,cat:'Teh/Teko',badge:true,active:true,img:'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=500'},
-   {id:4,name:'Tuko Beer (1 Teko)',price:18000,hpp:6500,cat:'Teh/Teko',badge:true,active:true,img:'https://images.unsplash.com/photo-1538488881523-230f65e23cb2?w=500'},
-   {id:5,name:'Sate Telur Puyuh',price:4000,hpp:2000,cat:'Sate-satean',badge:false,active:true,img:'https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=500'},
-   {id:6,name:'Sate Ati Ampela',price:3000,hpp:1500,cat:'Sate-satean',badge:false,active:true,img:'https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=500'},
-   {id:7,name:'Sate Usus',price:3000,hpp:1500,cat:'Sate-satean',badge:false,active:true,img:'https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=500'},
+   {id:1,name:'Tuko Original (1 Teko)',price:13000,hpp:0,cat:'Teh/Teko',badge:true,active:true,img:'https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=500'},
+   {id:2,name:'Tuko Leci (1 Teko)',price:16000,hpp:0,cat:'Teh/Teko',badge:true,active:true,img:'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=500'},
+   {id:3,name:'Tuko Lemon (1 Teko)',price:16000,hpp:0,cat:'Teh/Teko',badge:true,active:true,img:'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=500'},
+   {id:4,name:'Tuko Beer (1 Teko)',price:18000,hpp:0,cat:'Teh/Teko',badge:true,active:true,img:'https://images.unsplash.com/photo-1538488881523-230f65e23cb2?w=500'},
+   {id:5,name:'Sate Telur Puyuh',price:4000,hpp:0,cat:'Sate-satean',badge:false,active:true,img:'https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=500'},
+   {id:6,name:'Sate Ati Ampela',price:3000,hpp:0,cat:'Sate-satean',badge:false,active:true,img:'https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=500'},
+   {id:7,name:'Sate Usus',price:3000,hpp:0,cat:'Sate-satean',badge:false,active:true,img:'https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=500'},
   ],
-  cart:[], tableNote:'', discount:0, tabs:[], petty:[], trans:[], log:[],
+  cart:[], tableNote:'', discount:0, tabs:[], petty:[], expenses:[], trans:[], log:[],
  };
 }
 if(!D())SV(seed());
 let S=D();
 
-// Migration
-S.menu.forEach(m=>{if(typeof m.active==='undefined')m.active=true;if(typeof m.badge==='undefined')m.badge=false;});
+// Migration v3: pastikan field baru ada
+S.menu.forEach(m=>{if(typeof m.active==='undefined')m.active=true;if(typeof m.badge==='undefined')m.badge=false;m.hpp=0;});
 if(!Array.isArray(S.shiftHistory))S.shiftHistory=[];
 if(typeof S.shift==='undefined')S.shift=null;
+if(!Array.isArray(S.expenses))S.expenses=[];
+if(typeof S.dividendPct==='undefined')S.dividendPct=30;
+if(!Array.isArray(S.petty))S.petty=[]; // legacy, migrate ke expenses
+if(S.petty.length){
+  S.petty.forEach(p=>{
+    S.expenses.push({
+      id:p.id,
+      desc:p.desc,
+      amount:p.amount,
+      cat:'lainnya',
+      ts:p.ts,
+      tsRaw:p.tsRaw||new Date().toISOString(),
+      legacy:true,
+    });
+  });
+  S.petty=[];
+}
 
 const save=()=>SV(S);
 const rp=n=>'Rp'+Math.round(n).toLocaleString('id-ID');
@@ -418,6 +487,9 @@ let deleteConfirm=null;
 let sessionModal=null;
 let detailShift=null;
 let historyFilter={date:'',cashier:'',search:''};
+let expenseModal=null;
+let expenseDeleteConfirm=null;
+let reportMonth=null; // 'YYYY-MM' atau 'ALL'
 
 const PG={
   menu:{page:1,size:5},
@@ -425,6 +497,7 @@ const PG={
   sold:{page:1,size:5},
   log:{page:1,size:10},
   shiftHist:{page:1,size:5},
+  expense:{page:1,size:10},
 };
 
 function pgSlice(arr,key){
@@ -438,7 +511,6 @@ function pgSlice(arr,key){
 function pgGo(key,page){PG[key].page=page;render();}
 function pgSize(key,size){PG[key].size=+size;PG[key].page=1;render();}
 
-/* ===== PAGINATION UI COMPONENT ===== */
 function Pager(key,total,totalPages,start,count){
   if(total===0)return '';
   const cur=PG[key].page;
@@ -473,6 +545,29 @@ function Pager(key,total,totalPages,start,count){
   </div>`;
 }
 
+/* ===== DATE HELPERS ===== */
+function dateKey(iso){ // 'YYYY-MM-DD'
+  const d=new Date(iso);
+  const y=d.getFullYear();
+  const m=String(d.getMonth()+1).padStart(2,'0');
+  const day=String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${day}`;
+}
+function monthKey(iso){ // 'YYYY-MM'
+  const d=new Date(iso);
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+}
+function monthLabel(ym){
+  const [y,m]=ym.split('-');
+  const bulan=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  return `${bulan[+m-1]} ${y}`;
+}
+function dateLabel(ymd){
+  const [y,m,d]=ymd.split('-');
+  const bulan=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+  return `${+d} ${bulan[+m-1]} ${y}`;
+}
+
 /* ===== SHIFT SESSION HELPERS ===== */
 function isShiftActive(){return S.shift&&S.shift.status==='active';}
 
@@ -481,10 +576,10 @@ function shiftTrans(){
   const start=new Date(S.shift.startedAt).getTime();
   return S.trans.filter(t=>new Date(t.tsRaw||t.ts).getTime()>=start);
 }
-function shiftPetty(){
+function shiftExpenses(){
   if(!isShiftActive())return [];
   const start=new Date(S.shift.startedAt).getTime();
-  return S.petty.filter(p=>new Date(p.tsRaw||p.ts).getTime()>=start);
+  return S.expenses.filter(e=>new Date(e.tsRaw||e.ts).getTime()>=start);
 }
 function shiftCashSales(){
   return shiftTrans().filter(t=>t.method==='cash').reduce((a,t)=>a+t.total,0);
@@ -492,19 +587,18 @@ function shiftCashSales(){
 function shiftQrisSales(){
   return shiftTrans().filter(t=>t.method==='qris').reduce((a,t)=>a+t.total,0);
 }
-function shiftNonCashSales(){return shiftQrisSales();}
-function shiftPettyTotal(){
-  return shiftPetty().reduce((a,p)=>a+p.amount,0);
+function shiftExpenseTotal(){
+  return shiftExpenses().reduce((a,e)=>a+e.amount,0);
+}
+function shiftGrossRevenue(){
+  return shiftTrans().reduce((a,t)=>a+t.total,0);
+}
+function shiftNetProfit(){
+  return shiftGrossRevenue()-shiftExpenseTotal();
 }
 function shiftExpectedCash(){
   if(!isShiftActive())return 0;
-  return S.shift.openingCash+shiftCashSales()-shiftPettyTotal();
-}
-function shiftHPP(){
-  return shiftTrans().reduce((a,t)=>a+t.items.reduce((s,i)=>s+i.hpp*i.qty,0),0);
-}
-function shiftNetProfit(){
-  return shiftTrans().reduce((a,t)=>a+t.total,0)-shiftHPP()-shiftPettyTotal();
+  return S.shift.openingCash+shiftCashSales()-shiftExpenseTotal();
 }
 
 function transInShift(rec){
@@ -515,39 +609,26 @@ function transInShift(rec){
     return ts>=start && ts<=end;
   });
 }
-function pettyInShift(rec){
+function expensesInShift(rec){
   const start=new Date(rec.startedAt).getTime();
   const end=new Date(rec.closedAt).getTime();
-  return S.petty.filter(p=>{
-    const ts=new Date(p.tsRaw||p.ts).getTime();
+  return S.expenses.filter(e=>{
+    const ts=new Date(e.tsRaw||e.ts).getTime();
     return ts>=start && ts<=end;
   });
 }
-function shiftRecHPP(rec){
-  return transInShift(rec).reduce((a,t)=>a+t.items.reduce((s,i)=>s+i.hpp*i.qty,0),0);
-}
-function shiftRecCashSales(rec){
-  return transInShift(rec).filter(t=>t.method==='cash').reduce((a,t)=>a+t.total,0);
-}
-function shiftRecQrisSales(rec){
-  return transInShift(rec).filter(t=>t.method==='qris').reduce((a,t)=>a+t.total,0);
-}
-function shiftRecGrossRevenue(rec){
-  return transInShift(rec).reduce((a,t)=>a+t.total,0);
-}
-function shiftRecPettyTotal(rec){
-  return pettyInShift(rec).reduce((a,p)=>a+p.amount,0);
-}
-function shiftRecNetProfit(rec){
-  return shiftRecGrossRevenue(rec)-shiftRecHPP(rec)-shiftRecPettyTotal(rec);
-}
+function shiftRecGrossRevenue(rec){return transInShift(rec).reduce((a,t)=>a+t.total,0);}
+function shiftRecCashSales(rec){return transInShift(rec).filter(t=>t.method==='cash').reduce((a,t)=>a+t.total,0);}
+function shiftRecQrisSales(rec){return transInShift(rec).filter(t=>t.method==='qris').reduce((a,t)=>a+t.total,0);}
+function shiftRecExpenseTotal(rec){return expensesInShift(rec).reduce((a,e)=>a+e.amount,0);}
+function shiftRecNetProfit(rec){return shiftRecGrossRevenue(rec)-shiftRecExpenseTotal(rec);}
 function shiftRecItemBreakdown(rec){
   const agg={};
   transInShift(rec).forEach(t=>t.items.forEach(i=>{
-    if(!agg[i.id])agg[i.id]={name:i.name,cat:i.cat,qty:0,revenue:0,hpp:0};
-    agg[i.id].qty+=i.qty;agg[i.id].revenue+=i.qty*i.price;agg[i.id].hpp+=i.qty*i.hpp;
+    if(!agg[i.id])agg[i.id]={name:i.name,cat:i.cat,qty:0,revenue:0};
+    agg[i.id].qty+=i.qty;agg[i.id].revenue+=i.qty*i.price;
   }));
-  return Object.values(agg).map(x=>({...x,profit:x.revenue-x.hpp})).sort((a,b)=>b.qty-a.qty);
+  return Object.values(agg).sort((a,b)=>b.qty-a.qty);
 }
 
 /* ===== OPEN SHIFT ===== */
@@ -559,10 +640,7 @@ function showOpenShiftModal(){
   }};
   render();
 }
-function updateOpenShiftField(f,v){
-  if(!sessionModal)return;
-  sessionModal.data[f]=v;
-}
+function updateOpenShiftField(f,v){if(sessionModal)sessionModal.data[f]=v;}
 function submitOpenShift(){
   if(!sessionModal||sessionModal.mode!=='open')return;
   const d=sessionModal.data;
@@ -574,32 +652,22 @@ function submitOpenShift(){
   if(openingCash<=0){alert('Modal Awal Laci harus lebih dari 0.');return;}
   S.shift={
     id:'SHIFT-'+Date.now(),
-    name:name,
-    startedAt:nowISO(),
-    startedAtLabel:now(),
-    openingCash:openingCash,
-    cashierName:cashier,
-    status:'active',
+    name, cashierName:cashier,
+    startedAt:nowISO(), startedAtLabel:now(),
+    openingCash, status:'active',
   };
   S.cashierName=cashier;
   logA(`Shift "${name}" dibuka oleh ${cashier} — Modal awal ${rp(openingCash)}`);
-  sessionModal=null;
-  save();render();
+  sessionModal=null;save();render();
 }
 
 /* ===== CLOSE SHIFT ===== */
 function showCloseShiftModal(){
   if(!isShiftActive())return;
-  sessionModal={mode:'close',data:{
-    actualCash:'',
-    note:'',
-  }};
+  sessionModal={mode:'close',data:{actualCash:'',note:''}};
   render();
 }
-function updateCloseField(f,v){
-  if(!sessionModal)return;
-  sessionModal.data[f]=v;
-}
+function updateCloseField(f,v){if(sessionModal)sessionModal.data[f]=v;}
 function submitCloseShift(){
   if(!isShiftActive()||!sessionModal||sessionModal.mode!=='close')return;
   const actual=+sessionModal.data.actualCash||0;
@@ -610,50 +678,33 @@ function submitCloseShift(){
     return;
   }
   const rec={
-    id:S.shift.id,
-    name:S.shift.name,
-    cashierName:S.shift.cashierName,
-    startedAt:S.shift.startedAt,
-    startedAtLabel:S.shift.startedAtLabel,
-    closedAt:nowISO(),
-    closedAtLabel:now(),
+    id:S.shift.id, name:S.shift.name, cashierName:S.shift.cashierName,
+    startedAt:S.shift.startedAt, startedAtLabel:S.shift.startedAtLabel,
+    closedAt:nowISO(), closedAtLabel:now(),
     openingCash:S.shift.openingCash,
-    cashSales:shiftCashSales(),
-    qrisSales:shiftQrisSales(),
-    pettyCash:shiftPettyTotal(),
-    expectedCash:expected,
-    actualCash:actual,
-    variance:variance,
-    note:(sessionModal.data.note||'').trim(),
-    hpp:shiftHPP(),
+    cashSales:shiftCashSales(), qrisSales:shiftQrisSales(),
+    expenseTotal:shiftExpenseTotal(),
+    grossRevenue:shiftGrossRevenue(),
     netProfit:shiftNetProfit(),
-    grossRevenue:shiftTrans().reduce((a,t)=>a+t.total,0),
+    expectedCash:expected, actualCash:actual, variance,
+    note:(sessionModal.data.note||'').trim(),
     transCount:shiftTrans().length,
-    pettyCount:shiftPetty().length,
+    expenseCount:shiftExpenses().length,
   };
   S.shiftHistory.unshift(rec);
-  logA(`Shift "${rec.name}" ditutup — Expected ${rp(expected)}, Actual ${rp(actual)}, Variance ${rp(variance)}`);
+  logA(`Shift "${rec.name}" ditutup — Uang fisik ${rp(actual)}, Selisih ${rp(variance)}, Laba ${rp(rec.netProfit)}`);
   save();
-  sessionModal={mode:'success',data:rec};
-  render();
+  sessionModal={mode:'success',data:rec};render();
 }
 function finishCloseShift(){
   if(!sessionModal||sessionModal.mode!=='success')return;
-  S.shift=null;
-  S.cart=[];S.discount=0;S.tableNote='';S.tabs=[];
-  save();
-  sessionModal=null;
-  PG.shiftHist.page=1;
-  render();
+  S.shift=null;S.cart=[];S.discount=0;S.tableNote='';S.tabs=[];
+  save();sessionModal=null;PG.shiftHist.page=1;render();
 }
 function closeSessionModal(){sessionModal=null;render();}
 
 /* ===== SHIFT DETAIL ===== */
-function openShiftDetail(id){
-  const rec=S.shiftHistory.find(x=>x.id===id);
-  if(!rec)return;
-  detailShift=rec;render();
-}
+function openShiftDetail(id){const rec=S.shiftHistory.find(x=>x.id===id);if(rec){detailShift=rec;render();}}
 function closeShiftDetail(){detailShift=null;render();}
 
 /* ===== TRANSACTION HELPERS ===== */
@@ -665,7 +716,7 @@ function addItem(id){
 }
 function chQty(id,d){const c=S.cart.find(x=>x.id===id);if(!c)return;c.qty+=d;if(c.qty<=0)S.cart=S.cart.filter(x=>x.id!==id);save();render();}
 function checkout(method,cashGiven){
- if(!isShiftActive()){alert('Shift belum dibuka. Buka shift terlebih dahulu.');return;}
+ if(!isShiftActive()){alert('Shift belum dibuka.');return;}
  if(!S.cart.length)return;
  const total=cartTotal();
  const t={id:Date.now(),items:[...S.cart],total,method,cash:cashGiven||total,ts:now(),tsRaw:nowISO(),table:S.tableNote,cashier:S.cashierName,shiftId:S.shift.id,shiftName:S.shift.name};
@@ -679,132 +730,133 @@ function saveTab(){
  S.cart=[];S.discount=0;S.tableNote='';save();cartOpen=false;render();
 }
 function resumeTab(id){const tb=S.tabs.find(x=>x.id===id);if(!tb)return;S.cart=[...tb.items];S.tableNote=tb.table;S.tabs=S.tabs.filter(x=>x.id!==id);save();view='pos';cartOpen=true;render();}
-function addPetty(desc,amt){
- if(!isShiftActive()){alert('Buka shift terlebih dahulu untuk mencatat pengeluaran.');return;}
- S.petty.push({id:Date.now(),desc,amount:amt,ts:now(),tsRaw:nowISO()});logA(`Pengeluaran: ${desc} ${rp(amt)}`);save();render();
-}
 
-/* ===== EXCEL EXPORT ===== */
-function exportExcel(){
- const wb=XLSX.utils.book_new();
- const menuExport=S.menu.map(m=>({id:m.id,name:m.name,cat:m.cat,price:m.price,hpp:m.hpp,margin:m.price-m.hpp,badge:m.badge,active:m.active,img:m.img}));
- XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(menuExport),'Menu');
- XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(S.trans.map(t=>({id:t.id,ts:t.ts,shift:t.shiftName||'-',table:t.table,cashier:t.cashier||'',method:t.method,items:itemsLabel(t.items),total:t.total,cash:t.cash}))),'Transaksi');
- XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(salesBreakdown().map((s,i)=>({rank:i+1,nama:s.name,kategori:s.cat,pcs_terjual:s.qty,total_omzet:s.revenue,total_hpp:s.hpp,laba_bersih:s.profit}))),'ItemTerjual');
- XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(S.petty),'PettyCash');
- const shiftRows=S.shiftHistory.map(sh=>({
-   id_shift:sh.id,
-   nama_shift:sh.name||'-',
-   nama_kasir:sh.cashierName||'-',
-   tanggal_buka:sh.startedAtLabel,
-   tanggal_tutup:sh.closedAtLabel,
-   modal_awal:sh.openingCash,
-   total_penjualan_cash:sh.cashSales,
-   total_qris:sh.qrisSales,
-   total_pengeluaran:sh.pettyCash,
-   kas_diharapkan:sh.expectedCash,
-   uang_fisik:sh.actualCash,
-   selisih_kas:sh.variance,
-   total_hpp:sh.hpp,
-   laba_bersih_shift:sh.netProfit,
-   catatan:sh.note||'',
- }));
- XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(shiftRows.length?shiftRows:[{info:'Belum ada riwayat shift'}]),'Laporan_Shift');
- XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(S.log),'Log');
- XLSX.writeFile(wb,`TUKO_Data_${Date.now()}.xlsx`);logA('Export data ke Excel');
+/* ===== EXPENSE / BELANJA FUNCTIONS ===== */
+function showAddExpenseModal(){
+  if(!isShiftActive()){alert('Buka shift terlebih dahulu untuk mencatat pengeluaran.');return;}
+  expenseModal={data:{desc:'',amount:'',cat:'bahan'}};
+  render();
 }
-function importExcel(file){
- const r=new FileReader();
- r.onload=e=>{
-  try{
-   const wb=XLSX.read(new Uint8Array(e.target.result),{type:'array'});
-   if(wb.SheetNames.includes('Menu')){const rows=XLSX.utils.sheet_to_json(wb.Sheets['Menu']);if(rows.length)S.menu=rows.map(r=>({...r,price:+r.price,hpp:+r.hpp,id:+r.id,badge:!!r.badge,active:r.active!==false}));}
-   if(wb.SheetNames.includes('PettyCash')){const rows=XLSX.utils.sheet_to_json(wb.Sheets['PettyCash']);if(rows.length)S.petty=rows.map(r=>({...r,amount:+r.amount,id:+r.id}));}
-   logA('Import data dari Excel');save();adminUnlocked=true;render();alert('Import berhasil');
-  }catch(err){alert('File tidak valid');}
- };
- r.readAsArrayBuffer(file);
+function showEditExpenseModal(id){
+  const e=S.expenses.find(x=>x.id===id);if(!e)return;
+  expenseModal={data:{id:e.id,desc:e.desc,amount:e.amount,cat:e.cat||'lainnya'}};
+  render();
 }
-function tryAdmin(cb){pinModal={cb,val:''};render();}
-function checkPin(){if(pinModal.val===S.pin){adminUnlocked=true;const cb=pinModal.cb;pinModal=null;render();cb&&cb();}else{alert('PIN salah');pinModal.val='';render();}}
-function cashSalesTotal(){return S.trans.filter(t=>t.method==='cash').reduce((a,t)=>a+t.total,0);}
-function pettyTotal(){return S.petty.reduce((a,p)=>a+p.amount,0);}
+function closeExpenseModal(){expenseModal=null;render();}
+function updateExpenseField(f,v){if(expenseModal)expenseModal.data[f]=v;}
+function submitExpense(){
+  if(!expenseModal)return;
+  const d=expenseModal.data;
+  const desc=(d.desc||'').trim();
+  const amount=+d.amount||0;
+  if(!desc){alert('Keterangan wajib diisi.');return;}
+  if(amount<=0){alert('Nominal harus lebih dari 0.');return;}
+  if(d.id){
+    const e=S.expenses.find(x=>x.id===d.id);
+    if(e){e.desc=desc;e.amount=amount;e.cat=d.cat;}
+    logA(`Pengeluaran diupdate: ${desc} ${rp(amount)}`);
+  }else{
+    S.expenses.push({
+      id:Date.now(),desc,amount,cat:d.cat,
+      ts:now(),tsRaw:nowISO(),
+      shiftId:S.shift.id,shiftName:S.shift.name,
+    });
+    logA(`Pengeluaran [${CAT_LABEL[d.cat]}]: ${desc} ${rp(amount)}`);
+  }
+  expenseModal=null;save();render();
+}
+function askDeleteExpense(id){
+  const e=S.expenses.find(x=>x.id===id);if(!e)return;
+  expenseDeleteConfirm={id,name:e.desc};render();
+}
+function confirmDeleteExpense(){
+  if(!expenseDeleteConfirm)return;
+  const e=S.expenses.find(x=>x.id===expenseDeleteConfirm.id);
+  if(e){S.expenses=S.expenses.filter(x=>x.id!==e.id);logA(`Pengeluaran dihapus: ${e.desc} ${rp(e.amount)}`);}
+  expenseDeleteConfirm=null;save();render();
+}
+function cancelDeleteExpense(){expenseDeleteConfirm=null;render();}
+
+/* ===== FINANCIAL SUMMARY ===== */
+function totalExpense(filter){
+  if(!filter)return S.expenses.reduce((a,e)=>a+e.amount,0);
+  return S.expenses.filter(filter).reduce((a,e)=>a+e.amount,0);
+}
 function grossRevenue(){return S.trans.reduce((a,t)=>a+t.total,0);}
-function totalHPP(){return S.trans.reduce((a,t)=>a+t.items.reduce((s,i)=>s+i.hpp*i.qty,0),0);}
-function netProfit(){return grossRevenue()-totalHPP()-pettyTotal();}
+function netProfit(){return grossRevenue()-totalExpense();}
+function expenseByCat(monthFilter){
+  const agg={bahan:0,ops:0,lainnya:0};
+  S.expenses.forEach(e=>{
+    if(monthFilter){
+      const mk=monthKey(e.tsRaw||e.ts);
+      if(mk!==monthFilter)return;
+    }
+    const c=e.cat||'lainnya';
+    if(agg[c]!==undefined)agg[c]+=e.amount;else agg.lainnya+=e.amount;
+  });
+  return agg;
+}
 function salesBreakdown(){
  const agg={};
  S.trans.forEach(t=>t.items.forEach(i=>{
-  if(!agg[i.id])agg[i.id]={name:i.name,cat:i.cat,qty:0,revenue:0,hpp:0};
-  agg[i.id].qty+=i.qty;agg[i.id].revenue+=i.qty*i.price;agg[i.id].hpp+=i.qty*i.hpp;
+  if(!agg[i.id])agg[i.id]={name:i.name,cat:i.cat,qty:0,revenue:0};
+  agg[i.id].qty+=i.qty;agg[i.id].revenue+=i.qty*i.price;
  }));
- return Object.values(agg).map(x=>({...x,profit:x.revenue-x.hpp})).sort((a,b)=>b.qty-a.qty);
+ return Object.values(agg).sort((a,b)=>b.qty-a.qty);
 }
 function itemsLabel(items){return items.map(i=>`${i.qty}x ${i.name}`).join(', ');}
 function reopenReceipt(id){const t=S.trans.find(x=>x.id===id);if(t){modal={type:'receipt',t};render();}}
-function Icon(n,cls){return `<i data-lucide="${n}" class="${cls||''}"></i>`;}
-function Logo(size){return `<div class="brand-logo" style="width:${size}px;height:${size}px;font-size:${size*.42}px">T</div>`;}
 
-/* ===== MENU CRUD ===== */
-function openAddMenu(){
- menuModal={mode:'add',data:{id:null,name:'',cat:'Teh/Teko',price:'',hpp:'',img:'',badge:false,active:true}};
- render();
+/* ===== MONTHLY REPORT HELPERS ===== */
+function availableMonths(){
+  const set=new Set();
+  S.trans.forEach(t=>set.add(monthKey(t.tsRaw||t.ts)));
+  S.expenses.forEach(e=>set.add(monthKey(e.tsRaw||e.ts)));
+  S.shiftHistory.forEach(sh=>set.add(monthKey(sh.closedAt)));
+  return [...set].sort().reverse();
 }
-function openEditMenu(id){
- const m=S.menu.find(x=>x.id===id);if(!m)return;
- menuModal={mode:'edit',data:{...m,price:m.price,hpp:m.hpp}};
- render();
+function monthSummary(ym){
+  const isMonth=x=>monthKey(x)===ym;
+  const trans=S.trans.filter(t=>isMonth(t.tsRaw||t.ts));
+  const exp=S.expenses.filter(e=>isMonth(e.tsRaw||e.ts));
+  const omzet=trans.reduce((a,t)=>a+t.total,0);
+  const cashSales=trans.filter(t=>t.method==='cash').reduce((a,t)=>a+t.total,0);
+  const qrisSales=trans.filter(t=>t.method==='qris').reduce((a,t)=>a+t.total,0);
+  const totalExp=exp.reduce((a,e)=>a+e.amount,0);
+  const expBahan=exp.filter(e=>(e.cat||'lainnya')==='bahan').reduce((a,e)=>a+e.amount,0);
+  const expOps=exp.filter(e=>(e.cat||'lainnya')==='ops').reduce((a,e)=>a+e.amount,0);
+  const expOther=exp.filter(e=>(e.cat||'lainnya')==='lainnya').reduce((a,e)=>a+e.amount,0);
+  const laba=omzet-totalExp;
+  const dividend=laba>0?laba*S.dividendPct/100:0;
+  const retained=laba-dividend;
+  return {
+    ym,label:monthLabel(ym),
+    omzet,cashSales,qrisSales,
+    totalExp,expBahan,expOps,expOther,
+    laba,dividend,retained,
+    transCount:trans.length,expCount:exp.length,
+  };
 }
-function closeMenuModal(){menuModal=null;render();}
-function saveMenuModal(){
- const d=menuModal.data;
- const name=d.name.trim();
- if(!name){alert('Nama menu wajib diisi.');return;}
- const price=+d.price||0;
- const hpp=+d.hpp||0;
- if(price<=0){alert('Harga jual harus lebih dari 0.');return;}
- if(hpp<0){alert('HPP tidak boleh negatif.');return;}
- if(menuModal.mode==='add'){
-  const newId=Date.now();
-  S.menu.push({id:newId,name,cat:d.cat,price,hpp,img:d.img||PH,badge:!!d.badge,active:d.active!==false});
-  logA(`Menu baru ditambahkan: ${name} (${rp(price)})`);
-  PG.menu.page=Math.ceil(S.menu.length/PG.menu.size);
- }else{
-  const m=S.menu.find(x=>x.id===d.id);if(!m)return;
-  m.name=name;m.cat=d.cat;m.price=price;m.hpp=hpp;m.img=d.img||PH;m.badge=!!d.badge;m.active=d.active!==false;
-  logA(`Menu diupdate: ${name}`);
- }
- menuModal=null;save();render();
-}
-function toggleMenuActive(id){
- const m=S.menu.find(x=>x.id===id);if(!m)return;
- m.active=!m.active;
- logA(`Menu "${m.name}" ${m.active?'diaktifkan':'ditandai habis/nonaktif'}`);
- save();render();
-}
-function askDeleteMenu(id){
- const m=S.menu.find(x=>x.id===id);if(!m)return;
- deleteConfirm={id,name:m.name};render();
-}
-function confirmDeleteMenu(){
- if(!deleteConfirm)return;
- const m=S.menu.find(x=>x.id===deleteConfirm.id);
- if(m){S.menu=S.menu.filter(x=>x.id!==deleteConfirm.id);logA(`Menu dihapus: ${m.name}`);}
- deleteConfirm=null;save();render();
-}
-function cancelDeleteMenu(){deleteConfirm=null;render();}
-function updateMenuField(field,val){
- if(!menuModal)return;
- menuModal.data[field]=val;
- if(field==='img'){const p=document.getElementById('mmImgPreview');if(p){p.src=val||PH;p.classList.toggle('show',!!val);}}
-}
-function handleMenuImgInput(val){
- if(!menuModal)return;menuModal.data.img=val;
- const p=document.getElementById('mmImgPreview');
- if(p){if(val){p.src=val;p.classList.add('show');p.onerror=()=>{p.src=PH;};}else{p.classList.remove('show');}}
+function dailyBreakdown(ym){
+  const isMonth=x=>monthKey(x)===ym;
+  const map={};
+  S.trans.filter(t=>isMonth(t.tsRaw||t.ts)).forEach(t=>{
+    const k=dateKey(t.tsRaw||t.ts);
+    if(!map[k])map[k]={omzet:0,cash:0,qris:0,exp:0,laba:0,trans:0,expCount:0};
+    map[k].omzet+=t.total;
+    if(t.method==='cash')map[k].cash+=t.total;else map[k].qris+=t.total;
+    map[k].trans++;
+  });
+  S.expenses.filter(e=>isMonth(e.tsRaw||e.ts)).forEach(e=>{
+    const k=dateKey(e.tsRaw||e.ts);
+    if(!map[k])map[k]={omzet:0,cash:0,qris:0,exp:0,laba:0,trans:0,expCount:0};
+    map[k].exp+=e.amount;
+    map[k].expCount++;
+  });
+  return Object.entries(map).map(([date,v])=>({date,...v,laba:v.omzet-v.exp})).sort((a,b)=>a.date.localeCompare(b.date));
 }
 
-/* ===== SHIFT BADGE ===== */
+/* ===== NAV ===== */
 function ShiftBadge(){
  if(isShiftActive()){
   const s=S.shift;
@@ -826,7 +878,13 @@ function ShiftBadge(){
 }
 
 function Nav(){
- const items=[['pos','shopping-bag','POS'],['tabs','clipboard-list','Open Tab'],['petty','wallet','Petty Cash'],['admin','shield','Admin & Laporan'],['shift','clock','Kelola Shift']];
+ const items=[
+  ['pos','shopping-bag','POS'],
+  ['tabs','clipboard-list','Open Tab'],
+  ['expenses','wallet','Pengeluaran'],
+  ['admin','shield','Admin & Laporan'],
+  ['shift','clock','Kelola Shift']
+ ];
  return `<div class="sidebar">
   <div class="brand">${Logo(38)}<span class="brand-name">TUKO</span></div>
   <div class="slogan">Tuangin · Puterin · Nikmatin</div>
@@ -835,11 +893,10 @@ function Nav(){
   <div class="sidebar-foot role-badge">Role: <b>${S.role}</b><button class="link-btn" onclick="S.role=S.role==='kasir'?'admin':'kasir';render()">ganti</button></div>
  </div>`;
 }
-
 function MobileShiftBadge(){
  if(isShiftActive()){
   const s=S.shift;
-  return `<div class="mobile-shift-badge active" onclick="view='shift';render()" title="${s.name} - ${s.cashierName}">
+  return `<div class="mobile-shift-badge active" onclick="view='shift';render()">
    <span class="dot"></span>
    <span style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${s.cashierName}</span>
   </div>`;
@@ -849,9 +906,8 @@ function MobileShiftBadge(){
   <span>Buka Shift</span>
  </div>`;
 }
-
 function MobileHeader(){
- const cats=['pos','tabs','petty','admin','shift'],labels=['POS','Tab','Kas','Admin','Shift'];
+ const cats=['pos','tabs','expenses','admin','shift'],labels=['POS','Tab','Belanja','Admin','Shift'];
  return `<div class="mobile-header">
   <div class="mobile-top">
    <div class="mobile-brand">${Logo(34)}<div><div class="brand-name" style="font-size:17px">TUKO</div><div class="slogan-top">Tuangin · Puterin · Nikmatin</div></div></div>
@@ -861,6 +917,7 @@ function MobileHeader(){
  </div>`;
 }
 
+/* ===== PRODUCT GRID ===== */
 function ProductGrid(){
  const cats=['Semua',...new Set(S.menu.filter(m=>m.active!==false).map(m=>m.cat))];
  const items=S.menu.filter(m=>m.active!==false && (cat==='Semua'||m.cat===cat)&&m.name.toLowerCase().includes(search.toLowerCase()));
@@ -883,7 +940,6 @@ function ProductGrid(){
   </div>
  </div>`;
 }
-
 function CartPanel(mobile){
  const total=cartTotal();
  const shiftOK=isShiftActive();
@@ -909,7 +965,6 @@ function CartPanel(mobile){
  return mobile?`<div class="overlay" onclick="if(event.target===this){cartOpen=false;render()}"><div class="drawer">${body}</div></div>`
  :`<div class="cart-panel">${body}</div>`;
 }
-
 function MobileCartBar(){
  if(!S.cart.length||cartOpen)return'';
  const n=S.cart.reduce((a,i)=>a+i.qty,0);
@@ -918,7 +973,6 @@ function MobileCartBar(){
   <button onclick="cartOpen=true;render()" class="mcb-pay">Bayar / Pay</button>
  </div>`;
 }
-
 function PayModal(){
  const total=cartTotal();const quick=[10000,20000,50000,100000];
  return `<div class="overlay center" onclick="if(event.target===this){modal=null;render()}">
@@ -932,7 +986,6 @@ function PayModal(){
    <button onclick="modal=null;render()" class="cancel-link">Batal</button>
   </div></div>`;
 }
-
 function ReceiptModal(t){
  return `<div class="overlay center" onclick="if(event.target===this){modal=null;render()}">
   <div class="modal-box receipt">
@@ -948,7 +1001,6 @@ function ReceiptModal(t){
    <button onclick="modal=null;render()" class="close-link">Tutup</button>
   </div></div>`;
 }
-
 function PinModal(){
  return `<div class="overlay center">
   <div class="modal-box pin-box">
@@ -957,7 +1009,6 @@ function PinModal(){
    <div class="pin-actions"><button onclick="pinModal=null;render()" class="btn-outline">Batal</button><button onclick="checkPin()" class="btn-primary">Buka</button></div>
   </div></div>`;
 }
-
 function TabsView(){
  return `<div class="content">
   <div class="section-title">Open Tab / Bayar Nanti</div>
@@ -969,27 +1020,81 @@ function TabsView(){
   </div></div>`;
 }
 
-function PettyView(){
- const list=isShiftActive()?shiftPetty():S.petty;
+/* ===== EXPENSES VIEW (Pengeluaran / Belanja) ===== */
+function ExpensesView(){
  const active=isShiftActive();
- return `<div class="content" style="max-width:560px">
-  <div class="section-title">Pengeluaran Kasir (Petty Cash)</div>
+ const list=active?shiftExpenses():S.expenses.slice().reverse();
+ const expTotal=active?shiftExpenseTotal():totalExpense();
+ const shiftPettyTotal=active?shiftExpenseTotal():0;
+ const byCat=active?(()=>{
+   const agg={bahan:0,ops:0,lainnya:0};
+   shiftExpenses().forEach(e=>{const c=e.cat||'lainnya';if(agg[c]!==undefined)agg[c]+=e.amount;});
+   return agg;
+ })():expenseByCat();
+
+ const pg=pgSlice(active?list.slice().reverse():list,'expense');
+
+ return `<div class="content">
+  <div class="section-title">Pengeluaran / Belanja Usaha</div>
   ${!active?`<div style="background:var(--amber-l);border:1px solid #ffe082;border-radius:14px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-   <div style="color:var(--amber);font-weight:700;display:flex;align-items:center;gap:8px;flex:1;min-width:200px">${Icon('info','w-4 h-4')} Buka shift dulu untuk mencatat pengeluaran shift.</div>
+   <div style="color:var(--amber);font-weight:700;display:flex;align-items:center;gap:8px;flex:1;min-width:200px">${Icon('info','w-4 h-4')} Buka shift dulu untuk mencatat pengeluaran shift ini.</div>
    <button onclick="showOpenShiftModal()" style="background:var(--amber);color:#fff;border-radius:10px;padding:9px 16px;font-weight:700;font-size:12.5px">Buka Shift</button>
   </div>`:''}
-  <div class="petty-form">
-   <input id="pd" class="field" placeholder="Keterangan (es batu, gas, parkir...)" ${!active?'disabled':''}>
-   <input id="pa" type="number" class="field" placeholder="Nominal" ${!active?'disabled':''}>
-   <button onclick="const d=document.getElementById('pd').value,a=+document.getElementById('pa').value;if(d&&a)addPetty(d,a)" ${!active?'disabled':''}>${Icon('plus','w-4 h-4')}</button>
+
+  <div class="exp-summary-grid">
+   <div class="exp-summary-card" style="border-left:4px solid #e65100">
+    <div class="exp-summary-label">🛒 Bahan Baku</div>
+    <div class="exp-summary-value" style="color:#e65100">${rp(byCat.bahan)}</div>
+   </div>
+   <div class="exp-summary-card" style="border-left:4px solid var(--blue)">
+    <div class="exp-summary-label">⚡ Operasional</div>
+    <div class="exp-summary-value" style="color:var(--blue)">${rp(byCat.ops)}</div>
+   </div>
+   <div class="exp-summary-card" style="border-left:4px solid #6a1b9a">
+    <div class="exp-summary-label">📦 Lainnya</div>
+    <div class="exp-summary-value" style="color:#6a1b9a">${rp(byCat.lainnya)}</div>
+   </div>
   </div>
-  <div class="petty-list">
-   ${list.length?list.slice().reverse().map(p=>`<div class="petty-item"><span>${p.desc}<div class="petty-desc-meta">${p.ts}</div></span><span style="font-weight:700">-${rp(p.amount)}</span></div>`).join(''):`<div class="cart-empty">Belum ada pengeluaran.</div>`}
+
+  <button onclick="showAddExpenseModal()" class="exp-submit-btn" ${!active?'disabled':''} style="margin-bottom:18px">
+   ${Icon('plus-circle','w-4 h-4')} Catat Pengeluaran Baru
+  </button>
+
+  <div class="exp-list">
+   ${pg.items.length?pg.items.map(e=>{
+     const c=e.cat||'lainnya';
+     const catMeta=EXPENSE_CATEGORIES.find(x=>x.id===c)||EXPENSE_CATEGORIES[2];
+     return `<div class="exp-item">
+      <div class="exp-item-info">
+       <div class="exp-item-desc">${e.desc}</div>
+       <div class="exp-item-meta">
+        <span class="cat-badge ${c}">${Icon(catMeta.icon,'w-3 h-3')} ${CAT_LABEL[c]}</span>
+        <span>${e.ts}</span>
+        ${e.shiftName?`<span>· ${e.shiftName}</span>`:''}
+       </div>
+      </div>
+      <div class="exp-item-amount">-${rp(e.amount)}</div>
+      <button onclick="showEditExpenseModal(${e.id})" class="mm-icon-btn edit" title="Edit">${Icon('pencil','w-3.5 h-3.5')}</button>
+      <button onclick="askDeleteExpense(${e.id})" class="exp-item-del" title="Hapus">${Icon('trash-2','w-3.5 h-3.5')}</button>
+     </div>`;
+   }).join(''):`<div class="empty-state-card" style="padding:32px 20px">
+    <div class="empty-state-icon">${Icon('wallet','w-6 h-6')}</div>
+    <div class="empty-state-title">Belum Ada Pengeluaran</div>
+    <div class="empty-state-sub">Catat belanja bahan baku, operasional, atau pengeluaran lain-lain di sini.</div>
+   </div>`}
   </div>
-  <div class="total-line"><span>Total Pengeluaran ${active?'(Shift Ini)':''}</span><span>${rp(active?shiftPettyTotal():pettyTotal())}</span></div>
+
+  ${pg.total?Pager('expense',pg.total,pg.totalPages,pg.start,pg.items.length):''}
+
+  <div class="total-line" style="font-size:15px;padding-top:16px;margin-top:20px">
+   <span>Total Pengeluaran ${active?'(Shift Ini)':'Semua'}</span>
+   <span style="color:var(--red)">${rp(expTotal)}</span>
+  </div>
+  ${active?`<div style="font-size:11.5px;color:#a3a390;text-align:right;margin-top:4px">Termasuk bahan baku, operasional & lainnya</div>`:''}
  </div>`;
 }
 
+/* ===== SHIFT VIEW ===== */
 function ShiftView(){
  if(!isShiftActive()){
   return `<div class="content" style="max-width:520px">
@@ -997,7 +1102,7 @@ function ShiftView(){
    <div class="empty-state-card">
     <div class="empty-state-icon">${Icon('clock','w-7 h-7')}</div>
     <div class="empty-state-title">Belum Ada Shift Aktif</div>
-    <div class="empty-state-sub">Buka shift baru untuk mulai sesi kasir hari ini. Semua transaksi akan terikat otomatis ke shift tersebut.</div>
+    <div class="empty-state-sub">Buka shift baru untuk mulai sesi kasir hari ini. Semua transaksi & pengeluaran akan terikat otomatis ke shift tersebut.</div>
     <button onclick="showOpenShiftModal()" class="session-btn" style="max-width:280px;margin:18px auto 0;display:flex">
      ${Icon('plus-circle','w-4 h-4')} Buka Shift Baru
     </button>
@@ -1031,18 +1136,18 @@ function ShiftView(){
     <div class="session-info-line"><span>Modal Awal Laci</span><span>${rp(s.openingCash)}</span></div>
     <div class="session-info-line"><span>Penjualan Tunai (Cash)</span><span>+${rp(shiftCashSales())}</span></div>
     <div class="session-info-line"><span>Penjualan QRIS</span><span>${rp(shiftQrisSales())}</span></div>
-    <div class="session-info-line"><span>Petty Cash (Pengeluaran)</span><span>-${rp(shiftPettyTotal())}</span></div>
+    <div class="session-info-line"><span>Pengeluaran Shift</span><span>-${rp(shiftExpenseTotal())}</span></div>
     <div class="session-info-line total"><span>Kas Diharapkan</span><span>${rp(expected)}</span></div>
    </div>
   </div>
   <div class="section-title" style="font-size:14px;margin-bottom:10px">Aktivitas Shift Ini</div>
   <div class="stat-grid" style="margin-bottom:20px">
    <div class="stat-card"><div class="stat-label">Transaksi</div><div class="stat-value">${shiftTrans().length}</div></div>
-   <div class="stat-card"><div class="stat-label">Petty Cash</div><div class="stat-value">${shiftPetty().length}</div></div>
-   <div class="stat-card"><div class="stat-label">Cash Sales</div><div class="stat-value">${rp(shiftCashSales())}</div></div>
-   <div class="stat-card"><div class="stat-label">QRIS Sales</div><div class="stat-value">${rp(shiftQrisSales())}</div></div>
+   <div class="stat-card"><div class="stat-label">Pengeluaran</div><div class="stat-value">${shiftExpenses().length}</div></div>
+   <div class="stat-card"><div class="stat-label">Omzet Shift</div><div class="stat-value">${rp(shiftGrossRevenue())}</div></div>
+   <div class="stat-card metric-accent" style="padding:14px"><div class="stat-label">Laba Bersih Shift</div><div class="stat-value">${rp(shiftNetProfit())}</div></div>
   </div>
-  <button onclick="showCloseShiftModal()" class="shift-close">${Icon('lock','w-4 h-4')} Tutup Shift & Rekonsiliasi Kas</button>
+  <button onclick="showCloseShiftModal()" class="shift-close">${Icon('lock','w-4 h-4')} Tutup Shift & Setor Uang</button>
  </div>`;
 }
 
@@ -1054,12 +1159,12 @@ function OpenShiftModal(){
     <button onclick="closeSessionModal()" class="close-x">${Icon('x','w-4 h-4')}</button>
     <div class="session-head-icon">${Icon('play-circle','w-6 h-6')}</div>
     <div class="session-head-title">Buka Shift Baru</div>
-    <div class="session-head-sub">Mulai sesi kasir hari ini. Semua transaksi akan terikat otomatis ke shift ini.</div>
+    <div class="session-head-sub">Mulai sesi kasir. Semua transaksi & pengeluaran akan terikat otomatis ke shift ini.</div>
    </div>
    <div class="session-body">
     <div class="session-input-block">
      <label>Nama Shift / Tanggal <span style="color:var(--red)">*</span></label>
-     <input type="text" class="session-text-input" value="${d.name}" oninput="updateOpenShiftField('name',this.value)" placeholder="Shift - 27 September 2026">
+     <input type="text" class="session-text-input" value="${d.name}" oninput="updateOpenShiftField('name',this.value)">
     </div>
     <div class="session-input-block">
      <label>Nama Kasir <span style="color:var(--red)">*</span></label>
@@ -1069,9 +1174,6 @@ function OpenShiftModal(){
      <label>Modal Awal Laci (Rp) <span style="color:var(--red)">*</span></label>
      <input type="number" min="0" value="${d.openingCash}" oninput="updateOpenShiftField('openingCash',this.value)" placeholder="0">
     </div>
-    <div style="padding:12px 14px;background:var(--olive-l);border-radius:12px;font-size:12px;color:var(--sage);font-weight:600;display:flex;align-items:flex-start;gap:8px;margin-top:6px">
-     ${Icon('info','w-4 h-4')} Setelah shift dibuka, semua transaksi (tunai, QRIS) dan pengeluaran petty cash akan tercatat ke shift ini.
-    </div>
    </div>
    <div class="session-foot">
     <button onclick="closeSessionModal()" class="session-btn secondary">Batal</button>
@@ -1080,7 +1182,6 @@ function OpenShiftModal(){
   </div>
  </div>`;
 }
-
 function CloseShiftModal(){
  const s=S.shift;
  const expected=shiftExpectedCash();
@@ -1094,34 +1195,36 @@ function CloseShiftModal(){
    <div class="session-head" style="background:linear-gradient(135deg,#8B4A4A 0%,#A85B5B 100%)">
     <button onclick="closeSessionModal()" class="close-x">${Icon('x','w-4 h-4')}</button>
     <div class="session-head-icon">${Icon('clipboard-check','w-6 h-6')}</div>
-    <div class="session-head-title">Tutup Shift & Rekonsiliasi</div>
+    <div class="session-head-title">Tutup Shift & Setor Uang</div>
     <div class="session-head-sub">${s.name} · Kasir: ${s.cashierName}</div>
    </div>
    <div class="session-body">
     <div class="session-info-block">
      <div class="session-info-line"><span>Waktu Buka</span><span>${s.startedAtLabel}</span></div>
      <div class="session-info-line"><span>Waktu Tutup</span><span>${now()}</span></div>
-     <div class="session-info-line"><span>Jumlah Transaksi</span><span>${shiftTrans().length}</span></div>
+     <div class="session-info-line"><span>Transaksi</span><span>${shiftTrans().length}</span></div>
+     <div class="session-info-line"><span>Pengeluaran</span><span>${shiftExpenses().length}</span></div>
     </div>
     <div class="session-info-block">
      <div class="session-info-line"><span>Modal Awal</span><span>${rp(s.openingCash)}</span></div>
      <div class="session-info-line"><span>Penjualan Tunai</span><span>+${rp(shiftCashSales())}</span></div>
      <div class="session-info-line"><span>Penjualan QRIS</span><span>${rp(shiftQrisSales())}</span></div>
-     <div class="session-info-line"><span>Petty Cash</span><span>-${rp(shiftPettyTotal())}</span></div>
+     <div class="session-info-line"><span>Pengeluaran Shift</span><span>-${rp(shiftExpenseTotal())}</span></div>
      <div class="session-info-line total"><span>Kas Diharapkan</span><span>${rp(expected)}</span></div>
     </div>
     <div class="session-input-block">
-     <label>Uang Fisik di Laci (Rp) <span style="color:var(--red)">*</span></label>
+     <label>Uang Fisik Setoran (Rp) <span style="color:var(--red)">*</span></label>
      <input type="number" min="0" value="${sessionModal.data.actualCash}" oninput="updateCloseField('actualCash',this.value);render()" placeholder="0" autofocus>
+     <div style="font-size:11px;color:#a3a390;margin-top:6px">Hitung uang tunai yang ada di laci, lalu masukkan jumlahnya.</div>
     </div>
     <div class="session-variance ${varCls}">
-     <div class="lbl">Selisih Kas</div>
+     <div class="lbl">Selisih Uang</div>
      <div class="val">${variance>0?'+':''}${rp(variance)}</div>
-     <div class="st">${variance===0?'✓ Kas Sesuai':(variance>0?'⚠ Kas Berlebih':'⚠ Kas Kurang')}</div>
+     <div class="st">${variance===0?'✓ Uang Sesuai':(variance>0?'⚠ Uang Berlebih':'⚠ Uang Kurang')}</div>
     </div>
     ${needNote?`
      <div class="session-input-block">
-      <label>Catatan / Alasan Selisih Kas <span style="color:var(--red)">*</span></label>
+      <label>Catatan / Alasan Selisih <span style="color:var(--red)">*</span></label>
       <textarea placeholder="Contoh: Uang kembalian kurang, tip, kesalahan input, dll." oninput="updateCloseField('note',this.value)">${sessionModal.data.note||''}</textarea>
      </div>
     `:''}
@@ -1133,11 +1236,10 @@ function CloseShiftModal(){
   </div>
  </div>`;
 }
-
 function ShiftSuccessModal(){
  const r=sessionModal.data;
  const vCls=r.variance===0?'ok':(Math.abs(r.variance)>50000?'bad':'warn');
- const vStatus=r.variance===0?'✓ Kas Sesuai':(r.variance>0?'⚠ Kas Berlebih':'⚠ Kas Kurang');
+ const vStatus=r.variance===0?'✓ Uang Sesuai':(r.variance>0?'⚠ Uang Berlebih':'⚠ Uang Kurang');
  return `<div class="overlay center">
   <div class="session-modal">
    <div class="session-head" style="background:linear-gradient(135deg,#4A6343 0%,#5B7553 100%)">
@@ -1154,21 +1256,23 @@ function ShiftSuccessModal(){
     </div>
     <div class="session-info-block">
      <div class="session-info-line"><span>Modal Awal</span><span>${rp(r.openingCash)}</span></div>
-     <div class="session-info-line"><span>Penjualan Tunai (Cash)</span><span>+${rp(r.cashSales)}</span></div>
+     <div class="session-info-line"><span>Penjualan Tunai</span><span>+${rp(r.cashSales)}</span></div>
      <div class="session-info-line"><span>Penjualan QRIS</span><span>${rp(r.qrisSales)}</span></div>
-     <div class="session-info-line"><span>Petty Cash</span><span>-${rp(r.pettyCash)}</span></div>
+     <div class="session-info-line"><span>Pengeluaran</span><span>-${rp(r.expenseTotal)}</span></div>
      <div class="session-info-line total"><span>Kas Diharapkan</span><span>${rp(r.expectedCash)}</span></div>
-     <div class="session-info-line"><span>Uang Fisik di Laci</span><span style="font-weight:700">${rp(r.actualCash)}</span></div>
+     <div class="session-info-line"><span>Uang Fisik Setoran</span><span style="font-weight:700">${rp(r.actualCash)}</span></div>
     </div>
     <div class="session-variance ${vCls}">
-     <div class="lbl">Selisih Kas</div>
+     <div class="lbl">Selisih Uang</div>
      <div class="val">${r.variance>0?'+':''}${rp(r.variance)}</div>
      <div class="st">${vStatus}</div>
     </div>
-    ${r.note?`<div style="padding:10px 14px;background:var(--amber-l);border-left:3px solid var(--amber);border-radius:8px;font-size:12.5px;color:#6b5b1f;font-style:italic;margin-bottom:14px">📝 <b>Catatan:</b> ${r.note}</div>`:''}
-    <div style="padding:12px 14px;background:var(--olive-l);border-radius:12px;font-size:12px;color:var(--sage);font-weight:600;text-align:center">
-     ${Icon('info','w-4 h-4')} Klik "Selesai" untuk mengakhiri sesi kasir ini.
+    <div class="session-info-block" style="background:linear-gradient(135deg,#4A6343 0%,#5B7553 100%);color:#fff;margin-bottom:0">
+     <div class="session-info-line" style="color:#fff"><span>Omzet Shift</span><span>${rp(r.grossRevenue)}</span></div>
+     <div class="session-info-line" style="color:#fff"><span>Total Pengeluaran</span><span>-${rp(r.expenseTotal)}</span></div>
+     <div class="session-info-line total" style="color:#fff;border-top-color:rgba(255,255,255,.3)"><span>Laba Bersih Shift</span><span style="color:#fff">${rp(r.netProfit)}</span></div>
     </div>
+    ${r.note?`<div style="padding:10px 14px;background:var(--amber-l);border-left:3px solid var(--amber);border-radius:8px;font-size:12.5px;color:#6b5b1f;font-style:italic;margin-top:14px">📝 <b>Catatan:</b> ${r.note}</div>`:''}
    </div>
    <div class="session-foot">
     <button onclick="finishCloseShift()" class="session-btn">${Icon('refresh-cw','w-4 h-4')} Selesai</button>
@@ -1211,7 +1315,7 @@ function ShiftHistorySection(){
   <div class="stat-card metric-accent">
    <div class="stat-label">Total Laba Bersih (Semua Shift)</div>
    <div class="stat-value">${rp(totalLaba)}</div>
-   <div class="metric-sub">Akumulasi dari ${allHist.length} shift selesai</div>
+   <div class="metric-sub">Omzet − Pengeluaran · ${allHist.length} shift</div>
   </div>
   <div class="stat-card">
    <div class="stat-label">Total Penjualan Tunai</div>
@@ -1222,16 +1326,16 @@ function ShiftHistorySection(){
    <div class="stat-value">${rp(totalQris)}</div>
   </div>
   <div class="stat-card">
-   <div class="stat-label">Akumulasi Selisih Kas</div>
+   <div class="stat-label">Akumulasi Selisih Uang</div>
    <div class="stat-value" style="color:${totalSelisih===0?'var(--green)':(totalSelisih>0?'var(--amber)':'var(--red)')}">${totalSelisih>0?'+':''}${rp(totalSelisih)}</div>
   </div>
  </div>
 
  <div class="filter-bar">
-  <input type="date" value="${historyFilter.date}" oninput="historyFilter.date=this.value;PG.shiftHist.page=1;render()" placeholder="Filter tanggal">
+  <input type="date" value="${historyFilter.date}" oninput="historyFilter.date=this.value;PG.shiftHist.page=1;render()">
   <input type="text" value="${historyFilter.cashier}" oninput="historyFilter.cashier=this.value;PG.shiftHist.page=1;render()" placeholder="Filter nama kasir...">
   <input type="text" value="${historyFilter.search}" oninput="historyFilter.search=this.value;PG.shiftHist.page=1;render()" placeholder="Cari nama shift / ID...">
-  ${(historyFilter.date||historyFilter.cashier||historyFilter.search)?`<button onclick="historyFilter={date:'',cashier:'',search:''};render()" style="background:var(--red-l);color:var(--red);border-radius:11px;padding:9px 14px;font-weight:700;font-size:12.5px">Reset Filter</button>`:''}
+  ${(historyFilter.date||historyFilter.cashier||historyFilter.search)?`<button onclick="historyFilter={date:'',cashier:'',search:''};render()" style="background:var(--red-l);color:var(--red);border-radius:11px;padding:9px 14px;font-weight:700;font-size:12.5px">Reset</button>`:''}
  </div>
 
  ${filtered.length?`
@@ -1250,17 +1354,17 @@ function ShiftHistorySection(){
      </div>
     </div>
     <div class="shift-hist-grid">
-     <div><span class="lbl">Modal Awal</span><span class="val">${rp(sh.openingCash)}</span></div>
+     <div><span class="lbl">Omzet</span><span class="val">${rp(sh.grossRevenue||0)}</span></div>
      <div><span class="lbl">Cash Sales</span><span class="val">${rp(sh.cashSales)}</span></div>
      <div><span class="lbl">QRIS Sales</span><span class="val">${rp(sh.qrisSales||0)}</span></div>
-     <div><span class="lbl">Petty Cash</span><span class="val">-${rp(sh.pettyCash)}</span></div>
-     <div><span class="lbl">Kas Diharapkan</span><span class="val">${rp(sh.expectedCash)}</span></div>
+     <div><span class="lbl">Pengeluaran</span><span class="val">-${rp(sh.expenseTotal||0)}</span></div>
+     <div><span class="lbl">Setoran Uang</span><span class="val">${rp(sh.actualCash)}</span></div>
      <div><span class="lbl">Laba Bersih</span><span class="val" style="color:var(--sage)">${rp(sh.netProfit||0)}</span></div>
     </div>
     ${sh.note?`<div class="shift-hist-note">📝 ${sh.note}</div>`:''}
     <div class="shift-hist-actions">
      <button onclick="openShiftDetail('${sh.id}')" class="shift-hist-detail-btn">
-      ${Icon('list','w-3.5 h-3.5')} Detail Item Terjual (${transInShift(sh).length} transaksi)
+      ${Icon('list','w-3.5 h-3.5')} Detail (${transInShift(sh).length} transaksi)
      </button>
     </div>
    </div>`;
@@ -1279,7 +1383,7 @@ function ShiftDetailModal(){
  if(!rec)return '';
  const items=shiftRecItemBreakdown(rec);
  const trans=transInShift(rec);
- const petty=pettyInShift(rec);
+ const exps=expensesInShift(rec);
  return `<div class="overlay center" onclick="if(event.target===this)closeShiftDetail()">
   <div class="detail-modal">
    <div class="detail-head">
@@ -1294,8 +1398,7 @@ function ShiftDetailModal(){
      <div class="session-info-line"><span>Modal Awal</span><span>${rp(rec.openingCash)}</span></div>
      <div class="session-info-line"><span>Penjualan Tunai</span><span>+${rp(rec.cashSales)}</span></div>
      <div class="session-info-line"><span>Penjualan QRIS</span><span>${rp(rec.qrisSales||0)}</span></div>
-     <div class="session-info-line"><span>Petty Cash</span><span>-${rp(rec.pettyCash)}</span></div>
-     <div class="session-info-line"><span>Total HPP</span><span>${rp(rec.hpp||0)}</span></div>
+     <div class="session-info-line"><span>Pengeluaran</span><span>-${rp(rec.expenseTotal||0)}</span></div>
      <div class="session-info-line total"><span>Laba Bersih Shift</span><span>${rp(rec.netProfit||0)}</span></div>
     </div>
 
@@ -1303,10 +1406,10 @@ function ShiftDetailModal(){
     ${items.length?items.map(it=>`<div class="detail-item-row">
      <div style="flex:1;min-width:0">
       <div class="detail-item-name">${it.name}</div>
-      <div class="detail-item-qty">${it.qty} pcs · ${it.cat} · margin ${rp(it.profit)}</div>
+      <div class="detail-item-qty">${it.qty} pcs · ${it.cat}</div>
      </div>
      <div class="detail-item-total">${rp(it.revenue)}</div>
-    </div>`).join(''):`<div style="color:#b3b0a4;font-size:12.5px;padding:12px 0;text-align:center">Tidak ada item terjual di shift ini.</div>`}
+    </div>`).join(''):`<div style="color:#b3b0a4;font-size:12.5px;padding:12px 0;text-align:center">Tidak ada item terjual.</div>`}
 
     <div class="detail-section-title">Daftar Transaksi (${trans.length})</div>
     ${trans.length?trans.slice().reverse().map(t=>`<div class="detail-item-row">
@@ -1317,38 +1420,38 @@ function ShiftDetailModal(){
      <div class="detail-item-total">${rp(t.total)}</div>
     </div>`).join(''):`<div style="color:#b3b0a4;font-size:12.5px;padding:12px 0;text-align:center">Tidak ada transaksi.</div>`}
 
-    ${petty.length?`
-     <div class="detail-section-title">Pengeluaran Petty Cash (${petty.length})</div>
-     ${petty.slice().reverse().map(p=>`<div class="detail-item-row">
-      <div style="flex:1;min-width:0">
-       <div class="detail-item-name">${p.desc}</div>
-       <div class="detail-item-qty">${p.ts}</div>
-      </div>
-      <div class="detail-item-total" style="color:var(--red)">-${rp(p.amount)}</div>
-     </div>`).join('')}
+    ${exps.length?`
+     <div class="detail-section-title">Pengeluaran Shift (${exps.length})</div>
+     ${exps.slice().reverse().map(e=>{
+       const c=e.cat||'lainnya';
+       return `<div class="detail-item-row">
+        <div style="flex:1;min-width:0">
+         <div class="detail-item-name">${e.desc}</div>
+         <div class="detail-item-qty"><span class="cat-badge ${c}">${CAT_LABEL[c]}</span> ${e.ts}</div>
+        </div>
+        <div class="detail-item-total" style="color:var(--red)">-${rp(e.amount)}</div>
+       </div>`;
+     }).join('')}
     `:''}
    </div>
   </div>
  </div>`;
 }
 
+/* ===== MENU MANAGEMENT ===== */
 function MenuManagement(){
  const totalMenu=S.menu.length;
  const activeMenu=S.menu.filter(m=>m.active!==false).length;
  const inactiveMenu=totalMenu-activeMenu;
- const avgMargin=S.menu.length?Math.round(S.menu.reduce((a,m)=>a+(m.price-m.hpp),0)/S.menu.length):0;
  const pg=pgSlice(S.menu,'menu');
  return `
- <div class="section-title" style="font-size:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
-  <span>Manajemen Menu</span>
- </div>
+ <div class="section-title" style="font-size:14px">Manajemen Menu</div>
  <div class="mm-toolbar">
   <div>
    <h3>Daftar Menu (${totalMenu} item)</h3>
    <div class="mm-stats">
     <span class="mm-stat-pill">Aktif: ${activeMenu}</span>
     ${inactiveMenu?`<span class="mm-stat-pill off">Habis/Nonaktif: ${inactiveMenu}</span>`:''}
-    <span class="mm-stat-pill warn">Rata-rata Margin: ${rp(avgMargin)}/pcs</span>
    </div>
   </div>
   <button onclick="openAddMenu()" class="mm-add-btn">${Icon('plus-circle','w-4 h-4')}Tambah Menu Baru</button>
@@ -1360,40 +1463,62 @@ function MenuManagement(){
     <th>Nama Menu</th>
     <th>Kategori</th>
     <th>Harga Jual</th>
-    <th>HPP (Modal)</th>
-    <th>Margin/Pcs</th>
     <th>Status</th>
     <th style="text-align:right">Aksi</th>
    </tr></thead>
    <tbody>
     ${pg.items.length?pg.items.map(m=>{
-     const margin=m.price-m.hpp;
-     const marginCls=margin<0?'neg':(margin<0.2*m.price?'low':'');
      const isActive=m.active!==false;
      return `<tr>
       <td><img src="${m.img||PH}" onerror="this.onerror=null;this.src='${PH}'" class="mm-thumb" alt="${m.name}"></td>
       <td><div class="mm-name-cell"><div><div class="mm-name">${m.name}${m.badge?'<span class="mm-badge-tiny">1 TEKO</span>':''}</div></div></div></td>
       <td><span style="font-size:11.5px;color:#8a8a80">${m.cat}</span></td>
       <td style="font-weight:700">${rp(m.price)}</td>
-      <td style="color:#8a8a80">${rp(m.hpp)}</td>
-      <td><span class="mm-margin ${marginCls}">${margin>=0?'+':''}${rp(margin)}</span></td>
       <td>
-       <button onclick="toggleMenuActive(${m.id})" class="mm-status ${isActive?'aktif':'habis'}" title="Klik untuk ${isActive?'tandai habis':'aktifkan'}">
+       <button onclick="toggleMenuActive(${m.id})" class="mm-status ${isActive?'aktif':'habis'}">
         ${Icon(isActive?'check-circle':'x-circle','w-3 h-3')}${isActive?'Aktif':'Habis'}
        </button>
       </td>
       <td><div class="mm-actions">
-       <button onclick="openEditMenu(${m.id})" class="mm-icon-btn edit" title="Edit menu">${Icon('pencil','w-3.5 h-3.5')}</button>
-       <button onclick="askDeleteMenu(${m.id})" class="mm-icon-btn del" title="Hapus menu">${Icon('trash-2','w-3.5 h-3.5')}</button>
+       <button onclick="openEditMenu(${m.id})" class="mm-icon-btn edit" title="Edit">${Icon('pencil','w-3.5 h-3.5')}</button>
+       <button onclick="askDeleteMenu(${m.id})" class="mm-icon-btn del" title="Hapus">${Icon('trash-2','w-3.5 h-3.5')}</button>
       </div></td>
      </tr>`;
-    }).join(''):`<tr><td colspan="8" style="color:#b3b0a4;text-align:center;padding:30px">Belum ada menu. Klik "Tambah Menu Baru" untuk menambahkan.</td></tr>`}
+    }).join(''):`<tr><td colspan="6" style="color:#b3b0a4;text-align:center;padding:30px">Belum ada menu.</td></tr>`}
    </tbody>
   </table>
  </div>
  ${Pager('menu',pg.total,pg.totalPages,pg.start,pg.items.length)}
  `;
 }
+
+function openAddMenu(){menuModal={mode:'add',data:{id:null,name:'',cat:'Teh/Teko',price:'',img:'',badge:false,active:true}};render();}
+function openEditMenu(id){const m=S.menu.find(x=>x.id===id);if(!m)return;menuModal={mode:'edit',data:{...m,price:m.price}};render();}
+function closeMenuModal(){menuModal=null;render();}
+function saveMenuModal(){
+ const d=menuModal.data;
+ const name=d.name.trim();
+ if(!name){alert('Nama menu wajib diisi.');return;}
+ const price=+d.price||0;
+ if(price<=0){alert('Harga jual harus lebih dari 0.');return;}
+ if(menuModal.mode==='add'){
+  const newId=Date.now();
+  S.menu.push({id:newId,name,cat:d.cat,price,hpp:0,img:d.img||PH,badge:!!d.badge,active:d.active!==false});
+  logA(`Menu baru ditambahkan: ${name} (${rp(price)})`);
+  PG.menu.page=Math.ceil(S.menu.length/PG.menu.size);
+ }else{
+  const m=S.menu.find(x=>x.id===d.id);if(!m)return;
+  m.name=name;m.cat=d.cat;m.price=price;m.hpp=0;m.img=d.img||PH;m.badge=!!d.badge;m.active=d.active!==false;
+  logA(`Menu diupdate: ${name}`);
+ }
+ menuModal=null;save();render();
+}
+function toggleMenuActive(id){const m=S.menu.find(x=>x.id===id);if(!m)return;m.active=!m.active;logA(`Menu "${m.name}" ${m.active?'diaktifkan':'nonaktif'}`);save();render();}
+function askDeleteMenu(id){const m=S.menu.find(x=>x.id===id);if(!m)return;deleteConfirm={id,name:m.name};render();}
+function confirmDeleteMenu(){if(!deleteConfirm)return;const m=S.menu.find(x=>x.id===deleteConfirm.id);if(m){S.menu=S.menu.filter(x=>x.id!==deleteConfirm.id);logA(`Menu dihapus: ${m.name}`);}deleteConfirm=null;save();render();}
+function cancelDeleteMenu(){deleteConfirm=null;render();}
+function updateMenuField(field,val){if(!menuModal)return;menuModal.data[field]=val;if(field==='img'){const p=document.getElementById('mmImgPreview');if(p){p.src=val||PH;p.classList.toggle('show',!!val);}}}
+function handleMenuImgInput(val){if(!menuModal)return;menuModal.data.img=val;const p=document.getElementById('mmImgPreview');if(p){if(val){p.src=val;p.classList.add('show');p.onerror=()=>{p.src=PH;};}else{p.classList.remove('show');}}}
 
 function MenuFormModal(){
  const d=menuModal.data;
@@ -1403,40 +1528,34 @@ function MenuFormModal(){
    <h3>${Icon(isEdit?'pencil':'plus-circle','w-5 h-5')} ${isEdit?'Edit Menu':'Tambah Menu Baru'}</h3>
    <div class="form-group">
     <label>Nama Menu <span class="req">*</span></label>
-    <input class="field" id="mmName" value="${d.name}" oninput="updateMenuField('name',this.value)" placeholder="Contoh: Tuko Original (1 Teko)">
+    <input class="field" value="${d.name}" oninput="updateMenuField('name',this.value)" placeholder="Contoh: Tuko Original (1 Teko)">
    </div>
    <div class="form-row">
     <div class="form-group">
      <label>Kategori <span class="req">*</span></label>
-     <select class="field" id="mmCat" onchange="updateMenuField('cat',this.value)">
+     <select class="field" onchange="updateMenuField('cat',this.value)">
       ${CATEGORIES.map(c=>`<option value="${c}" ${d.cat===c?'selected':''}>${c}</option>`).join('')}
      </select>
     </div>
     <div class="form-group">
      <label>URL Foto Produk</label>
-     <input class="field" id="mmImg" value="${d.img||''}" oninput="handleMenuImgInput(this.value)" placeholder="https://...">
+     <input class="field" value="${d.img||''}" oninput="handleMenuImgInput(this.value)" placeholder="https://...">
     </div>
    </div>
-   <div class="form-row">
-    <div class="form-group">
-     <label>Harga Jual (Rp) <span class="req">*</span></label>
-     <input class="field" id="mmPrice" type="number" min="0" value="${d.price}" oninput="updateMenuField('price',this.value)" placeholder="13000">
-    </div>
-    <div class="form-group">
-     <label>HPP / Modal (Rp) <span class="req">*</span></label>
-     <input class="field" id="mmHpp" type="number" min="0" value="${d.hpp}" oninput="updateMenuField('hpp',this.value)" placeholder="4000">
-    </div>
+   <div class="form-group">
+    <label>Harga Jual (Rp) <span class="req">*</span></label>
+    <input class="field" type="number" min="0" value="${d.price}" oninput="updateMenuField('price',this.value)" placeholder="13000">
    </div>
    <img id="mmImgPreview" class="form-img-preview ${d.img?'show':''}" src="${d.img||PH}" onerror="this.onerror=null;this.src='${PH}';">
    <div class="form-group">
     <label class="form-check">
-     <input type="checkbox" id="mmBadge" ${d.badge?'checked':''} onchange="updateMenuField('badge',this.checked)">
+     <input type="checkbox" ${d.badge?'checked':''} onchange="updateMenuField('badge',this.checked)">
      <span>Badge "1 Teko"</span>
     </label>
    </div>
    <div class="form-group">
     <label class="form-check">
-     <input type="checkbox" id="mmActive" ${d.active!==false?'checked':''} onchange="updateMenuField('active',this.checked)">
+     <input type="checkbox" ${d.active!==false?'checked':''} onchange="updateMenuField('active',this.checked)">
      <span>Menu Aktif (tampil di POS)</span>
     </label>
    </div>
@@ -1447,13 +1566,12 @@ function MenuFormModal(){
   </div>
  </div>`;
 }
-
 function DeleteConfirmModal(){
  return `<div class="overlay center" onclick="if(event.target===this)cancelDeleteMenu()">
   <div class="confirm-modal">
    <div class="confirm-icon">${Icon('trash-2','w-7 h-7')}</div>
    <h3>Hapus Menu?</h3>
-   <p>Menu <b>"${deleteConfirm.name}"</b> akan dihapus permanen. Tindakan ini tidak dapat dibatalkan.</p>
+   <p>Menu <b>"${deleteConfirm.name}"</b> akan dihapus permanen.</p>
    <div class="confirm-actions">
     <button onclick="cancelDeleteMenu()" class="btn-cancel">Batal</button>
     <button onclick="confirmDeleteMenu()" class="btn-danger">Ya, Hapus</button>
@@ -1462,6 +1580,165 @@ function DeleteConfirmModal(){
  </div>`;
 }
 
+/* ===== EXPENSE MODAL ===== */
+function ExpenseModal(){
+ const d=expenseModal.data;
+ const isEdit=!!d.id;
+ return `<div class="overlay center" onclick="if(event.target===this)closeExpenseModal()">
+  <div class="form-modal">
+   <h3>${Icon(isEdit?'pencil':'wallet','w-5 h-5')} ${isEdit?'Edit Pengeluaran':'Catat Pengeluaran Baru'}</h3>
+   <div class="form-group">
+    <label>Kategori <span class="req">*</span></label>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+     ${EXPENSE_CATEGORIES.map(c=>`
+      <button onclick="updateExpenseField('cat','${c.id}');render()" style="padding:12px 8px;border-radius:12px;border:2px solid ${d.cat===c.id?'var(--sage)':'#e7e3da'};background:${d.cat===c.id?'var(--olive-l)':'#fff'};color:${d.cat===c.id?'var(--sage)':'#6b6b60'};font-weight:700;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:6px;transition:all .15s">
+       ${Icon(c.icon,'w-5 h-5')}
+       <span>${c.label.split(' ')[0]}</span>
+      </button>
+     `).join('')}
+    </div>
+    <div style="font-size:11px;color:#8a8a80;margin-top:6px;text-align:center">${(EXPENSE_CATEGORIES.find(x=>x.id===d.cat)||EXPENSE_CATEGORIES[0]).hint}</div>
+   </div>
+   <div class="form-group">
+    <label>Keterangan <span class="req">*</span></label>
+    <input class="field" value="${d.desc}" oninput="updateExpenseField('desc',this.value)" placeholder="Contoh: Beli teh 1 kg, Gas 3kg, Bayar listrik...">
+   </div>
+   <div class="form-group">
+    <label>Nominal (Rp) <span class="req">*</span></label>
+    <input class="field" type="number" min="0" value="${d.amount}" oninput="updateExpenseField('amount',this.value)" placeholder="0">
+   </div>
+   <div class="form-actions">
+    <button onclick="closeExpenseModal()" class="btn-cancel">Batal</button>
+    <button onclick="submitExpense()" class="btn-save">${isEdit?'Simpan Perubahan':'Simpan Pengeluaran'}</button>
+   </div>
+  </div>
+ </div>`;
+}
+function ExpenseDeleteConfirmModal(){
+ return `<div class="overlay center" onclick="if(event.target===this)cancelDeleteExpense()">
+  <div class="confirm-modal">
+   <div class="confirm-icon">${Icon('trash-2','w-7 h-7')}</div>
+   <h3>Hapus Pengeluaran?</h3>
+   <p><b>"${expenseDeleteConfirm.name}"</b> akan dihapus dari daftar pengeluaran.</p>
+   <div class="confirm-actions">
+    <button onclick="cancelDeleteExpense()" class="btn-cancel">Batal</button>
+    <button onclick="confirmDeleteExpense()" class="btn-danger">Ya, Hapus</button>
+   </div>
+  </div>
+ </div>`;
+}
+
+/* ===== MONTHLY REPORT SECTION (Admin) ===== */
+function MonthlyReportSection(){
+ const months=availableMonths();
+ if(!reportMonth) reportMonth = months[0]||monthKey(nowISO());
+ // Jika reportMonth belum ada di months (misal baru), tetap tampilkan
+ const summary=monthSummary(reportMonth);
+ const daily=dailyBreakdown(reportMonth);
+
+ return `
+ <div class="section-title" style="font-size:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+  <span>📊 Ringkasan Keuangan Bulanan</span>
+ </div>
+
+ <div class="filter-bar" style="margin-bottom:16px">
+  <select onchange="reportMonth=this.value;render()" style="flex:2;font-weight:700">
+   ${months.length?months.map(m=>`<option value="${m}" ${reportMonth===m?'selected':''}>${monthLabel(m)}</option>`).join(''):`<option value="${reportMonth}">${monthLabel(reportMonth)}</option>`}
+  </select>
+ </div>
+
+ <div class="month-card">
+  <div class="month-head">
+   <div class="month-name">${summary.label}</div>
+   <div style="font-size:11.5px;color:#a3a390">${summary.transCount} transaksi · ${summary.expCount} pengeluaran</div>
+  </div>
+
+  <div class="month-grid">
+   <div class="month-item">
+    <div class="lbl">Omzet Kotor</div>
+    <div class="val blue">${rp(summary.omzet)}</div>
+   </div>
+   <div class="month-item">
+    <div class="lbl">Total Pengeluaran</div>
+    <div class="val red">-${rp(summary.totalExp)}</div>
+   </div>
+   <div class="month-item" style="grid-column:1/-1;background:linear-gradient(135deg,#4A6343 0%,#5B7553 100%)">
+    <div class="lbl" style="color:rgba(255,255,255,.8)">Total Laba Bersih Usaha</div>
+    <div class="val" style="color:#fff;font-size:20px">${rp(summary.laba)}</div>
+   </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font-size:11.5px;margin-bottom:14px">
+   <div style="background:#fff3e0;border-radius:9px;padding:8px 10px">
+    <div style="color:#e65100;font-weight:700;font-size:10.5px">🛒 Bahan Baku</div>
+    <div style="font-weight:800;font-size:13px;margin-top:2px">${rp(summary.expBahan)}</div>
+   </div>
+   <div style="background:var(--blue-l);border-radius:9px;padding:8px 10px">
+    <div style="color:var(--blue);font-weight:700;font-size:10.5px">⚡ Operasional</div>
+    <div style="font-weight:800;font-size:13px;margin-top:2px">${rp(summary.expOps)}</div>
+   </div>
+   <div style="background:#f3e5f5;border-radius:9px;padding:8px 10px">
+    <div style="color:#6a1b9a;font-weight:700;font-size:10.5px">📦 Lainnya</div>
+    <div style="font-weight:800;font-size:13px;margin-top:2px">${rp(summary.expOther)}</div>
+   </div>
+  </div>
+
+  <div class="dividend-block">
+   <div class="dividend-title">${Icon('pie-chart','w-4 h-4')} ALOKASI DIVIDEN / BAGI HASIL</div>
+   <div class="dividend-slider">
+    <span style="font-size:11.5px;font-weight:700">Persentase Bagi Hasil:</span>
+    <input type="range" min="0" max="100" step="5" value="${S.dividendPct}" oninput="S.dividendPct=+this.value;save();render()">
+    <span class="pct">${S.dividendPct}%</span>
+   </div>
+   <div class="dividend-row"><span>Laba Bersih Usaha</span><span>${rp(summary.laba)}</span></div>
+   <div class="dividend-row"><span>Alokasi Dividen (${S.dividendPct}%)</span><span style="color:#ffe082">${rp(summary.dividend)}</span></div>
+   <div class="dividend-row"><span>Laba Ditahan (${100-S.dividendPct}%)</span><span style="color:#a5d6a7">${rp(summary.retained)}</span></div>
+   ${summary.laba<0?`<div style="font-size:11px;opacity:.85;margin-top:8px;background:rgba(255,255,255,.1);padding:8px 10px;border-radius:8px">⚠ Bulan ini rugi. Dividen & laba ditahan diset 0.</div>`:''}
+  </div>
+ </div>
+
+ <div class="section-title" style="font-size:13px;margin-top:20px">Rincian Per Tanggal — ${summary.label}</div>
+ <div class="menu-table-wrap">
+  <table class="daily-table">
+   <thead><tr>
+    <th>Tanggal</th>
+    <th style="text-align:right">Omzet</th>
+    <th style="text-align:right">Cash</th>
+    <th style="text-align:right">QRIS</th>
+    <th style="text-align:right">Pengeluaran</th>
+    <th style="text-align:right">Laba Bersih</th>
+    <th style="text-align:center">Trx</th>
+   </tr></thead>
+   <tbody>
+    ${daily.length?daily.map(d=>{
+      const dt=new Date(d.date+'T00:00:00');
+      const isWeekend=dt.getDay()===0||dt.getDay()===6;
+      return `<tr class="${isWeekend?'weekend':''}">
+       <td><b>${dateLabel(d.date)}</b>${isWeekend?' <span style="font-size:9.5px;color:#a3a390">(Wknd)</span>':''}</td>
+       <td class="num">${rp(d.omzet)}</td>
+       <td class="num" style="color:#2e7d32">${rp(d.cash)}</td>
+       <td class="num" style="color:var(--blue)">${rp(d.qris)}</td>
+       <td class="num neg">${d.exp?'-'+rp(d.exp):'-'}</td>
+       <td class="num ${d.laba>=0?'pos':'neg'}">${rp(d.laba)}</td>
+       <td style="text-align:center;font-weight:600">${d.trans}</td>
+      </tr>`;
+    }).join(''):`<tr><td colspan="7" style="text-align:center;color:#b3b0a4;padding:20px">Belum ada transaksi di bulan ini.</td></tr>`}
+    ${daily.length?`<tr class="total-row">
+     <td>TOTAL</td>
+     <td class="num">${rp(summary.omzet)}</td>
+     <td class="num">${rp(summary.cashSales)}</td>
+     <td class="num">${rp(summary.qrisSales)}</td>
+     <td class="num">-${rp(summary.totalExp)}</td>
+     <td class="num" style="color:${summary.laba>=0?'var(--green)':'var(--red)'}">${rp(summary.laba)}</td>
+     <td style="text-align:center">${summary.transCount}</td>
+    </tr>`:''}
+   </tbody>
+  </table>
+ </div>
+ `;
+}
+
+/* ===== ADMIN VIEW ===== */
 function AdminView(){
  if(!adminUnlocked){tryAdmin(null);return `<div class="content" style="color:#b3b0a4">Menunggu PIN...</div>`;}
  const soldData=salesBreakdown();
@@ -1473,23 +1750,28 @@ function AdminView(){
  return `<div class="content">
   <div class="section-title">Admin & Laporan Keuangan</div>
   <div class="stat-grid">
-   ${[['Omzet Kotor',grossRevenue()],['Total HPP',totalHPP()],['Pengeluaran',pettyTotal()],['Laba Bersih',netProfit()]].map(([l,v])=>`<div class="stat-card"><div class="stat-label">${l}</div><div class="stat-value">${rp(v)}</div></div>`).join('')}
+   <div class="stat-card"><div class="stat-label">Omzet Kotor</div><div class="stat-value">${rp(grossRevenue())}</div></div>
+   <div class="stat-card"><div class="stat-label">Total Pengeluaran</div><div class="stat-value" style="color:var(--red)">${rp(totalExpense())}</div></div>
+   <div class="stat-card"><div class="stat-label">Laba Bersih Usaha</div><div class="stat-value" style="color:${netProfit()>=0?'var(--green)':'var(--red)'}">${rp(netProfit())}</div></div>
+   <div class="stat-card metric-accent"><div class="stat-label">Alokasi Dividen (${S.dividendPct}%)</div><div class="stat-value">${rp(netProfit()>0?netProfit()*S.dividendPct/100:0)}</div></div>
   </div>
   <div class="chart-card"><canvas id="profitChart" height="90"></canvas></div>
   <div class="export-row">
-   <button onclick="exportExcel()" class="export-btn">${Icon('download','w-4 h-4')}Export Excel (Laporan_Shift)</button>
+   <button onclick="exportExcel()" class="export-btn">${Icon('download','w-4 h-4')}Export Excel (Lengkap)</button>
    <label class="import-btn">${Icon('upload','w-4 h-4')}Import Excel<input type="file" accept=".xlsx" style="display:none" onchange="if(this.files[0])importExcel(this.files[0])"></label>
   </div>
 
+  ${MonthlyReportSection()}
+
   ${ShiftHistorySection()}
 
-  <div class="section-title" style="font-size:14px">Rincian Item Terjual (Best Seller)</div>
+  <div class="section-title" style="font-size:14px">Rincian Item Terjual</div>
   <div class="menu-table-wrap">
-   <table><thead><tr><th>#</th><th>Nama Item</th><th>Kategori</th><th>Pcs Terjual</th><th>Total Omzet</th><th>Total HPP</th><th>Laba Bersih</th></tr></thead>
+   <table><thead><tr><th>#</th><th>Nama Item</th><th>Kategori</th><th>Pcs</th><th>Total Omzet</th></tr></thead>
    <tbody>${soldPg.items.length?soldPg.items.map((s,idx)=>`<tr>
     <td>${soldPg.start+idx+1}</td><td>${s.name}</td><td>${s.cat}</td><td style="font-weight:700">${s.qty}</td>
-    <td>${rp(s.revenue)}</td><td>${rp(s.hpp)}</td><td style="color:var(--sage);font-weight:700">${rp(s.profit)}</td>
-   </tr>`).join(''):`<tr><td colspan="7" style="color:#b3b0a4;text-align:center;padding:20px">Belum ada transaksi.</td></tr>`}</tbody></table>
+    <td style="color:var(--sage);font-weight:700">${rp(s.revenue)}</td>
+   </tr>`).join(''):`<tr><td colspan="5" style="color:#b3b0a4;text-align:center;padding:20px">Belum ada transaksi.</td></tr>`}</tbody></table>
   </div>
   ${Pager('sold',soldPg.total,soldPg.totalPages,soldPg.start,soldPg.items.length)}
 
@@ -1505,7 +1787,7 @@ function AdminView(){
     </div>
     <div style="text-align:right">
      <div class="tab-total">${rp(t.total)}</div>
-     <button onclick="reopenReceipt(${t.id})" class="tab-resume">Detail / Lihat Struk</button>
+     <button onclick="reopenReceipt(${t.id})" class="tab-resume">Lihat Struk</button>
     </div>
    </div>`).join(''):`<div class="cart-empty">Belum ada transaksi.</div>`}
   </div>
@@ -1517,12 +1799,93 @@ function AdminView(){
  </div>`;
 }
 
+/* ===== EXCEL EXPORT ===== */
+function exportExcel(){
+ const wb=XLSX.utils.book_new();
+ // 1. Menu
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(S.menu.map(m=>({id:m.id,name:m.name,cat:m.cat,price:m.price,active:m.active,img:m.img}))),'Menu');
+ // 2. Transaksi
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(S.trans.map(t=>({id:t.id,ts:t.ts,shift:t.shiftName||'-',table:t.table,cashier:t.cashier||'',method:t.method,items:itemsLabel(t.items),total:t.total}))),'Transaksi');
+ // 3. Pengeluaran
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(S.expenses.map(e=>({
+   id:e.id, tanggal:e.ts, shift:e.shiftName||'-', kategori:CAT_LABEL[e.cat||'lainnya'], keterangan:e.desc, nominal:e.amount,
+ }))),'Pengeluaran');
+ // 4. Laporan_Shift
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(S.shiftHistory.map(sh=>({
+   id_shift:sh.id, nama_shift:sh.name||'-', nama_kasir:sh.cashierName||'-',
+   tanggal_buka:sh.startedAtLabel, tanggal_tutup:sh.closedAtLabel,
+   modal_awal:sh.openingCash, total_penjualan_cash:sh.cashSales, total_qris:sh.qrisSales,
+   total_pengeluaran:sh.expenseTotal||0, kas_diharapkan:sh.expectedCash,
+   uang_fisik_setoran:sh.actualCash, selisih_uang:sh.variance,
+   omzet_shift:sh.grossRevenue||0, laba_bersih_shift:sh.netProfit||0,
+   catatan:sh.note||'',
+ }))),'Laporan_Shift');
+ // 5. Rincian_Bulanan
+ const monthlyRows=[];
+ availableMonths().forEach(ym=>{
+   const s=monthSummary(ym);
+   monthlyRows.push({
+     bulan:s.label,
+     omzet_kotor:s.omzet,
+     cash:s.cashSales,
+     qris:s.qrisSales,
+     pengeluaran_bahan_baku:s.expBahan,
+     pengeluaran_operasional:s.expOps,
+     pengeluaran_lainnya:s.expOther,
+     total_pengeluaran:s.totalExp,
+     laba_bersih:s.laba,
+     persentase_dividen:S.dividendPct,
+     alokasi_dividen:s.dividend,
+     laba_ditahan:s.retained,
+     jumlah_transaksi:s.transCount,
+   });
+ });
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(monthlyRows.length?monthlyRows:[{info:'Belum ada data'}]),'Rincian_Bulanan');
+ // 6. Rincian_Harian
+ const dailyRows=[];
+ availableMonths().forEach(ym=>{
+   dailyBreakdown(ym).forEach(d=>{
+     dailyRows.push({
+       tanggal:d.date,
+       omzet:d.omzet,
+       cash:d.cash,
+       qris:d.qris,
+       pengeluaran:d.exp,
+       laba_bersih:d.laba,
+       jumlah_transaksi:d.trans,
+     });
+   });
+ });
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(dailyRows.length?dailyRows:[{info:'Belum ada data'}]),'Rincian_Harian');
+ // 7. Log
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(S.log),'Log');
+ XLSX.writeFile(wb,`TUKO_Laporan_${Date.now()}.xlsx`);
+ logA('Export data ke Excel (lengkap)');
+}
+function importExcel(file){
+ const r=new FileReader();
+ r.onload=e=>{
+  try{
+   const wb=XLSX.read(new Uint8Array(e.target.result),{type:'array'});
+   if(wb.SheetNames.includes('Menu')){const rows=XLSX.utils.sheet_to_json(wb.Sheets['Menu']);if(rows.length)S.menu=rows.map(r=>({...r,price:+r.price,hpp:0,id:+r.id,badge:!!r.badge,active:r.active!==false}));}
+   if(wb.SheetNames.includes('Pengeluaran')){const rows=XLSX.utils.sheet_to_json(wb.Sheets['Pengeluaran']);if(rows.length)S.expenses=rows.map(r=>({id:+r.id,desc:r.keterangan||r.desc,amount:+r.nominal||+r.amount,cat:(r.kategori||'').toLowerCase().includes('bahan')?'bahan':((r.kategori||'').toLowerCase().includes('operasional')?'ops':'lainnya'),ts:r.tanggal||now(),tsRaw:r.tanggal||nowISO()}));}
+   logA('Import data dari Excel');save();adminUnlocked=true;render();alert('Import berhasil');
+  }catch(err){alert('File tidak valid');}
+ };
+ r.readAsArrayBuffer(file);
+}
+function tryAdmin(cb){pinModal={cb,val:''};render();}
+function checkPin(){if(pinModal.val===S.pin){adminUnlocked=true;const cb=pinModal.cb;pinModal=null;render();cb&&cb();}else{alert('PIN salah');pinModal.val='';render();}}
+function Icon(n,cls){return `<i data-lucide="${n}" class="${cls||''}"></i>`;}
+function Logo(size){return `<div class="brand-logo" style="width:${size}px;height:${size}px;font-size:${size*.42}px">T</div>`;}
+
+/* ===== MAIN RENDER ===== */
 function render(){
  window.m=S.menu;
  let content;
  if(view==='pos')content=ProductGrid();
  else if(view==='tabs')content=TabsView();
- else if(view==='petty')content=PettyView();
+ else if(view==='expenses')content=ExpensesView();
  else if(view==='admin')content=AdminView();
  else if(view==='shift')content=ShiftView();
 
@@ -1541,6 +1904,8 @@ function render(){
   ${pinModal?PinModal():''}
   ${menuModal?MenuFormModal():''}
   ${deleteConfirm?DeleteConfirmModal():''}
+  ${expenseModal?ExpenseModal():''}
+  ${expenseDeleteConfirm?ExpenseDeleteConfirmModal():''}
   ${sessionModal&&sessionModal.mode==='open'?OpenShiftModal():''}
   ${sessionModal&&sessionModal.mode==='close'?CloseShiftModal():''}
   ${sessionModal&&sessionModal.mode==='success'?ShiftSuccessModal():''}
@@ -1550,7 +1915,7 @@ function render(){
  if(view==='admin'&&adminUnlocked){
   const ctx=document.getElementById('profitChart');
   if(ctx){if(window._chart)window._chart.destroy();
-   window._chart=new Chart(ctx,{type:'bar',data:{labels:['Omzet Kotor','Total HPP','Pengeluaran','Laba Bersih'],datasets:[{data:[grossRevenue(),totalHPP(),pettyTotal(),netProfit()],backgroundColor:['#8A9B7D','#DCE2D7','#c9b8a3','#4A6343'],borderRadius:6}]},options:{plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'Rp'+(v/1000)+'rb'}}}}});
+   window._chart=new Chart(ctx,{type:'bar',data:{labels:['Omzet Kotor','Pengeluaran','Laba Bersih'],datasets:[{data:[grossRevenue(),totalExpense(),netProfit()],backgroundColor:['#8A9B7D','#c9b8a3','#4A6343'],borderRadius:6}]},options:{plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'Rp'+(v/1000)+'rb'}}}}});
   }
  }
 }
