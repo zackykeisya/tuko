@@ -22,7 +22,6 @@ img{display:block;max-width:100%;}
 .main-col{flex:1;display:flex;flex-direction:column;overflow:hidden;}
 .row{display:flex;flex:1;overflow:hidden;}
 
-/* Sidebar */
 .sidebar{display:none;flex-direction:column;width:250px;flex-shrink:0;background:#fff;border-right:1px solid #e7e3da;padding:20px 16px;overflow-y:auto;}
 .brand{display:flex;align-items:center;gap:10px;margin-bottom:2px;}
 .brand-logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--sage),var(--sage-l));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;flex-shrink:0;}
@@ -35,7 +34,6 @@ img{display:block;max-width:100%;}
 .sidebar-foot{margin-top:auto;padding-top:16px;border-top:1px solid #eee;font-size:12px;color:#9a998e;}
 .link-btn{background:none;color:var(--sage);text-decoration:underline;padding:0;margin-left:4px;}
 
-/* Shift Badge */
 .shift-badge{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;margin-bottom:14px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;border:1px solid transparent;}
 .shift-badge.none{background:var(--amber-l);color:var(--amber);border-color:#ffe082;}
 .shift-badge.none:hover{background:#fceec2;}
@@ -49,7 +47,6 @@ img{display:block;max-width:100%;}
 .shift-badge-name{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .shift-badge-sub{font-size:10px;opacity:.75;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
-/* Mobile header */
 .mobile-header{display:block;background:#fff;border-bottom:1px solid #e7e3da;padding:14px 16px;position:sticky;top:0;z-index:20;}
 .mobile-top{display:flex;justify-content:space-between;align-items:center;gap:10px;}
 .mobile-brand{display:flex;align-items:center;gap:9px;}
@@ -62,7 +59,6 @@ img{display:block;max-width:100%;}
 .mobile-cats{display:flex;gap:8px;margin-top:12px;overflow-x:auto;scrollbar-width:none;}
 .mobile-cats::-webkit-scrollbar{display:none;}
 
-/* Content */
 .content{flex:1;overflow-y:auto;padding:18px;}
 .search-box{width:100%;max-width:420px;padding:11px 16px;border-radius:14px;border:1px solid #e7e3da;background:#fff;margin-bottom:16px;display:none;}
 .search-box:focus{outline:2px solid var(--olive-l);}
@@ -88,7 +84,6 @@ img{display:block;max-width:100%;}
 .add-btn:active{transform:scale(.92);}
 .add-btn:disabled{background:#b3b0a4;cursor:not-allowed;opacity:.55;}
 
-/* Cart */
 .cart-panel{display:none;flex-direction:column;width:340px;flex-shrink:0;background:#fff;border-left:1px solid #e7e3da;}
 .cart-header{padding:18px 18px 14px;border-bottom:1px solid #f0ede4;display:flex;justify-content:space-between;align-items:center;}
 .cart-title{font-weight:700;font-size:16px;}
@@ -115,7 +110,6 @@ img{display:block;max-width:100%;}
 .btn-primary:hover{background:var(--sage-l);}
 .btn-primary:disabled,.btn-outline:disabled{opacity:.5;cursor:not-allowed;}
 
-/* Mobile cart bar & drawer */
 .mobile-cart-bar{display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--ink);color:#fff;padding:14px 16px;justify-content:space-between;align-items:center;z-index:30;border-radius:18px 18px 0 0;box-shadow:0 -4px 16px rgba(0,0,0,.2);}
 .mcb-left{display:flex;align-items:center;gap:10px;font-size:13.5px;}
 .mcb-count{background:var(--olive-l);color:var(--sage);font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;}
@@ -129,7 +123,6 @@ img{display:block;max-width:100%;}
 @keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
 .modal-title{font-weight:700;font-size:16px;margin-bottom:14px;}
 
-/* Payment modal */
 .pay-total-display{background:linear-gradient(135deg,#4A6343 0%,#5B7553 100%);color:#fff;border-radius:14px;padding:16px 18px;margin-bottom:16px;text-align:center;}
 .pay-total-label{font-size:11px;text-transform:uppercase;letter-spacing:.5px;font-weight:700;opacity:.8;margin-bottom:4px;}
 .pay-total-amount{font-weight:900;font-size:28px;letter-spacing:.5px;}
@@ -162,7 +155,6 @@ img{display:block;max-width:100%;}
 .btn-pay-confirm:disabled{opacity:.5;cursor:not-allowed;box-shadow:none;}
 .btn-pay-cancel{background:var(--cream);color:#6b6b60;border-radius:13px;padding:14px 0;font-weight:700;font-size:14px;}
 
-/* QRIS DISPLAY */
 .qris-box{background:#fff;border-radius:16px;padding:16px;margin-bottom:14px;border:1px solid #e7e3da;}
 .qris-header{text-align:center;margin-bottom:12px;}
 .qris-brand{font-weight:800;font-size:15px;color:var(--ink);margin-bottom:3px;}
@@ -213,7 +205,6 @@ td{padding:10px 12px;border-bottom:1px solid #f6f4ee;vertical-align:middle;}
 .log-list{font-size:12px;color:#8a8a80;max-height:220px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;}
 .role-badge{display:flex;align-items:center;gap:4px;}
 
-/* Menu management */
 .mm-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;}
 .mm-toolbar h3{font-weight:700;font-size:15px;margin:0;}
 .mm-add-btn{background:var(--sage);color:#fff;border-radius:12px;padding:10px 18px;font-weight:700;font-size:13px;display:flex;align-items:center;gap:8px;box-shadow:0 3px 10px rgba(74,99,67,.3);transition:background .15s,transform .1s;}
@@ -223,17 +214,14 @@ td{padding:10px 12px;border-bottom:1px solid #f6f4ee;vertical-align:middle;}
 .mm-stat-pill{background:var(--olive-l);color:var(--sage);padding:5px 12px;border-radius:999px;font-size:11.5px;font-weight:600;}
 .mm-stat-pill.warn{background:var(--amber-l);color:var(--amber);}
 .mm-stat-pill.off{background:var(--red-l);color:var(--red);}
-
 .mm-thumb{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#DCE2D7 0%,#c8d1c2 100%);display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--sage);font-size:14px;flex-shrink:0;text-align:center;line-height:1;padding:4px;overflow:hidden;}
 .mm-name-cell{display:flex;align-items:center;gap:10px;min-width:180px;}
 .mm-name{font-weight:600;font-size:13px;line-height:1.3;}
 .mm-badge-tiny{display:inline-block;background:var(--sage);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:6px;margin-left:6px;vertical-align:middle;letter-spacing:.3px;}
-
 .mm-status{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;cursor:pointer;transition:all .15s;user-select:none;border:none;}
 .mm-status.aktif{background:var(--green-l);color:var(--green);}
 .mm-status.habis{background:var(--red-l);color:var(--red);}
 .mm-status:hover{transform:scale(1.05);}
-
 .mm-actions{display:flex;gap:6px;justify-content:flex-end;}
 .mm-icon-btn{width:32px;height:32px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;transition:all .15s;}
 .mm-icon-btn.edit{background:var(--olive-l);color:var(--sage);}
@@ -241,7 +229,6 @@ td{padding:10px 12px;border-bottom:1px solid #f6f4ee;vertical-align:middle;}
 .mm-icon-btn.del{background:var(--red-l);color:var(--red);}
 .mm-icon-btn.del:hover{background:var(--red);color:#fff;}
 
-/* Pagination */
 .pagination{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 4px;flex-wrap:wrap;margin-bottom:20px;}
 .pg-info{font-size:12px;color:#8a8a80;}
 .pg-controls{display:flex;align-items:center;gap:6px;}
@@ -254,7 +241,6 @@ td{padding:10px 12px;border-bottom:1px solid #f6f4ee;vertical-align:middle;}
 .pg-size select{padding:6px 10px;border-radius:9px;border:1px solid #e7e3da;background:#fff;font-size:12px;color:var(--ink);cursor:pointer;}
 .pg-size select:focus{outline:2px solid var(--olive-l);}
 
-/* Modal form */
 .form-modal{background:#fff;border-radius:20px;width:100%;max-width:460px;padding:22px;max-height:90vh;overflow-y:auto;animation:pop .15s ease-out;}
 .form-modal h3{font-weight:700;font-size:16px;margin-bottom:18px;color:var(--sage);display:flex;align-items:center;gap:8px;}
 .form-group{margin-bottom:14px;}
@@ -273,7 +259,6 @@ td{padding:10px 12px;border-bottom:1px solid #f6f4ee;vertical-align:middle;}
 .btn-save{background:var(--sage);color:#fff;border-radius:13px;padding:12px 0;font-weight:700;font-size:13.5px;box-shadow:0 3px 10px rgba(74,99,67,.3);}
 .btn-save:hover{background:var(--sage-l);}
 
-/* Delete confirm */
 .confirm-modal{background:#fff;border-radius:20px;width:100%;max-width:360px;padding:24px;text-align:center;animation:pop .15s ease-out;}
 .confirm-icon{width:56px;height:56px;border-radius:50%;background:var(--red-l);color:var(--red);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;}
 .confirm-modal h3{font-weight:700;font-size:16px;margin-bottom:8px;}
@@ -281,16 +266,14 @@ td{padding:10px 12px;border-bottom:1px solid #f6f4ee;vertical-align:middle;}
 .confirm-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .btn-danger{background:var(--red);color:#fff;border-radius:13px;padding:12px 0;font-weight:700;font-size:13.5px;}
 
-/* Category badges */
 .cat-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:999px;font-size:10.5px;font-weight:700;letter-spacing:.2px;}
 .cat-badge.bahan{background:#fff3e0;color:#e65100;}
 .cat-badge.ops{background:var(--blue-l);color:var(--blue);}
 .cat-badge.lainnya{background:#f3e5f5;color:#6a1b9a;}
 
-/* Shift session */
 .session-modal{background:#fff;border-radius:22px;width:100%;max-width:520px;padding:0;max-height:92vh;overflow-y:auto;animation:pop .2s ease-out;}
 .session-head{background:linear-gradient(135deg,#4A6343 0%,#5B7553 100%);color:#fff;padding:24px;border-radius:22px 22px 0 0;position:relative;}
-.session-head .close-x{position:absolute;top:16px;right:16px;background:rgba(255,255,255,.15);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:#fff;transition:background .15s;}
+.session-head .close-x{position:absolute;top:16px;right:16px;background:rgba(255,255,255,.15);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:#fff;transition:background .15s;cursor:pointer;}
 .session-head .close-x:hover{background:rgba(255,255,255,.3);}
 .session-head-icon{width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
 .session-head-title{font-weight:800;font-size:20px;margin-bottom:4px;}
@@ -329,7 +312,6 @@ td{padding:10px 12px;border-bottom:1px solid #f6f4ee;vertical-align:middle;}
 .session-btn.secondary{background:var(--cream);color:#6b6b60;box-shadow:none;}
 .session-btn.secondary:hover{background:#e8e4da;}
 
-/* Shift history */
 .shift-hist-card{background:#fff;border-radius:16px;border:1px solid #eee6d9;padding:16px;margin-bottom:12px;transition:transform .15s,box-shadow .15s;}
 .shift-hist-card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(74,99,67,.08);}
 .shift-hist-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #f0ede4;}
@@ -344,20 +326,15 @@ td{padding:10px 12px;border-bottom:1px solid #f6f4ee;vertical-align:middle;}
 .shift-hist-grid .lbl{color:#8a8a80;}
 .shift-hist-grid .val{font-weight:700;color:var(--ink);}
 .shift-hist-actions{display:flex;gap:8px;padding-top:12px;border-top:1px solid #f0ede4;}
-.shift-hist-detail-btn{flex:1;background:var(--olive-l);color:var(--sage);border-radius:10px;padding:9px 14px;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s;}
+.shift-hist-detail-btn{flex:1;background:var(--olive-l);color:var(--sage);border-radius:10px;padding:9px 14px;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s;cursor:pointer;}
 .shift-hist-detail-btn:hover{background:var(--sage);color:#fff;}
 .shift-hist-note{margin-top:10px;padding:8px 12px;background:var(--amber-l);border-left:3px solid var(--amber);border-radius:6px;font-size:11.5px;color:#6b5b1f;font-style:italic;}
 
-/* Metric accent */
 .metric-accent{background:linear-gradient(135deg,#4A6343 0%,#5B7553 100%);color:#fff;border-radius:16px;padding:16px;}
 .metric-accent .stat-label{color:rgba(255,255,255,.8);}
 .metric-accent .stat-value{color:#fff;font-size:17px;}
 .metric-accent .metric-sub{font-size:10.5px;color:rgba(255,255,255,.7);margin-top:3px;}
-.metric-accent.blue{background:linear-gradient(135deg,#1565c0 0%,#1976d2 100%);}
-.metric-accent.red{background:linear-gradient(135deg,#b71c1c 0%,#d32f2f 100%);}
-.metric-accent.amber{background:linear-gradient(135deg,#e65100 0%,#ef6c00 100%);}
 
-/* Detail modal */
 .detail-modal{background:#fff;border-radius:22px;width:100%;max-width:640px;padding:0;max-height:92vh;overflow-y:auto;animation:pop .2s ease-out;}
 .detail-head{background:linear-gradient(135deg,#4A6343 0%,#5B7553 100%);color:#fff;padding:22px 24px;border-radius:22px 22px 0 0;position:relative;}
 .detail-body{padding:22px 24px;}
@@ -369,18 +346,15 @@ td{padding:10px 12px;border-bottom:1px solid #f6f4ee;vertical-align:middle;}
 .detail-item-qty{color:#8a8a80;font-size:11.5px;margin-top:2px;}
 .detail-item-total{font-weight:700;color:var(--sage);white-space:nowrap;}
 
-/* Empty state */
 .empty-state-card{background:#fff;border-radius:16px;border:1px dashed #d6d0c2;padding:40px 20px;text-align:center;}
 .empty-state-icon{width:64px;height:64px;border-radius:50%;background:var(--olive-l);color:var(--sage);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;}
 .empty-state-title{font-weight:700;font-size:15px;color:var(--ink);margin-bottom:6px;}
 .empty-state-sub{font-size:12.5px;color:#8a8a80;max-width:320px;margin:0 auto;line-height:1.5;}
 
-/* Filter bar */
 .filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
 .filter-bar input,.filter-bar select{padding:9px 12px;border-radius:11px;border:1px solid #e7e3da;background:#fff;font-size:12.5px;flex:1;min-width:140px;}
 .filter-bar input:focus,.filter-bar select:focus{outline:2px solid var(--olive-l);}
 
-/* Expenses view */
 .exp-submit-btn{width:100%;background:var(--sage);color:#fff;border-radius:13px;padding:13px 0;font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 3px 10px rgba(74,99,67,.3);transition:background .15s;}
 .exp-submit-btn:hover{background:var(--sage-l);}
 .exp-submit-btn:disabled{opacity:.5;cursor:not-allowed;}
@@ -391,7 +365,7 @@ td{padding:10px 12px;border-bottom:1px solid #f6f4ee;vertical-align:middle;}
 .exp-item-desc{font-weight:600;}
 .exp-item-meta{font-size:11px;color:#a3a390;margin-top:3px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
 .exp-item-amount{font-weight:800;color:var(--red);white-space:nowrap;}
-.exp-item-del{background:var(--red-l);color:var(--red);width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.exp-item-del{background:var(--red-l);color:var(--red);width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;}
 .exp-item-del:hover{background:var(--red);color:#fff;}
 
 .exp-summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px;}
@@ -399,7 +373,6 @@ td{padding:10px 12px;border-bottom:1px solid #f6f4ee;vertical-align:middle;}
 .exp-summary-label{font-size:10.5px;color:#a3a390;text-transform:uppercase;letter-spacing:.3px;font-weight:700;}
 .exp-summary-value{font-weight:800;font-size:14px;margin-top:4px;}
 
-/* Monthly report */
 .month-card{background:#fff;border-radius:16px;border:1px solid #eee6d9;padding:18px;margin-bottom:16px;}
 .month-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;}
 .month-name{font-weight:800;font-size:16px;color:var(--sage);}
@@ -425,7 +398,6 @@ td{padding:10px 12px;border-bottom:1px solid #f6f4ee;vertical-align:middle;}
 .daily-table tr.total-row{background:var(--olive-l);font-weight:800;}
 .daily-table tr.total-row td{border-top:2px solid var(--sage);}
 
-/* Danger zone */
 .danger-zone{background:#fff;border:2px solid #ef9a9a;border-radius:16px;padding:18px;margin-bottom:20px;}
 .danger-zone-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
 .danger-zone-icon{width:40px;height:40px;border-radius:11px;background:var(--red-l);color:var(--red);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
@@ -479,6 +451,9 @@ td{padding:10px 12px;border-bottom:1px solid #f6f4ee;vertical-align:middle;}
 <body>
 <div id="app"></div>
 <script>
+/* =========================================================
+   TUKO POS — Storage & Seed
+   ========================================================= */
 const LS='tuko_v5';
 const D=()=>JSON.parse(localStorage.getItem(LS));
 const SV=s=>localStorage.setItem(LS,JSON.stringify(s));
@@ -497,7 +472,7 @@ function defaultShiftName(){
 }
 
 function shortLabel(name){
-  const t=name.replace(/\(.*?\)/g,'').trim();
+  const t=String(name||'').replace(/\(.*?\)/g,'').trim();
   if(t.length<=10)return t;
   return t.split(' ').slice(0,2).join(' ');
 }
@@ -522,6 +497,7 @@ function seed(){
 if(!D())SV(seed());
 let S=D();
 
+// Migration
 S.menu.forEach(m=>{
   if(typeof m.active==='undefined')m.active=true;
   if(typeof m.badge==='undefined')m.badge=false;
@@ -547,6 +523,9 @@ const now=()=>new Date().toLocaleString('id-ID',{dateStyle:'short',timeStyle:'sh
 const nowISO=()=>new Date().toISOString();
 function logA(a){S.log.unshift({a,ts:now()});save();}
 
+/* =========================================================
+   Global State
+   ========================================================= */
 let view='pos', cat='Semua', search='', cartOpen=false, adminUnlocked=false, pinModal=null, modal=null;
 let menuModal=null;
 let deleteConfirm=null;
@@ -558,6 +537,7 @@ let expenseDeleteConfirm=null;
 let reportMonth=null;
 let resetModal=null;
 let settingsModal=null;
+let payState=null;
 
 const PG={
   menu:{page:1,size:5},
@@ -568,6 +548,9 @@ const PG={
   expense:{page:1,size:10},
 };
 
+/* =========================================================
+   Helpers
+   ========================================================= */
 function pgSlice(arr,key){
   const p=PG[key];
   const total=arr.length;
@@ -766,8 +749,6 @@ function addItem(id){
 function chQty(id,d){const c=S.cart.find(x=>x.id===id);if(!c)return;c.qty+=d;if(c.qty<=0)S.cart=S.cart.filter(x=>x.id!==id);save();render();}
 
 /* ===== PAYMENT MODAL ===== */
-let payState=null;
-
 function openPayModal(){
   const total=cartTotal();
   payState={method:'cash', cashInput:''};
@@ -965,7 +946,9 @@ function dailyBreakdown(ym){
   return Object.entries(map).map(([date,v])=>({date,...v,laba:v.omzet-v.exp})).sort((a,b)=>a.date.localeCompare(b.date));
 }
 
-/* ===== NAV ===== */
+/* =========================================================
+   NAV
+   ========================================================= */
 function ShiftBadge(){
  if(isShiftActive()){
   const s=S.shift;
@@ -1019,6 +1002,9 @@ function MobileHeader(){
  </div>`;
 }
 
+/* =========================================================
+   VIEWS
+   ========================================================= */
 function ProductGrid(){
  const cats=['Semua',...new Set(S.menu.filter(m=>m.active!==false).map(m=>m.cat))];
  const items=S.menu.filter(m=>m.active!==false && (cat==='Semua'||m.cat===cat)&&m.name.toLowerCase().includes(search.toLowerCase()));
@@ -1310,6 +1296,7 @@ function ShiftView(){
   <button onclick="showCloseShiftModal()" class="shift-close">${Icon('lock','w-4 h-4')} Tutup Shift & Setor Uang</button>
  </div>`;
 }
+
 function OpenShiftModal(){
  const d=sessionModal.data;
  return `<div class="overlay center" onclick="if(event.target===this)closeSessionModal()">
@@ -1613,7 +1600,7 @@ function openEditMenu(id){const m=S.menu.find(x=>x.id===id);if(!m)return;menuMod
 function closeMenuModal(){menuModal=null;render();}
 function saveMenuModal(){
  const d=menuModal.data;
- const name=d.name.trim();
+ const name=(d.name||'').trim();
  if(!name){alert('Nama menu wajib diisi.');return;}
  const price=+d.price||0;
  if(price<=0){alert('Harga jual harus lebih dari 0.');return;}
@@ -1986,7 +1973,9 @@ function ResetModal(){
  </div>`;
 }
 
-/* ===== ADMIN VIEW — DIPERBAIKI ===== */
+/* =========================================================
+   ADMIN VIEW
+   ========================================================= */
 function AdminView(){
  if(!adminUnlocked){
    return `<div class="content" style="max-width:520px">
@@ -2080,45 +2069,526 @@ function AdminView(){
  </div>`;
 }
 
+/* =========================================================
+   EXPORT / IMPORT EXCEL — VERSI BARU
+   ========================================================= */
+
+/* Helper: parse angka dari string seperti "Rp 13.000" */
+function parseNum(v){
+  if(v === null || v === undefined || v === '') return 0;
+  if(typeof v === 'number') return isFinite(v) ? v : 0;
+  const s = String(v).replace(/[^\d.-]/g, '');
+  const n = parseFloat(s);
+  return isNaN(n) ? 0 : n;
+}
+
+/* Helper: normalisasi nama kolom (lowercase, tanpa spasi/underscore/dash/dot) */
+function normalizeHeader(k){
+  return String(k||'').toLowerCase().replace(/[\s_\-\.]/g,'');
+}
+
+/* Helper: ambil nilai dari row berdasarkan banyak kemungkinan nama kolom */
+function pickField(row, candidates){
+  for(const key of Object.keys(row)){
+    const norm = normalizeHeader(key);
+    for(const c of candidates){
+      if(norm === normalizeHeader(c)){
+        return row[key];
+      }
+    }
+  }
+  return undefined;
+}
+
 function exportExcel(){
  const wb=XLSX.utils.book_new();
- XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(S.menu.map(m=>({id:m.id,name:m.name,cat:m.cat,price:m.price,active:m.active}))),'Menu');
- XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(S.trans.map(t=>({id:t.id,ts:t.ts,shift:t.shiftName||'-',table:t.table,cashier:t.cashier||'',method:t.method,items:itemsLabel(t.items),total:t.total}))),'Transaksi');
- XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(S.expenses.map(e=>({id:e.id,tanggal:e.ts,shift:e.shiftName||'-',kategori:CAT_LABEL[e.cat||'lainnya'],keterangan:e.desc,nominal:e.amount}))),'Pengeluaran');
- XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(S.shiftHistory.map(sh=>({
-   id_shift:sh.id,nama_shift:sh.name||'-',nama_kasir:sh.cashierName||'-',tanggal_buka:sh.startedAtLabel,tanggal_tutup:sh.closedAtLabel,
-   modal_awal:sh.openingCash,total_penjualan_cash:sh.cashSales,total_qris:sh.qrisSales,total_pengeluaran:sh.expenseTotal||0,
-   kas_diharapkan:sh.expectedCash,uang_fisik_setoran:sh.actualCash,selisih_uang:sh.variance,omzet_shift:sh.grossRevenue||0,laba_bersih_shift:sh.netProfit||0,catatan:sh.note||'',
- }))),'Laporan_Shift');
+
+ // ===== SHEET MENU =====
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(
+   S.menu.map(m=>({
+     id: m.id,
+     name: m.name,
+     cat: m.cat,
+     price: m.price,
+     hpp: m.hpp || 0,
+     badge: m.badge === true,
+     active: m.active !== false,
+   }))
+ ),'Menu');
+
+ // ===== SHEET PENGELUARAN =====
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(
+   S.expenses.map(e=>({
+     id: e.id,
+     tanggal: e.ts,
+     tsRaw: e.tsRaw || e.ts,
+     shift: e.shiftName || '-',
+     shiftId: e.shiftId || '',
+     kategori: CAT_LABEL[e.cat || 'lainnya'],
+     cat: e.cat || 'lainnya',
+     keterangan: e.desc,
+     nominal: e.amount,
+   }))
+ ),'Pengeluaran');
+
+ // ===== SHEET TRANSAKSI =====
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(
+   S.trans.map(t=>({
+     id: t.id,
+     ts: t.ts,
+     tsRaw: t.tsRaw || '',
+     shiftId: t.shiftId || '',
+     shiftName: t.shiftName || '-',
+     table: t.table || '',
+     cashier: t.cashier || '',
+     method: t.method,
+     items: itemsLabel(t.items),
+     itemsJson: JSON.stringify(t.items || []),
+     total: t.total,
+     cash: t.cash,
+   }))
+ ),'Transaksi');
+
+ // ===== SHEET LAPORAN SHIFT =====
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(
+   S.shiftHistory.map(sh=>({
+     id_shift: sh.id,
+     nama_shift: sh.name || '-',
+     nama_kasir: sh.cashierName || '-',
+     startedAt: sh.startedAt || '',
+     closedAt: sh.closedAt || '',
+     tanggal_buka: sh.startedAtLabel || '',
+     tanggal_tutup: sh.closedAtLabel || '',
+     modal_awal: sh.openingCash,
+     total_penjualan_cash: sh.cashSales,
+     total_qris: sh.qrisSales,
+     total_pengeluaran: sh.expenseTotal || 0,
+     kas_diharapkan: sh.expectedCash,
+     uang_fisik_setoran: sh.actualCash,
+     selisih_uang: sh.variance,
+     omzet_shift: sh.grossRevenue || 0,
+     laba_bersih_shift: sh.netProfit || 0,
+     catatan: sh.note || '',
+   }))
+ ),'Laporan_Shift');
+
+ // ===== SHEET OPEN TAB =====
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(
+   S.tabs.length ? S.tabs.map(t=>({
+     id: t.id,
+     ts: t.ts || '',
+     tsRaw: t.tsRaw || '',
+     table: t.table || '',
+     items: itemsLabel(t.items || []),
+     itemsJson: JSON.stringify(t.items || []),
+     total: t.total,
+   })) : [{info:'Belum ada tab terbuka'}]
+ ),'Open_Tab');
+
+ // ===== SHEET LOG =====
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(S.log),'Log');
+
+ // ===== SHEET PENGATURAN =====
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet([{
+   pin: S.pin,
+   cashierName: S.cashierName || '',
+   dividendPct: S.dividendPct,
+   qrisImage: S.qrisImage || '',
+ }]),'Pengaturan');
+
+ // ===== SHEET RINCIAN BULANAN (info saja) =====
  const monthlyRows=[];
  availableMonths().forEach(ym=>{
    const s=monthSummary(ym);
-   monthlyRows.push({bulan:s.label,omzet_kotor:s.omzet,cash:s.cashSales,qris:s.qrisSales,pengeluaran_bahan_baku:s.expBahan,pengeluaran_operasional:s.expOps,pengeluaran_lainnya:s.expOther,total_pengeluaran:s.totalExp,laba_bersih:s.laba,persentase_dividen:S.dividendPct,alokasi_dividen:s.dividend,laba_ditahan:s.retained,jumlah_transaksi:s.transCount});
+   monthlyRows.push({
+     bulan:s.label, omzet_kotor:s.omzet, cash:s.cashSales, qris:s.qrisSales,
+     pengeluaran_bahan_baku:s.expBahan, pengeluaran_operasional:s.expOps,
+     pengeluaran_lainnya:s.expOther, total_pengeluaran:s.totalExp,
+     laba_bersih:s.laba, persentase_dividen:S.dividendPct,
+     alokasi_dividen:s.dividend, laba_ditahan:s.retained,
+     jumlah_transaksi:s.transCount,
+   });
  });
- XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(monthlyRows.length?monthlyRows:[{info:'Belum ada data'}]),'Rincian_Bulanan');
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(
+   monthlyRows.length?monthlyRows:[{info:'Belum ada data'}]
+ ),'Rincian_Bulanan');
+
+ // ===== SHEET RINCIAN HARIAN (info saja) =====
  const dailyRows=[];
  availableMonths().forEach(ym=>{
    dailyBreakdown(ym).forEach(d=>{
-     dailyRows.push({tanggal:d.date,omzet:d.omzet,cash:d.cash,qris:d.qris,pengeluaran:d.exp,laba_bersih:d.laba,jumlah_transaksi:d.trans});
+     dailyRows.push({
+       tanggal:d.date, omzet:d.omzet, cash:d.cash, qris:d.qris,
+       pengeluaran:d.exp, laba_bersih:d.laba, jumlah_transaksi:d.trans,
+     });
    });
  });
- XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(dailyRows.length?dailyRows:[{info:'Belum ada data'}]),'Rincian_Harian');
- XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(S.log),'Log');
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(
+   dailyRows.length?dailyRows:[{info:'Belum ada data'}]
+ ),'Rincian_Harian');
+
  XLSX.writeFile(wb,`TUKO_Laporan_${Date.now()}.xlsx`);
  logA('Export data ke Excel (lengkap)');
 }
+
+/* ===== IMPORT EXCEL — SUPER TOLERAN ===== */
 function importExcel(file){
- const r=new FileReader();
- r.onload=e=>{
-  try{
-   const wb=XLSX.read(new Uint8Array(e.target.result),{type:'array'});
-   if(wb.SheetNames.includes('Menu')){const rows=XLSX.utils.sheet_to_json(wb.Sheets['Menu']);if(rows.length)S.menu=rows.map(r=>({id:+r.id,name:r.name,cat:r.cat,price:+r.price,hpp:0,badge:!!r.badge,active:r.active!==false}));}
-   if(wb.SheetNames.includes('Pengeluaran')){const rows=XLSX.utils.sheet_to_json(wb.Sheets['Pengeluaran']);if(rows.length)S.expenses=rows.map(r=>({id:+r.id,desc:r.keterangan||r.desc,amount:+r.nominal||+r.amount,cat:(r.kategori||'').toLowerCase().includes('bahan')?'bahan':((r.kategori||'').toLowerCase().includes('operasional')?'ops':'lainnya'),ts:r.tanggal||now(),tsRaw:r.tanggal||nowISO()}));}
-   logA('Import data dari Excel');save();adminUnlocked=true;render();alert('Import berhasil');
-  }catch(err){alert('File tidak valid');}
- };
- r.readAsArrayBuffer(file);
+  if(!file){
+    alert('Tidak ada file yang dipilih.');
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onerror = () => {
+    alert('Gagal membaca file. Coba pilih ulang file.');
+  };
+
+  reader.onload = (ev) => {
+    try {
+      const data = new Uint8Array(ev.target.result);
+      const wb = XLSX.read(data, { type:'array' });
+
+      console.log('[IMPORT] Sheets:', wb.SheetNames);
+
+      // Hitung berapa sheet yang berhasil dibaca
+      const imported = {
+        menu: 0,
+        expenses: 0,
+        trans: 0,
+        shiftHistory: 0,
+        tabs: 0,
+        log: 0,
+        settings: false,
+      };
+
+      // Helper: cari sheet case-insensitive
+      const findSheet = (aliases) => wb.SheetNames.find(n =>
+        aliases.map(a=>normalizeHeader(a)).includes(normalizeHeader(n))
+      );
+
+      // ==================== 1. MENU ====================
+      const menuSheet = findSheet(['menu','daftarmenu','daftar_menu','products','produk']);
+      if(menuSheet){
+        const rows = XLSX.utils.sheet_to_json(wb.Sheets[menuSheet], { defval:'' });
+        console.log('[IMPORT] Menu rows:', rows.length);
+        const newMenu = [];
+        rows.forEach((row, i) => {
+          const name = String(pickField(row, ['name','nama','namamenu','menu','produk','product']) || '').trim();
+          if(!name) return;
+          const cat = String(pickField(row, ['cat','kategori','category','kategorimenu','type']) || 'Lainnya').trim() || 'Lainnya';
+          const price = parseNum(pickField(row, ['price','harga','hargajual','hargasatuan']));
+          const hpp = parseNum(pickField(row, ['hpp','modal','hppmodal','cost']));
+          const badgeRaw = pickField(row, ['badge','badge1teko','isteeko','teko']);
+          const badge = badgeRaw === true || badgeRaw === 'true' || badgeRaw === 'TRUE' || badgeRaw === 1 || badgeRaw === '1' || badgeRaw === 'ya' || badgeRaw === 'Ya';
+          const activeRaw = pickField(row, ['active','aktif','status','isactive','is_active']);
+          const active = !(activeRaw === false || activeRaw === 'false' || activeRaw === 'FALSE' || activeRaw === 0 || activeRaw === '0' || activeRaw === 'nonaktif' || activeRaw === 'Nonaktif');
+          newMenu.push({
+            id: parseNum(pickField(row, ['id'])) || (Date.now() + i),
+            name, cat, price, hpp, badge, active
+          });
+        });
+        if(newMenu.length){
+          S.menu = newMenu;
+          imported.menu = newMenu.length;
+        }
+      }
+
+      // ==================== 2. PENGELUARAN ====================
+      const expSheet = findSheet(['pengeluaran','expenses','expense','belanja','belanjausaha','kaskeluar']);
+      if(expSheet){
+        const rows = XLSX.utils.sheet_to_json(wb.Sheets[expSheet], { defval:'' });
+        console.log('[IMPORT] Pengeluaran rows:', rows.length);
+        const newExp = [];
+        rows.forEach((row, i) => {
+          const desc = String(pickField(row, ['keterangan','desc','description','deskripsi','nama','item','uraian','catatan']) || '').trim();
+          if(!desc) return;
+          const amount = parseNum(pickField(row, ['nominal','amount','jumlah','total','harga','biaya','value']));
+          if(amount <= 0) return;
+
+          // Kategori: prioritas kolom 'cat' (raw: bahan/ops/lainnya) > 'kategori' (label Indonesia)
+          let cat = 'lainnya';
+          const catRaw = String(pickField(row, ['cat']) || '').toLowerCase();
+          if(['bahan','ops','lainnya'].includes(catRaw)){
+            cat = catRaw;
+          } else {
+            const katLabel = String(pickField(row, ['kategori','category','jenis','tipe','type']) || '').toLowerCase();
+            if(katLabel.includes('bahan') || katLabel.includes('baku')) cat = 'bahan';
+            else if(katLabel.includes('operasional') || katLabel.includes('ops')) cat = 'ops';
+          }
+
+          const ts = pickField(row, ['tanggal','ts','date','waktu','time']) || now();
+          const tsRaw = pickField(row, ['tsRaw','tsraw']) || ts;
+
+          newExp.push({
+            id: parseNum(pickField(row, ['id'])) || (Date.now() + i),
+            desc, amount, cat,
+            ts: typeof ts === 'string' ? ts : now(),
+            tsRaw: typeof tsRaw === 'string' ? tsRaw : nowISO(),
+            shiftId: pickField(row, ['shiftId','shiftid']) || '',
+            shiftName: pickField(row, ['shift','shiftname']) || '-'
+          });
+        });
+        if(newExp.length){
+          S.expenses = newExp;
+          imported.expenses = newExp.length;
+        }
+      }
+
+      // ==================== 3. TRANSAKSI ====================
+      const transSheet = findSheet(['transaksi','transactions','trans']);
+      if(transSheet){
+        const rows = XLSX.utils.sheet_to_json(wb.Sheets[transSheet], { defval:'' });
+        console.log('[IMPORT] Transaksi rows:', rows.length);
+        const newTrans = [];
+        rows.forEach((row, i) => {
+          const id = parseNum(pickField(row, ['id'])) || (Date.now() + i);
+          const ts = pickField(row, ['ts','tanggal','date','waktu']) || now();
+          const tsRaw = pickField(row, ['tsRaw','tsraw']) || ts;
+          const table = String(pickField(row, ['table','meja','nama']) || '');
+          const cashier = String(pickField(row, ['cashier','kasir']) || '');
+          const method = String(pickField(row, ['method','metode','payment']) || 'cash').toLowerCase();
+          const total = parseNum(pickField(row, ['total','nominal','amount']));
+          const cash = parseNum(pickField(row, ['cash','bayar','tunai'])) || total;
+
+          if(total <= 0) return;
+
+          // Parse items: coba itemsJson dulu (JSON array), fallback ke items (string label)
+          let items = [];
+          const itemsJson = pickField(row, ['itemsJson','itemsjson','items_json']);
+          if(itemsJson){
+            try{
+              const parsed = JSON.parse(itemsJson);
+              if(Array.isArray(parsed)) items = parsed;
+            }catch(e){ console.warn('Parse itemsJson gagal:', e); }
+          }
+          if(items.length === 0){
+            // Fallback: parse dari string "2x Menu A, 1x Menu B"
+            const itemsStr = String(pickField(row, ['items']) || '');
+            if(itemsStr){
+              items = itemsStr.split(',').map(part => {
+                const m = part.trim().match(/^(\d+)x\s+(.+)$/);
+                if(m){
+                  const qty = +m[1];
+                  const name = m[2].trim();
+                  // Cari harga dari S.menu
+                  const menuItem = S.menu.find(mm => mm.name === name);
+                  const price = menuItem ? menuItem.price : 0;
+                  const cat = menuItem ? menuItem.cat : 'Lainnya';
+                  return { id: menuItem ? menuItem.id : 0, name, qty, price, cat, hpp:0, badge:false, active:true };
+                }
+                return null;
+              }).filter(Boolean);
+            }
+          }
+
+          newTrans.push({
+            id, items, total, method, cash,
+            ts: typeof ts === 'string' ? ts : now(),
+            tsRaw: typeof tsRaw === 'string' ? tsRaw : nowISO(),
+            table, cashier,
+            shiftId: pickField(row, ['shiftId','shiftid']) || '',
+            shiftName: pickField(row, ['shiftName','shiftname','shift']) || ''
+          });
+        });
+        if(newTrans.length){
+          S.trans = newTrans;
+          imported.trans = newTrans.length;
+        }
+      }
+
+      // ==================== 4. LAPORAN SHIFT ====================
+      const shiftSheet = findSheet(['laporanshift','laporan_shift','laporanshift','shift']);
+      if(shiftSheet){
+        const rows = XLSX.utils.sheet_to_json(wb.Sheets[shiftSheet], { defval:'' });
+        console.log('[IMPORT] Laporan_Shift rows:', rows.length);
+        const newHist = [];
+        rows.forEach((row, i) => {
+          const id = String(pickField(row, ['id_shift','idshift','id']) || '');
+          if(!id) return;
+
+          const name = String(pickField(row, ['nama_shift','namashift','name']) || '-');
+          const cashierName = String(pickField(row, ['nama_kasir','namakasir','cashier']) || '-');
+          const startedAt = pickField(row, ['startedAt','startedat']) || '';
+          const closedAt = pickField(row, ['closedAt','closedat']) || nowISO();
+          const startedAtLabel = pickField(row, ['tanggal_buka','tanggalbuka']) || '';
+          const closedAtLabel = pickField(row, ['tanggal_tutup','tanggalttutup','tanggalttutup']) || '';
+
+          const openingCash = parseNum(pickField(row, ['modal_awal','modalawal']));
+          const cashSales = parseNum(pickField(row, ['total_penjualan_cash','totalpenjualancash']));
+          const qrisSales = parseNum(pickField(row, ['total_qris','totalqris']));
+          const expenseTotal = parseNum(pickField(row, ['total_pengeluaran','totalpengeluaran']));
+          const expectedCash = parseNum(pickField(row, ['kas_diharapkan','kasdiharapkan']));
+          const actualCash = parseNum(pickField(row, ['uang_fisik_setoran','uangfisiksetoran','uang_fisik']));
+          const variance = parseNum(pickField(row, ['selisih_uang','selisihuang']));
+          const grossRevenue = parseNum(pickField(row, ['omzet_shift','omzetshift']));
+          const netProfit = parseNum(pickField(row, ['laba_bersih_shift','lababersihshift']));
+          const note = String(pickField(row, ['catatan','note']) || '');
+
+          newHist.push({
+            id, name, cashierName,
+            startedAt, startedAtLabel,
+            closedAt, closedAtLabel,
+            openingCash, cashSales, qrisSales, expenseTotal,
+            expectedCash, actualCash, variance,
+            grossRevenue, netProfit,
+            note,
+            transCount: 0, expenseCount: 0,
+          });
+        });
+        if(newHist.length){
+          S.shiftHistory = newHist;
+          imported.shiftHistory = newHist.length;
+        }
+      }
+
+      // ==================== 5. OPEN TAB ====================
+      const tabSheet = findSheet(['opentab','open_tab','tabs','tab']);
+      if(tabSheet){
+        const rows = XLSX.utils.sheet_to_json(wb.Sheets[tabSheet], { defval:'' });
+        console.log('[IMPORT] Open_Tab rows:', rows.length);
+        const newTabs = [];
+        rows.forEach((row, i) => {
+          const id = parseNum(pickField(row, ['id'])) || (Date.now() + i);
+          const table = String(pickField(row, ['table','meja','nama']) || '');
+          const total = parseNum(pickField(row, ['total']));
+          const ts = pickField(row, ['ts','tanggal']) || now();
+          const tsRaw = pickField(row, ['tsRaw','tsraw']) || ts;
+
+          // Parse items
+          let items = [];
+          const itemsJson = pickField(row, ['itemsJson','itemsjson','items_json']);
+          if(itemsJson){
+            try{
+              const parsed = JSON.parse(itemsJson);
+              if(Array.isArray(parsed)) items = parsed;
+            }catch(e){}
+          }
+          if(items.length === 0){
+            const itemsStr = String(pickField(row, ['items']) || '');
+            if(itemsStr){
+              items = itemsStr.split(',').map(part => {
+                const m = part.trim().match(/^(\d+)x\s+(.+)$/);
+                if(m){
+                  const qty = +m[1];
+                  const name = m[2].trim();
+                  const menuItem = S.menu.find(mm => mm.name === name);
+                  return {
+                    id: menuItem ? menuItem.id : 0,
+                    name, qty,
+                    price: menuItem ? menuItem.price : 0,
+                    cat: menuItem ? menuItem.cat : 'Lainnya',
+                    hpp: 0, badge: false, active: true
+                  };
+                }
+                return null;
+              }).filter(Boolean);
+            }
+          }
+
+          // Skip baris kosong
+          if(!table && items.length === 0) return;
+
+          newTabs.push({
+            id, items, table, total,
+            ts: typeof ts === 'string' ? ts : now(),
+            tsRaw: typeof tsRaw === 'string' ? tsRaw : nowISO(),
+          });
+        });
+        S.tabs = newTabs;
+        imported.tabs = newTabs.length;
+      }
+
+      // ==================== 6. LOG ====================
+      const logSheet = findSheet(['log','logs','aktivitas']);
+      if(logSheet){
+        const rows = XLSX.utils.sheet_to_json(wb.Sheets[logSheet], { defval:'' });
+        console.log('[IMPORT] Log rows:', rows.length);
+        const newLog = [];
+        rows.forEach((row) => {
+          const a = String(pickField(row, ['a','aktivitas','activity','action']) || '').trim();
+          const ts = pickField(row, ['ts','timestamp','tanggal','waktu']) || now();
+          if(!a) return;
+          newLog.push({ a, ts: typeof ts === 'string' ? ts : now() });
+        });
+        if(newLog.length){
+          S.log = newLog;
+          imported.log = newLog.length;
+        }
+      }
+
+      // ==================== 7. PENGATURAN ====================
+      const setSheet = findSheet(['pengaturan','settings','config','konfigurasi']);
+      if(setSheet){
+        const rows = XLSX.utils.sheet_to_json(wb.Sheets[setSheet], { defval:'' });
+        if(rows.length){
+          const row = rows[0];
+          const pin = String(pickField(row, ['pin']) || '').trim();
+          const cashierName = String(pickField(row, ['cashierName','cashiername','kasir']) || '').trim();
+          const dividendPct = parseNum(pickField(row, ['dividendPct','dividendpct','dividen']));
+          const qrisImage = String(pickField(row, ['qrisImage','qrisimage','qris']) || '');
+
+          if(pin) S.pin = pin;
+          if(cashierName) S.cashierName = cashierName;
+          if(dividendPct >= 0 && dividendPct <= 100) S.dividendPct = dividendPct;
+          if(qrisImage) S.qrisImage = qrisImage;
+
+          imported.settings = true;
+          console.log('[IMPORT] Pengaturan di-import');
+        }
+      }
+
+      // ==================== HASIL ====================
+      const totalImported = imported.menu + imported.expenses + imported.trans +
+                            imported.shiftHistory + imported.tabs + imported.log +
+                            (imported.settings ? 1 : 0);
+
+      if(totalImported === 0){
+        alert('⚠ File berhasil dibaca, tapi tidak ada data yang valid.\n\nSheet yang ada: ' + wb.SheetNames.join(', '));
+        return;
+      }
+
+      // Simpan log & state
+      logA(`Import dari Excel: ${imported.menu} menu, ${imported.expenses} pengeluaran, ${imported.trans} transaksi, ${imported.shiftHistory} shift, ${imported.tabs} tab`);
+      save();
+      view = 'admin';
+      adminUnlocked = true;
+      PG.menu.page = 1;
+      PG.expense.page = 1;
+      PG.trans.page = 1;
+      PG.sold.page = 1;
+      PG.log.page = 1;
+      PG.shiftHist.page = 1;
+
+      // Render
+      render();
+
+      // Alert ringkasan
+      const lines = [];
+      if(imported.menu) lines.push(`• Menu: ${imported.menu} item`);
+      if(imported.expenses) lines.push(`• Pengeluaran: ${imported.expenses} item`);
+      if(imported.trans) lines.push(`• Transaksi: ${imported.trans} item`);
+      if(imported.shiftHistory) lines.push(`• Riwayat Shift: ${imported.shiftHistory} item`);
+      if(imported.tabs) lines.push(`• Open Tab: ${imported.tabs} item`);
+      if(imported.log) lines.push(`• Log: ${imported.log} item`);
+      if(imported.settings) lines.push(`• Pengaturan: ✔`);
+
+      setTimeout(() => {
+        alert(`✅ Import berhasil!\n\n${lines.join('\n')}`);
+      }, 100);
+
+    } catch(err){
+      console.error('[IMPORT] Error lengkap:', err);
+      alert('❌ Gagal memproses file.\n\nDetail: ' + err.message + '\n\nCek Console (F12) untuk info teknis.');
+    }
+  };
+
+  reader.readAsArrayBuffer(file);
 }
+
+/* =========================================================
+   PIN & ICONS
+   ========================================================= */
 function tryAdmin(cb){pinModal={cb:cb||null,val:''};render();}
 function checkPin(){
   if(!pinModal)return;
@@ -2126,23 +2596,49 @@ function checkPin(){
     adminUnlocked=true;
     const cb=pinModal.cb;
     pinModal=null;
-    render();
-    if(cb)cb();
+    try{
+      render();
+      if(cb)cb();
+    }catch(e){
+      console.error('Render error:', e);
+      alert('Terjadi error saat membuka admin: ' + e.message);
+    }
   }else{
     alert('PIN salah');
     pinModal.val='';
     render();
   }
 }
-function Icon(n,cls){return `<i data-lucide="${n}" class="${cls||''}"></i>`;}
+
+function Icon(n,cls){
+  // Kalau lucide tersedia, pakai
+  if(typeof lucide !== 'undefined' && lucide && typeof lucide.createIcons === 'function'){
+    return `<i data-lucide="${n}" class="${cls||''}"></i>`;
+  }
+  // Fallback unicode kalau CDN gagal load
+  const fallback = {
+    'shopping-bag':'🛍', 'clipboard-list':'📋', 'wallet':'💼', 'shield':'🛡',
+    'clock':'🕐', 'play-circle':'▶', 'lock':'🔒', 'check-circle':'✓',
+    'x-circle':'✕', 'plus':'+', 'plus-circle':'⊕', 'trash-2':'🗑',
+    'pencil':'✎', 'x':'✕', 'info':'ℹ', 'credit-card':'💳', 'banknote':'💵',
+    'qr-code':'▦', 'image-off':'🚫', 'tag':'🏷', 'share-2':'↗',
+    'alert-triangle':'⚠', 'alert-octagon':'⛔', 'settings':'⚙',
+    'key-round':'🔑', 'upload-cloud':'☁', 'upload':'↑', 'download':'↓',
+    'refresh-cw':'↻', 'pie-chart':'◐', 'list':'☰', 'package':'📦',
+    'zap':'⚡', 'more-horizontal':'⋯', 'trending-up':'↗', 'trending-down':'↘',
+    'user':'👤', 'search':'🔍', 'shopping-cart':'🛒',
+  };
+  const emoji = fallback[n] || '•';
+  return `<span class="${cls||''}" style="display:inline-flex;align-items:center;justify-content:center">${emoji}</span>`;
+}
 function Logo(size){return `<div class="brand-logo" style="width:${size}px;height:${size}px;font-size:${size*.42}px">T</div>`;}
 
-/* ===== MAIN RENDER — DIPERBAIKI ===== */
+/* =========================================================
+   MAIN RENDER
+   ========================================================= */
 function render(){
  window.m=S.menu;
 
- // ===== PERBAIKAN: Trigger PIN modal SEBELUM render =====
- // Kalau user masuk ke admin dan belum unlock, buka modal PIN saat itu juga
  if(view==='admin' && !adminUnlocked && !pinModal){
    pinModal={cb:null,val:''};
  }
@@ -2178,9 +2674,12 @@ function render(){
   ${resetModal?ResetModal():''}
   ${settingsModal?SettingsModal():''}
  `;
- lucide.createIcons();
 
- // Auto-focus ke input PIN setelah render
+ // Panggil createIcons HANYA kalau lucide tersedia
+ if(typeof lucide !== 'undefined' && lucide && typeof lucide.createIcons === 'function'){
+   try{ lucide.createIcons(); }catch(e){ console.warn('Lucide error:', e); }
+ }
+
  if(pinModal){
    setTimeout(()=>{
      const inp=document.querySelector('.pin-input');
