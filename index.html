@@ -37,10 +37,11 @@ input,select,textarea{border:1.5px solid var(--line);border-radius:10px;padding:
 .pc .bdg{position:absolute;top:18px;left:18px}
 .hd{position:sticky;top:0;z-index:20;background:rgba(253,251,247,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 18px;display:flex;justify-content:space-between;align-items:center;gap:8px}
 .hero{padding:34px 18px;transition:background 1.2s ease-in-out;display:flex;gap:28px;align-items:center;justify-content:center;flex-wrap:wrap}
-.hero h1{font-size:34px;line-height:1.1;font-weight:800;max-width:420px;margin-bottom:10px}
-.hc{background:#fff;border-radius:28px;padding:22px;text-align:center;width:250px;animation:float 3.5s ease-in-out infinite;box-shadow:0 20px 44px rgba(74,107,93,.2);cursor:pointer;position:relative}
+.hero h1{font-size:34px;line-height:1.1;font-weight:800;max-width:420px;margin-bottom:10px;color:#2D3748}
+.hero h1 span{color:var(--primary)}
+.hc{background:#fff;border-radius:28px;padding:22px;text-align:center;width:250px;animation:float 4s ease-in-out infinite;box-shadow:0 20px 44px rgba(74,107,93,.15);cursor:pointer;position:relative;overflow:hidden}
 .hc:active{animation:none;transform:scale(.97)}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 .dots{display:flex;gap:8px;justify-content:center;margin-top:14px}
 .dot{width:8px;height:8px;border-radius:99px;background:#4A6B5D40;cursor:pointer;transition:all .3s}.dot.on{width:24px;background:var(--primary)}
 .wrap{max-width:1100px;margin:0 auto;padding:18px 16px 110px}
@@ -51,8 +52,6 @@ input,select,textarea{border:1.5px solid var(--line);border-radius:10px;padding:
 .sh{align-items:flex-end}.sh .md{border-radius:24px 24px 0 0;max-width:520px}
 .md h3{color:var(--primary);margin-bottom:14px;font-size:18px}.fg{margin-bottom:12px}.fg label{display:block;font-size:12px;font-weight:700;color:var(--text-muted);margin-bottom:4px}
 .pin{font-size:26px;text-align:center;letter-spacing:12px}
-
-/* === DESKTOP LAYOUT === */
 #k{display:flex;min-height:100vh}
 .side{width:216px;background:#fff;border-right:1px solid var(--line);padding:16px 12px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:4px;flex:none;z-index:40}
 .logo{font-weight:800;font-size:22px;color:var(--primary);padding:4px 8px}
@@ -80,61 +79,20 @@ table{width:100%;border-collapse:collapse;font-size:12.5px}th,td{padding:9px 8px
 .selbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .selbar select{width:auto;min-width:140px}
 
-/* === TABLET === */
-@media(max-width:1024px){
- .grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
- .cp{width:290px}
- .stats{grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}
-}
-
 /* === MOBILE FIX (< 860px) === */
 @media(max-width:860px){
  #k{display:block!important;min-height:100vh;padding-bottom:70px!important} 
  main{padding:12px 12px 20px!important;width:100%!important}
  .mh{display:flex!important;justify-content:space-between;align-items:center;margin-bottom:12px;gap:8px}
 
- /* Bottom Nav Bar */
- .side{
-  position:fixed!important;
-  bottom:0!important; left:0!important; right:0!important; top:auto!important;
-  width:100%!important; height:auto!important;
-  flex-direction:row!important;
-  justify-content:space-around!important;
-  padding:8px 4px!important;
-  background:#fff!important;
-  border-top:1px solid var(--line)!important;
-  border-right:0!important;
-  box-shadow:0 -4px 16px rgba(74,107,93,.08)!important;
-  z-index:9999!important;
- }
+ .side{position:fixed!important;bottom:0!important; left:0!important; right:0!important; top:auto!important;width:100%!important; height:auto!important;flex-direction:row!important;justify-content:space-around!important;padding:8px 4px!important;background:#fff!important;border-top:1px solid var(--line)!important;border-right:0!important;box-shadow:0 -4px 16px rgba(74,107,93,.08)!important;z-index:9999!important;}
  .side .logo, .side .sb, .side .xt{display:none!important}
- .side .nv{
-  flex-direction:column!important;
-  gap:4px!important;
-  font-size:10px!important;
-  padding:6px 2px!important;
-  justify-content:center!important;
-  text-align:center!important;
-  border-radius:10px!important;
-  flex:1!important;
- }
+ .side .nv{flex-direction:column!important;gap:4px!important;font-size:10px!important;padding:6px 2px!important;justify-content:center!important;text-align:center!important;border-radius:10px!important;flex:1!important;}
  .side .nv span:first-child{font-size:18px!important;margin-bottom:2px!important}
  .side .nv.on{background:var(--primary)!important;color:#fff!important}
- 
- /* Layout Konten */
  .lay{display:block!important}
  .cp{width:100%!important;position:static!important;margin-top:14px!important}
- 
- /* Floating bar bawah */
- .bar{
-  display:flex!important;position:fixed!important;
-  left:12px!important; right:12px!important; bottom:80px!important;
-  z-index:24!important;background:var(--primary)!important;color:#fff!important;
-  border-radius:16px!important;padding:13px 18px!important;
-  justify-content:space-between!important;font-weight:800!important;
-  box-shadow:0 8px 24px rgba(74,107,93,.35)!important;
- }
- 
+ .bar{display:flex!important;position:fixed!important;left:12px!important; right:12px!important; bottom:80px!important;z-index:24!important;background:var(--primary)!important;color:#fff!important;border-radius:16px!important;padding:13px 18px!important;justify-content:space-between!important;font-weight:800!important;box-shadow:0 8px 24px rgba(74,107,93,.35)!important;}
  .hero h1{font-size:28px}
  .stats{grid-template-columns:repeat(auto-fit,minmax(120px,1fr))!important}
 }
@@ -165,7 +123,6 @@ table{width:100%;border-collapse:collapse;font-size:12.5px}th,td{padding:9px 8px
  .selbar select{flex:1;min-width:100px;font-size:12px;padding:8px 10px}
 }
 
-/* === EXTRA SMALL (< 400px) === */
 @media(max-width:400px){
  .grid{grid-template-columns:repeat(2,1fr)}
  .stats{grid-template-columns:1fr}
@@ -203,7 +160,7 @@ const CATS={bahan:'Bahan Baku',ops:'Operasional',lainnya:'Lainnya'};
 
 /* ===== State ===== */
 let cust=true,view='pos',AU=false,M=null,Q='',KC='Semua',CT=[];
-let C={table:'',cart:[],cat:'Semua',open:false,idx:0,done:null},TM=null;
+let C={table:'',name:'',cart:[],cat:'Semua',open:false,idx:0,done:null},TM=null;
 const BG=['#EEF3EF','#FDF3D6','#F8EBD3','#EAF0EC'];
 const P={exp:{n:10,p:0},sold:{n:10,p:0}};let HF={d:'',k:''},MON='',chart=null;
 
@@ -228,6 +185,7 @@ function initCust(){const q=new URLSearchParams(location.search).get('meja')||ne
 const showList=()=>{const a=S.menu.filter(m=>m.active!==false);const b=a.filter(m=>m.badge);return(b.length?b:a).slice(0,4)};
 function updateShowcaseDOM(){const l=showList();if(!l.length||!$('hero'))return;const i=C.idx%l.length,m=l[i];
  $('hero').style.background=BG[i%4];$('hl').textContent=short(m.name);$('hn').textContent=m.name;$('hp').textContent=rp(m.price);
+ $('heroIcon').textContent=m.cat.toLowerCase().includes('sate')?'🍢':'🍵';
  [...document.querySelectorAll('.dot')].forEach((d,j)=>d.classList.toggle('on',j===i))}
 
 /* ===== Smooth scroll to catalog + filter by category ===== */
@@ -247,11 +205,33 @@ function rCust(){
  const act=S.menu.filter(m=>m.active!==false);CT=['Semua',...new Set(act.map(m=>m.cat))];
  const it=act.filter(m=>C.cat==='Semua'||m.cat===C.cat),n=C.cart.reduce((a,i)=>a+i.qty,0),tl=sum(C.cart,i=>i.price*i.qty);
  const l=showList(),i=C.idx%Math.max(1,l.length),m=l[i]||{name:'TUKO',price:0,cat:'Semua'};
- if(C.done)return `<div class="wrap" style="text-align:center;padding-top:60px"><div style="font-size:60px">✅</div><h2 style="margin:10px 0">Pesanan terkirim!</h2><p class="mu" style="margin-bottom:18px">Meja ${esc(C.table)} · ${rp(C.done.total)} · Menunggu pembayaran di kasir.</p><button class="b" onclick="C.done=null;render()">Pesan lagi</button></div>`;
- return `<header class="hd"><b style="font-size:20px;color:var(--primary)">TUKO <span class="mu" style="font-weight:500">Tuangin · Puterin · Nikmatin</span></b><span class="row">${C.table?`<button class="chip on" onclick="M={t:'tbl'};render()">Meja ${esc(C.table)} ✎</button>`:''}<button class="b2" title="Staff" onclick="M={t:'pin',v:'',staff:1};render()">🔒</button></span></header>
- <section class="hero" id="hero" style="background:${BG[i%4]}"><div><h1>Teh teko &amp; sate hangat, langsung dari meja Anda.</h1><p class="mu" style="margin-bottom:14px">Pilih menu, tulis catatan, kirim ke kasir.</p><a class="b" href="#menu" style="text-decoration:none;display:inline-block">Lihat menu</a></div>
- <div><div class="hc" onclick="scrollToCat(${JSON.stringify(m).replace(/"/g,'&quot;')})"><span class="bdg">⭐ Best Seller</span><div class="lab" id="hl" style="margin:16px 0;font-size:20px;padding:34px 8px">${esc(short(m.name))}</div><b id="hn">${esc(m.name)}</b><div id="hp" style="font-size:22px;font-weight:800;color:var(--primary)">${rp(m.price)}</div><button class="b2" style="margin-top:10px;width:100%" onclick="event.stopPropagation();scrollToCat(${JSON.stringify(m).replace(/"/g,'&quot;')})">Pesan Ini</button></div>
- <div class="dots">${l.map((_,j)=>`<span class="dot ${j===i?'on':''}" onclick="C.idx=${j};updateShowcaseDOM()"></span>`).join('')}</div></div></section>
+ 
+ if(C.done)return `<div class="wrap" style="text-align:center;padding-top:60px"><div style="font-size:60px">✅</div><h2 style="margin:10px 0">Pesanan terkirim!</h2><p class="mu" style="margin-bottom:18px">Meja ${esc(C.table)} ${C.name?`(${esc(C.name)})`:''} · ${rp(C.done.total)} · Menunggu pembayaran di kasir.</p><button class="b" onclick="C.done=null;render()">Pesan lagi</button></div>`;
+ 
+ const tableLabel = C.table ? `Meja ${esc(C.table)} ${C.name?`- ${esc(C.name)}`:''}` : '';
+ 
+ return `<header class="hd"><b style="font-size:20px;color:var(--primary)">TUKO <span class="mu" style="font-weight:500">Tuangin · Puterin · Nikmatin</span></b><span class="row">${C.table?`<button class="chip on" onclick="M={t:'tbl'};render()">${tableLabel} ✎</button>`:''}<button class="b2" title="Staff" onclick="M={t:'pin',v:'',staff:1};render()">🔒</button></span></header>
+ 
+ <section class="hero" id="hero" style="background:${BG[i%4]}">
+ <div>
+   <h1>Teh teko &amp; sate hangat, <span>langsung dari meja Anda.</span></h1>
+   <p class="mu" style="margin-bottom:14px">Pilih menu, tulis catatan, kirim ke kasir.</p>
+   <a class="b" href="#menu" style="text-decoration:none;display:inline-block">Lihat menu</a>
+ </div>
+ <div>
+   <div class="hc" onclick="scrollToCat(${JSON.stringify(m).replace(/"/g,'&quot;')})">
+     <span class="bdg">⭐ Best Seller</span>
+     <div class="lab" id="hl" style="margin:16px 0;font-size:20px;padding:34px 8px;position:relative;">
+       <div id="heroIcon" style="position:absolute;top:6px;right:10px;font-size:18px;opacity:0.6;">🍵</div>
+       ${esc(short(m.name))}
+     </div>
+     <b id="hn">${esc(m.name)}</b>
+     <div id="hp" style="font-size:22px;font-weight:800;color:var(--primary)">${rp(m.price)}</div>
+     <button class="b2" style="margin-top:10px;width:100%" onclick="event.stopPropagation();scrollToCat(${JSON.stringify(m).replace(/"/g,'&quot;')})">Pesan Ini</button>
+   </div>
+   <div class="dots">${l.map((_,j)=>`<span class="dot ${j===i?'on':''}" onclick="C.idx=${j};updateShowcaseDOM()"></span>`).join('')}</div>
+ </div></section>
+ 
  <div class="wrap" id="menu"><h2 style="margin-bottom:10px">Menu</h2><div class="chips">${CT.map((c,j)=>`<button class="chip ${C.cat===c?'on':''}" onclick="C.cat=CT[${j}];render()">${esc(c)}</button>`).join('')}</div>
  <div class="grid" id="custCatalog">${it.map(m=>`<div class="card pc hv" onclick="cAdd(${m.id})">${m.badge?'<span class="bdg">1 Teko</span>':''}<div class="lab">${esc(short(m.name))}</div><div class="nm">${esc(m.name)}</div><div class="row"><b>${rp(m.price)}</b><span class="pl">+</span></div></div>`).join('')||'<p class="mu">Belum ada menu.</p>'}</div></div>
  ${n?`<button class="fab" onclick="C.open=true;render()">🛒 ${n} · ${rp(tl)}</button>`:''}`}
@@ -261,9 +241,19 @@ function cQty(id,d){const c=C.cart.find(x=>x.id===id);if(!c)return;c.qty+=d;if(c
 function cNote(id,v){const c=C.cart.find(x=>x.id===id);if(c)c.note=v}
 function cSend(){if(!C.cart.length)return;if(!C.table){M={t:'tbl'};render();return}
  const items=C.cart.map(i=>({...i,note:(i.note||'').trim()})),total=sum(items,i=>i.price*i.qty);
- const tab={id:Date.now(),items,table:'Meja '+C.table,total,ts:now(),tsRaw:iso(),source:'self-order',status:'Belum Dibayar'};
- S.tabs.push(tab);logA('Self-order Meja '+C.table+' '+rp(total));C.done=tab;C.cart=[];C.open=false;render()}
-function setTable(){const v=($('tin').value||'').trim();if(!v){toast('Isi nomor meja');return}C.table=v.padStart(2,'0');M=null;render()}
+ const tab={id:Date.now(),items,table:'Meja '+C.table,tableNum:C.table,customerName:C.name||'',total,ts:now(),tsRaw:iso(),source:'self-order',status:'Belum Dibayar'};
+ S.tabs.push(tab);logA(`Self-order Meja ${C.table} ${C.name?`(${C.name})`:''} ${rp(total)}`);
+ C.done=tab;C.cart=[];C.name='';C.open=false;render()}
+
+function setTable(){
+ const vTable=($('tin').value||'').trim();
+ const vName=($('tinName').value||'').trim();
+ if(!vTable){toast('Isi nomor meja');return}
+ C.table=vTable.padStart(2,'0');
+ C.name=vName;
+ M=null;render()
+}
+
 function submitPin(){const v=M.v;
  if(v===S.pin){AU=true;cust=false;view='admin';clearInterval(TM);M=null;logA('Login Admin');render();return}
  if(M.staff&&v===S.kasirPin){AU=false;cust=false;view='pos';clearInterval(TM);M=null;logA('Login Kasir');render();return}
@@ -277,7 +267,9 @@ function chQ(id,d){const c=S.cart.find(x=>x.id===id);if(!c)return;c.qty+=d;if(c.
 const sub=()=>sum(S.cart,i=>i.price*i.qty),cTot=()=>Math.max(0,sub()-S.discount);
 function updTot(){if($('tot'))$('tot').textContent=rp(cTot())}
 function resumeTab(id){const t=S.tabs.find(x=>x.id===id);if(!t)return;if(!shiftOn()){toast('Buka shift dulu');return}
- S.cart=t.items.map(i=>({...i}));S.tableNote=t.table;S.tabs=S.tabs.filter(x=>x.id!==id);save();view='pos';render();toast('Tab dilanjutkan')}
+ S.cart=t.items.map(i=>({...i}));
+ S.tableNote=t.customerName ? `${t.table} - ${t.customerName}` : t.table;
+ S.tabs=S.tabs.filter(x=>x.id!==id);save();view='pos';render();toast('Tab dilanjutkan')}
 function saveTab(){if(!S.cart.length)return;S.tabs.push({id:Date.now(),items:S.cart.map(i=>({...i})),table:S.tableNote||'Meja',total:cTot(),ts:now(),tsRaw:iso(),source:'kasir',status:'Belum Dibayar'});S.cart=[];S.discount=0;S.tableNote='';save();render();toast('Tab disimpan')}
 function checkout(method,cash){const total=cTot(),t={id:Date.now(),items:S.cart.map(i=>({...i})),total,discount:S.discount,method,cash:cash||total,ts:now(),tsRaw:iso(),table:S.tableNote,cashier:S.cashierName,shiftId:S.shift.id,shiftName:S.shift.name};
  S.trans.push(t);logA('Order '+rp(total)+' ('+method+')');S.cart=[];S.discount=0;S.tableNote='';save();M={t:'rc',r:t};render()}
@@ -308,9 +300,25 @@ function vPos(){
  ${n?`<div class="bar" onclick="$('cart').scrollIntoView({behavior:'smooth'})"><span>🛒 ${n} item</span><span>${rp(cTot())}</span></div>`:''}`}
 
 /* ===== 2) Open Tab ===== */
-function vTabs(){return S.tabs.length?S.tabs.map(t=>{const nt=t.items.filter(i=>i.note);
- return `<div class="card row wr" style="${t.source==='self-order'?'border-left:4px solid var(--blue)':''}"><div style="flex:1;min-width:200px"><b>${esc(t.table)}</b> ${t.source==='self-order'?'<span class="tag self">⚡ SELF-ORDER</span>':''}<div class="mu">${t.items.reduce((a,i)=>a+i.qty,0)} item · ${t.ts}</div><div class="mu">${t.items.map(i=>i.qty+'x '+esc(i.name)).join(', ')}</div>${nt.map(i=>`<div class="nt">📝 ${esc(i.name)}: ${esc(i.note)}</div>`).join('')}</div><div style="text-align:right"><b style="font-size:17px;color:var(--primary)">${rp(t.total)}</b><br><button class="b" style="margin-top:6px" onclick="resumeTab(${t.id})">Lanjutkan</button></div></div>`}).join('')
- :'<div class="empty"><div style="font-size:40px">📋</div><b>Belum ada tab</b><p class="mu">Pesanan self-order pembeli muncul di sini.</p></div>'}
+function vTabs(){
+ return S.tabs.length?S.tabs.map(t=>{
+   const nt=t.items.filter(i=>i.note);
+   const title = t.customerName ? `<b>${esc(t.table)}</b> <span style="color:var(--primary);font-weight:800;">- ${esc(t.customerName)}</span>` : `<b>${esc(t.table)}</b>`;
+   return `<div class="card row wr" style="${t.source==='self-order'?'border-left:4px solid var(--blue)':''}">
+   <div style="flex:1;min-width:200px">
+     <div style="font-size:14px;margin-bottom:2px;">${title} ${t.source==='self-order'?'<span class="tag self">⚡ SELF-ORDER</span>':''}</div>
+     <div class="mu">${t.items.reduce((a,i)=>a+i.qty,0)} item · ${t.ts}</div>
+     <div class="mu">${t.items.map(i=>i.qty+'x '+esc(i.name)).join(', ')}</div>
+     ${nt.map(i=>`<div class="nt">📝 ${esc(i.name)}: ${esc(i.note)}</div>`).join('')}
+   </div>
+   <div style="text-align:right">
+     <b style="font-size:17px;color:var(--primary)">${rp(t.total)}</b><br>
+     <button class="b" style="margin-top:6px" onclick="resumeTab(${t.id})">Lanjutkan</button>
+   </div>
+   </div>`
+ }).join('')
+ :'<div class="empty"><div style="font-size:40px">📋</div><b>Belum ada tab</b><p class="mu">Pesanan self-order pembeli muncul di sini.</p></div>'
+}
 
 /* ===== 3) Pengeluaran ===== */
 function vExp(){const a=shiftOn(),c=k=>sum(S.expenses.filter(e=>e.cat===k),e=>e.amount),ex=[...S.expenses].reverse();
@@ -328,19 +336,17 @@ function saveExp(){const e=M.e,d=$('xd').value.trim(),n=+$('xn').value,cat=$('xc
 function vAdm(){
  if(!AU)return `<div class="empty"><div style="font-size:40px">🛡️</div><b>Akses Admin Terkunci</b><p class="mu" style="margin-bottom:14px">Masukkan PIN Admin untuk membuka laporan.</p><button class="b" onclick="M={t:'pin',v:'',staff:0};render()">Masukkan PIN</button></div>`;
  
- // Ambil semua bulan yang ada datanya
  const days=[...new Set([...S.trans.map(day),...S.expenses.map(day)])].filter(Boolean).sort().reverse();
  const mons=[...new Set(days.map(d=>d.slice(0,7)))];
  if(!MON||!mons.includes(MON))MON=mons[0]||'';
  
- // Filter data sesuai bulan terpilih
  const mt=S.trans.filter(t=>day(t).slice(0,7)===MON);
  const me=S.expenses.filter(e=>day(e).slice(0,7)===MON);
- const mo=sum(mt,t=>t.total); // Omzet
- const mx=sum(me,e=>e.amount); // Pengeluaran
- const mn=mo-mx; // Laba
- const mTxCount=mt.length; // Jml Transaksi
- const mDiv=Math.max(0,mn)*S.dividendPct/100; // Dividen
+ const mo=sum(mt,t=>t.total);
+ const mx=sum(me,e=>e.amount);
+ const mn=mo-mx;
+ const mTxCount=mt.length;
+ const mDiv=Math.max(0,mn)*S.dividendPct/100;
 
  const ks=[...new Set(S.shiftHistory.map(s=>s.cashierName))];
  const sh=S.shiftHistory.filter(s=>(!HF.d||(s.startedAt||'').slice(0,10)===HF.d)&&(!HF.k||s.cashierName===HF.k));
@@ -351,7 +357,6 @@ function vAdm(){
  }).join('');
 
  return `
- <!-- HEADER ADMIN -->
  <div class="row wr" style="margin-bottom:14px; align-items:flex-start;">
    <div style="flex:1; min-width:200px;">
      <b style="font-size:20px; color:var(--primary);">Admin &amp; Laporan</b>
@@ -363,7 +368,6 @@ function vAdm(){
    </div>
  </div>
 
- <!-- LAPORAN BULANAN (UTAMA) -->
  <div class="card" style="border:2px solid var(--primary);">
    <div class="row wr" style="margin-bottom:12px; border-bottom:1px dashed var(--line); padding-bottom:12px;">
      <div>
@@ -377,7 +381,6 @@ function vAdm(){
      </div>
    </div>
 
-   <!-- STAT CARDS TER-FILTER -->
    <div class="stats" style="margin-bottom:16px;">
      <div class="st" style="border-left:4px solid var(--primary);">Omzet Kotor<b>${rp(mo)}</b></div>
      <div class="st" style="border-left:4px solid var(--red);">Pengeluaran<b class="rd">${rp(mx)}</b></div>
@@ -386,12 +389,10 @@ function vAdm(){
      <div class="st" style="background:var(--primary); color:#fff; border:none;">Alokasi Dividen<b>${rp(mDiv)}</b></div>
    </div>
 
-   <!-- CHART TER-FILTER -->
    <div style="background:#FAFAFA; border-radius:12px; padding:12px; margin-bottom:16px;">
      <canvas id="ch" height="120"></canvas>
    </div>
 
-   <!-- SLIDER DIVIDEN -->
    <div style="background:#FEF3C7; border-radius:12px; padding:12px; margin-bottom:16px;">
      <div class="row" style="margin-bottom:6px;">
        <span style="font-weight:700; font-size:12px;">Atur Persentase Dividen</span>
@@ -401,7 +402,6 @@ function vAdm(){
      <div class="mu" style="margin-top:6px; text-align:right;">Nilai: <b id="dvaLabel" style="color:var(--accent);">${rp(mDiv)}</b></div>
    </div>
 
-   <!-- TABEL RINCIAN HARIAN -->
    <div class="sc">
      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
        <b>Rincian Per Tanggal (${MON})</b>
@@ -413,7 +413,6 @@ function vAdm(){
    </div>
  </div>
 
- <!-- EXCEL & SHIFT -->
  <div class="card row wr" style="margin-top:20px;">
    <div>
      <b>Export / Import Excel</b>
@@ -444,7 +443,6 @@ function vAdm(){
    ${sh.map((s,i)=>`<div class="card" style="margin:8px 0; background:#FAFAFA;"><div class="row"><b>${esc(s.name)}</b><button class="b2" onclick="M={t:'det',r:S.shiftHistory[${S.shiftHistory.indexOf(s)}]};render()">Detail</button></div><div class="mu">${esc(s.cashierName)} · ${s.startedAtLabel} → ${s.closedAtLabel}</div><div class="row wr mu" style="margin-top:6px"><span>Modal ${rp(s.openingCash)}</span><span>Cash ${rp(s.cashSales)}</span><span>QRIS ${rp(s.qrisSales)}</span><span>Keluar ${rp(s.expenseTotal)}</span><span>Setor ${rp(s.actualCash)}</span><span class="${s.variance?'rd':'gr'}">Selisih ${rp(s.variance)}</span></div>${s.note?`<div class="nt">${esc(s.note)}</div>`:''}</div>`).join('')||'<p class="mu">Belum ada riwayat shift.</p>'}
  </div>
 
- <!-- MANAJEMEN MENU -->
  <div class="card sc">
    <div class="row" style="margin-bottom:10px;">
      <b>Manajemen Menu</b>
@@ -456,7 +454,6 @@ function vAdm(){
    </table>
  </div>
 
- <!-- LOG & DANGER -->
  <div class="card" style="margin-top:20px;">
    <b>Log Aktivitas Terakhir</b>
    ${S.log.slice(0,10).map(l=>`<div class="mu" style="border-bottom:1px dashed var(--line); padding:6px 0;">${l.ts} — ${esc(l.a)}</div>`).join('')||'<p class="mu">Kosong</p>'}
@@ -470,7 +467,6 @@ function vAdm(){
 }
 function togM(id){const m=S.menu.find(x=>x.id===id);m.active=m.active===false;save();render()}
 
-/* UPDATE CHART: Hanya menampilkan data BULAN TERPILIH */
 function drawChart(){
  if(chart){chart.destroy();chart=null}
  const c=$('ch');if(!c||typeof Chart==='undefined')return;
@@ -544,7 +540,23 @@ function doReset(){if($('rt').value!=='RESET'){toast('Ketik RESET');return}const
 /* ===== Modal lintas menu ===== */
 const fg=(l,h)=>`<div class="fg"><label>${l}</label>${h}</div>`,acts=(ok,t,dis)=>`<div class="row" style="margin-top:16px"><button class="b2" style="flex:1" onclick="M=null;render()">Batal</button><button class="b" style="flex:1" onclick="${ok}" ${dis||''}>${t}</button></div>`;
 function rM(){const t=M.t;let h='',cls='ov';
- if(t==='tbl'){h=`<h3>🍽️ Nomor Meja</h3><p class="mu" style="margin-bottom:12px">Masukkan nomor meja Anda untuk mulai memesan.</p><input id="tin" class="pin" style="letter-spacing:4px" maxlength="4" placeholder="03" value="${esc(C.table)}" onkeydown="if(event.key==='Enter')setTable()"><div class="row" style="margin-top:16px"><button class="b" style="width:100%" onclick="setTable()">Mulai Pesan</button></div>`}
+
+ if(t==='tbl'){
+   h=`<h3>🍽️ Data Pesanan</h3>
+   <div class="g" style="margin-bottom:16px">
+     <div class="fg">
+       <label>Nomor Meja</label>
+       <input id="tin" placeholder="03" value="${esc(C.table)}" onkeydown="if(event.key==='Enter')setTable()">
+     </div>
+     <div class="fg">
+       <label>Nama Pemesan (Atas Nama)</label>
+       <input id="tinName" placeholder="Ciki" value="${esc(C.name)}" onkeydown="if(event.key==='Enter')setTable()">
+     </div>
+   </div>
+   <div class="row">
+     <button class="b" style="width:100%" onclick="setTable()">Simpan &amp; Mulai Pesan</button>
+   </div>`
+ }
  else if(t==='pin'){h=`<h3 style="text-align:center">🔒 ${M.staff?'Akses Staff':'PIN Admin'}</h3><input id="pi" class="pin" type="password" inputmode="numeric" maxlength="4" oninput="M.v=this.value" onkeydown="if(event.key==='Enter')submitPin()">${acts('submitPin()','Buka')}`}
  else if(t==='pay'){const tl=cTot(),ok=M.m==='qris'||M.c>=tl;h=`<h3>💳 Pembayaran</h3><div style="background:var(--primary);color:#fff;border-radius:14px;padding:16px;text-align:center;margin-bottom:12px"><div class="mu" style="color:#fff">Total Tagihan</div><div style="font-size:30px;font-weight:800">${rp(tl)}</div></div>
  <div class="row" style="margin-bottom:12px"><button class="chip ${M.m==='cash'?'on':''}" style="flex:1" onclick="M.m='cash';render()">💵 Tunai</button><button class="chip ${M.m==='qris'?'on':''}" style="flex:1" onclick="M.m='qris';render()">📱 QRIS</button></div>
@@ -574,7 +586,7 @@ function rM(){const t=M.t;let h='',cls='ov';
 const _render=render;
 render=function(){_render();
  if(cust&&C.open&&!M){const tl=sum(C.cart,i=>i.price*i.qty);
-  $('mdl').innerHTML=`<div class="ov sh" onclick="if(event.target===this){C.open=false;render()}"><div class="md"><div class="row" style="margin-bottom:12px"><div><h3 style="margin:0">Keranjang · Meja ${esc(C.table||'?')}</h3></div><button class="b2" onclick="C.open=false;render()">✕</button></div>
+  $('mdl').innerHTML=`<div class="ov sh" onclick="if(event.target===this){C.open=false;render()}"><div class="md"><div class="row" style="margin-bottom:12px"><div><h3 style="margin:0">Keranjang · Meja ${esc(C.table||'?')} ${C.name?`(${esc(C.name)})`:''}</h3></div><button class="b2" onclick="C.open=false;render()">✕</button></div>
   ${C.cart.map(i=>`<div class="card row" style="align-items:flex-start;padding:12px;margin-bottom:8px"><div style="flex:1"><b>${esc(i.name)}</b><div class="mu">${rp(i.price)} × ${i.qty} = ${rp(i.price*i.qty)}</div><input style="margin-top:6px;font-size:12px" placeholder="Catatan (mis. es sedikit)" value="${esc(i.note)}" oninput="cNote(${i.id},this.value)"></div><div class="row" style="flex-direction:column"><button class="b2" onclick="cQty(${i.id},1)">+</button><b>${i.qty}</b><button class="b2" onclick="cQty(${i.id},-1)">−</button></div></div>`).join('')||'<p class="mu">Keranjang kosong</p>'}
   <div class="row" style="font-size:18px;font-weight:800;color:var(--primary);margin:10px 0"><span>Total</span><span>${rp(tl)}</span></div><button class="b" style="width:100%;padding:14px" onclick="cSend()" ${C.cart.length?'':'disabled'}>Kirim Pesanan ke Kasir</button></div></div>`}};
 
