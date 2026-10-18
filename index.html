@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TUKO POS v6 — Warm &amp; Living UI</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
@@ -10,7 +10,8 @@
 <style>
 :root{--bg-main:#FDFBF7;--bg-card:#FFFFFF;--primary:#4A6B5D;--primary-hover:#3B574B;--accent:#D97706;--text-main:#2D3748;--text-muted:#718096;--line:#EAE4D8;--red:#C25454;--blue:#1565C0;--ease:cubic-bezier(0.25,0.8,0.25,1)}
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg-main);color:var(--text-main);font:14px/1.5 'Plus Jakarta Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth}
+body{background:var(--bg-main);color:var(--text-main);font:14px/1.5 'Plus Jakarta Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer;border:0;background:none;transition:all .3s var(--ease)}
 button:active{transform:scale(.96)}
@@ -23,8 +24,9 @@ input,select,textarea{border:1.5px solid var(--line);border-radius:10px;padding:
 .b2{background:#fff;border:1.5px solid var(--line);padding:9px 14px;border-radius:12px;font-weight:600}.b2:hover{border-color:var(--primary)}
 .bd{background:#fff;border:1.5px solid var(--red);color:var(--red);padding:9px 14px;border-radius:12px;font-weight:700}
 .b:disabled,.b2:disabled{opacity:.4;cursor:not-allowed}
-.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 0 12px;scrollbar-width:none}
-.chip{flex:none;padding:8px 16px;border:1.5px solid var(--line);border-radius:99px;background:#fff;font-weight:600}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 0 12px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;padding:8px 16px;border:1.5px solid var(--line);border-radius:99px;background:#fff;font-weight:600;white-space:nowrap}
 .chip.on{background:var(--primary);color:#fff;border-color:var(--primary)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
 .pc{cursor:pointer;position:relative;padding:12px;margin:0}
@@ -33,10 +35,11 @@ input,select,textarea{border:1.5px solid var(--line);border-radius:10px;padding:
 .pl{background:var(--primary);color:#fff;width:30px;height:30px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
 .bdg{background:var(--accent);color:#fff;font-size:10px;padding:3px 9px;border-radius:99px;font-weight:800;display:inline-block}
 .pc .bdg{position:absolute;top:18px;left:18px}
-.hd{position:sticky;top:0;z-index:20;background:#FDFBF7ee;backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 18px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.hd{position:sticky;top:0;z-index:20;background:rgba(253,251,247,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 18px;display:flex;justify-content:space-between;align-items:center;gap:8px}
 .hero{padding:34px 18px;transition:background 1.2s ease-in-out;display:flex;gap:28px;align-items:center;justify-content:center;flex-wrap:wrap}
 .hero h1{font-size:34px;line-height:1.1;font-weight:800;max-width:420px;margin-bottom:10px}
-.hc{background:#fff;border-radius:28px;padding:22px;text-align:center;width:250px;animation:float 3.5s ease-in-out infinite;box-shadow:0 20px 44px rgba(74,107,93,.2);cursor:pointer}
+.hc{background:#fff;border-radius:28px;padding:22px;text-align:center;width:250px;animation:float 3.5s ease-in-out infinite;box-shadow:0 20px 44px rgba(74,107,93,.2);cursor:pointer;position:relative}
+.hc:active{animation:none;transform:scale(.97)}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 .dots{display:flex;gap:8px;justify-content:center;margin-top:14px}
 .dot{width:8px;height:8px;border-radius:99px;background:#4A6B5D40;cursor:pointer;transition:all .3s}.dot.on{width:24px;background:var(--primary)}
@@ -69,7 +72,7 @@ table{width:100%;border-collapse:collapse;font-size:12.5px}th,td{padding:9px 8px
 .tag{display:inline-block;padding:2px 9px;border-radius:99px;font-size:11px;font-weight:700;background:#E8EEEA;color:var(--primary)}
 .self{background:#E3F2FD;color:var(--blue)}.nt{color:var(--accent);font-style:italic;font-size:12px}
 .empty{text-align:center;padding:44px 16px;border:1.5px dashed var(--line);border-radius:18px;background:#fff}
-.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--text-main);color:#fff;padding:12px 22px;border-radius:99px;z-index:90;font-weight:600;max-width:92vw;text-align:center}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--text-main);color:#fff;padding:12px 22px;border-radius:99px;z-index:90;font-weight:600;max-width:92vw;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.2)}
 .warn{background:#FEF3C7;border:1px solid #F5E6C8;color:var(--accent);padding:12px 16px;border-radius:14px;margin-bottom:14px;font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
 #rc{font-family:'Courier New',monospace;font-size:12px}
 .selbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
@@ -85,7 +88,8 @@ table{width:100%;border-collapse:collapse;font-size:12.5px}th,td{padding:9px 8px
 /* === Mobile < 860px : Sidebar -> Bottom Nav === */
 @media(max-width:860px){
  #k{display:block}
- .side{position:fixed;bottom:0;left:0;right:0;width:auto;height:auto;flex-direction:row;z-index:25;padding:6px;border-top:1px solid var(--line);border-right:0;overflow-x:auto;scrollbar-width:none}
+ .side{position:fixed;bottom:0;left:0;right:0;width:auto;height:auto;flex-direction:row;z-index:25;padding:6px;border-top:1px solid var(--line);border-right:0;overflow-x:auto;scrollbar-width:none;box-shadow:0 -4px 16px rgba(74,107,93,.08)}
+ .side::-webkit-scrollbar{display:none}
  .side .logo,.side .sb,.side .xt{display:none}
  .nv{flex-direction:column;gap:2px;font-size:10px;padding:6px 4px;justify-content:center;text-align:center;white-space:nowrap}
  .nv span:first-child{font-size:16px}
@@ -192,13 +196,12 @@ function scrollToCat(m){
  if(!m)return;
  const cat=m.cat||'Semua';
  C.cat=CT.includes(cat)?cat:'Semua';
- // Re-render (produk grid terupdate) lalu scroll ke katalog
  render();
  setTimeout(()=>{
   const el=$('menu');
   if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
   toast('Kategori: '+C.cat);
- },60);
+ },80);
 }
 
 function rCust(){
@@ -211,7 +214,7 @@ function rCust(){
  <div><div class="hc" onclick="scrollToCat(${JSON.stringify(m).replace(/"/g,'&quot;')})"><span class="bdg">⭐ Best Seller</span><div class="lab" id="hl" style="margin:16px 0;font-size:20px;padding:34px 8px">${esc(short(m.name))}</div><b id="hn">${esc(m.name)}</b><div id="hp" style="font-size:22px;font-weight:800;color:var(--primary)">${rp(m.price)}</div><button class="b2" style="margin-top:10px;width:100%" onclick="event.stopPropagation();scrollToCat(${JSON.stringify(m).replace(/"/g,'&quot;')})">Pesan Ini</button></div>
  <div class="dots">${l.map((_,j)=>`<span class="dot ${j===i?'on':''}" onclick="C.idx=${j};updateShowcaseDOM()"></span>`).join('')}</div></div></section>
  <div class="wrap" id="menu"><h2 style="margin-bottom:10px">Menu</h2><div class="chips">${CT.map((c,j)=>`<button class="chip ${C.cat===c?'on':''}" onclick="C.cat=CT[${j}];render()">${esc(c)}</button>`).join('')}</div>
- <div class="grid">${it.map(m=>`<div class="card pc hv" onclick="cAdd(${m.id})">${m.badge?'<span class="bdg">1 Teko</span>':''}<div class="lab">${esc(short(m.name))}</div><div class="nm">${esc(m.name)}</div><div class="row"><b>${rp(m.price)}</b><span class="pl">+</span></div></div>`).join('')||'<p class="mu">Belum ada menu.</p>'}</div></div>
+ <div class="grid" id="custCatalog">${it.map(m=>`<div class="card pc hv" onclick="cAdd(${m.id})">${m.badge?'<span class="bdg">1 Teko</span>':''}<div class="lab">${esc(short(m.name))}</div><div class="nm">${esc(m.name)}</div><div class="row"><b>${rp(m.price)}</b><span class="pl">+</span></div></div>`).join('')||'<p class="mu">Belum ada menu.</p>'}</div></div>
  ${n?`<button class="fab" onclick="C.open=true;render()">🛒 ${n} · ${rp(tl)}</button>`:''}`}
 
 function cAdd(id){const m=S.menu.find(x=>x.id===id);if(!m)return;const c=C.cart.find(x=>x.id===id);if(c)c.qty++;else C.cart.push({id:m.id,name:m.name,price:m.price,cat:m.cat,hpp:0,badge:m.badge,active:true,qty:1,note:''});render();toast('+ '+m.name)}
@@ -290,6 +293,7 @@ function vAdm(){
  const mt=S.trans.filter(t=>day(t).slice(0,7)===MON),me=S.expenses.filter(e=>day(e).slice(0,7)===MON),mo=sum(mt,t=>t.total),mx=sum(me,e=>e.amount),mn=mo-mx;
  const ks=[...new Set(S.shiftHistory.map(s=>s.cashierName))],sh=S.shiftHistory.filter(s=>(!HF.d||(s.startedAt||'').slice(0,10)===HF.d)&&(!HF.k||s.cashierName===HF.k));
  const so=sold();
+ const dayRows=days.filter(d=>d.slice(0,7)===MON).slice(0,31).map(d=>{const t=S.trans.filter(x=>day(x)===d),o=sum(t,x=>x.total),x=sum(S.expenses.filter(e=>day(e)===d),e=>e.amount);return `<tr><td>${d}</td><td class="r">${rp(o)}</td><td class="r rd">${rp(x)}</td><td class="r"><b>${rp(o-x)}</b></td><td class="r">${t.length}</td><td><button class="b2" onclick="M={t:'detDaily',d:'${d}',trans:S.trans.filter(z=>day(z)==='${d}'),exps:S.expenses.filter(z=>day(z)==='${d}')};render()">Lihat</button></td></tr>`}).join('');
  return `<div class="row wr" style="margin-bottom:12px"><b style="font-size:18px">Admin &amp; Laporan</b><span class="row"><button class="b2" onclick="M={t:'set'};render()">⚙️ Pengaturan Toko</button><button class="b2" onclick="AU=false;render()">Kunci</button></span></div>
  <div class="stats"><div class="st">Omzet Kotor<b>${rp(gross())}</b></div><div class="st">Total Pengeluaran<b class="rd">${rp(totEx())}</b></div><div class="st">Laba Bersih<b class="${net()>=0?'gr':'rd'}">${rp(net())}</b></div><div class="st" style="background:var(--primary);color:#fff">Alokasi Dividen<b>${rp(Math.max(0,net())*S.dividendPct/100)}</b></div></div>
  <div class="card"><canvas id="ch" height="110"></canvas></div>
@@ -316,7 +320,7 @@ function vAdm(){
  </div>
 
  <div class="card sc"><b>Rincian Per Tanggal</b><table><tr><th>Tanggal</th><th class="r">Omzet Kotor</th><th class="r">Pengeluaran</th><th class="r">Laba Bersih</th><th class="r">Jml Transaksi</th><th>Detail</th></tr>
- ${days.filter(d=>d.slice(0,7)===MON).slice(0,31).map(d=>{const t=S.trans.filter(x=>day(x)===d),o=sum(t,x=>x.total),x=sum(S.expenses.filter(e=>day(e)===d),e=>e.amount);return `<tr><td>${d}</td><td class="r">${rp(o)}</td><td class="r rd">${rp(x)}</td><td class="r"><b>${rp(o-x)}</b></td><td class="r">${t.length}</td><td><button class="b2" onclick="M={t:'detDaily',d:'${d}',trans:S.trans.filter(z=>day(z)==='${d}'),exps:S.expenses.filter(z=>day(z)==='${d}')};render()">Lihat</button></td></tr>`}).join('')||'<tr><td colspan="6" class="mu">Belum ada data</td></tr>'}</table></div>
+ ${dayRows||'<tr><td colspan="6" class="mu">Belum ada data</td></tr>'}</table></div>
 
  <div class="card"><div class="row wr"><b>Riwayat Shift</b><span class="row"><input type="date" style="width:auto" value="${HF.d}" onchange="HF.d=this.value;render()"><select style="width:auto" onchange="HF.k=this.value;render()"><option value="">Semua kasir</option>${ks.map(k=>`<option ${HF.k===k?'selected':''}>${esc(k)}</option>`).join('')}</select></span></div>
  <div class="stats" style="margin-top:10px"><div class="st">Jumlah Shift<b>${sh.length}</b></div><div class="st">Omzet<b>${rp(sum(sh,s=>s.grossRevenue))}</b></div><div class="st">Laba<b>${rp(sum(sh,s=>s.netProfit))}</b></div><div class="st">Total Selisih<b class="${sum(sh,s=>s.variance)<0?'rd':'gr'}">${rp(sum(sh,s=>s.variance))}</b></div></div>
@@ -398,7 +402,7 @@ function rM(){const t=M.t;let h='',cls='ov';
  if(C.open&&cust&&!M)return '';
  return `<div class="${cls}" onclick="if(event.target===this&&'${t}'!=='tbl'){M=null;render()}"><div class="md">${h}</div></div>`}
 
-/* ===== Cart sheet pembeli (overlay terpisah, tidak mereset render saat mengetik catatan) ===== */
+/* ===== Cart sheet pembeli ===== */
 const _render=render;
 render=function(){_render();
  if(cust&&C.open&&!M){const tl=sum(C.cart,i=>i.price*i.qty);
