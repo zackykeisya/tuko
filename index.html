@@ -36,14 +36,58 @@ input,select,textarea{border:1.5px solid var(--line);border-radius:10px;padding:
 .bdg{background:var(--accent);color:#fff;font-size:10px;padding:3px 9px;border-radius:99px;font-weight:800;display:inline-block}
 .pc .bdg{position:absolute;top:18px;left:18px}
 .hd{position:sticky;top:0;z-index:20;background:rgba(253,251,247,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 18px;display:flex;justify-content:space-between;align-items:center;gap:8px}
-.hero{padding:34px 18px;transition:background 1.2s ease-in-out;display:flex;gap:28px;align-items:center;justify-content:center;flex-wrap:wrap}
-.hero h1{font-size:34px;line-height:1.1;font-weight:800;max-width:420px;margin-bottom:10px;color:#2D3748}
-.hero h1 span{color:var(--primary)}
-.hc{background:#fff;border-radius:28px;padding:22px;text-align:center;width:250px;animation:float 4s ease-in-out infinite;box-shadow:0 20px 44px rgba(74,107,93,.15);cursor:pointer;position:relative;overflow:hidden}
+
+/* === HERO STYLE ALA PINTEREST === */
+.hero{
+  position:relative;
+  overflow:hidden;
+  padding:60px 18px;
+  display:flex;
+  gap:32px;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  background:linear-gradient(135deg, #FDFBF7 0%, #F5EBDD 40%, #E4EBE5 100%);
+}
+/* Ornamen Blur Glow */
+.hero::before, .hero::after{
+  content:'';
+  position:absolute;
+  border-radius:50%;
+  filter:blur(70px);
+  z-index:0;
+  opacity:0.6;
+}
+.hero::before{
+  width:350px; height:350px;
+  background:#D97706; /* Amber */
+  top:-80px; left:-50px;
+}
+.hero::after{
+  width:450px; height:450px;
+  background:#4A6B5D; /* Sage */
+  bottom:-100px; right:-50px;
+}
+/* Grid Pattern Halus */
+.hero-bg-pattern{
+  position:absolute; inset:0; z-index:0;
+  background-image:radial-gradient(#4A6B5D 1px, transparent 1px);
+  background-size:20px 20px;
+  opacity:0.05;
+}
+/* Konten Hero */
+.hero > div{position:relative; z-index:1;}
+.hero h1{font-size:36px;line-height:1.15;font-weight:800;max-width:420px;margin-bottom:14px;color:#2D3748;letter-spacing:-0.5px}
+.hero h1 span{color:#4A6B5D;display:inline-block}
+.hero p{font-size:15px;margin-bottom:20px;color:#4A5568;max-width:400px;line-height:1.6}
+.hero .b{padding:12px 24px;font-size:15px;box-shadow:0 8px 20px rgba(74,107,93,.25)}
+
+.hc{background:rgba(255,255,255,0.85);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.6);border-radius:28px;padding:22px;text-align:center;width:260px;animation:float 4s ease-in-out infinite;box-shadow:0 24px 48px rgba(45,55,72,.08);cursor:pointer;position:relative;overflow:hidden}
 .hc:active{animation:none;transform:scale(.97)}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 .dots{display:flex;gap:8px;justify-content:center;margin-top:14px}
 .dot{width:8px;height:8px;border-radius:99px;background:#4A6B5D40;cursor:pointer;transition:all .3s}.dot.on{width:24px;background:var(--primary)}
+
 .wrap{max-width:1100px;margin:0 auto;padding:18px 16px 110px}
 .fab{position:fixed;right:18px;bottom:18px;z-index:30;background:var(--primary);color:#fff;border-radius:99px;padding:14px 22px;font-weight:800;box-shadow:0 12px 30px rgba(74,107,93,.4)}
 .ov{position:fixed;inset:0;background:#2d374880;display:flex;align-items:center;justify-content:center;padding:16px;z-index:60}
@@ -52,6 +96,8 @@ input,select,textarea{border:1.5px solid var(--line);border-radius:10px;padding:
 .sh{align-items:flex-end}.sh .md{border-radius:24px 24px 0 0;max-width:520px}
 .md h3{color:var(--primary);margin-bottom:14px;font-size:18px}.fg{margin-bottom:12px}.fg label{display:block;font-size:12px;font-weight:700;color:var(--text-muted);margin-bottom:4px}
 .pin{font-size:26px;text-align:center;letter-spacing:12px}
+
+/* === DESKTOP LAYOUT === */
 #k{display:flex;min-height:100vh}
 .side{width:216px;background:#fff;border-right:1px solid var(--line);padding:16px 12px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:4px;flex:none;z-index:40}
 .logo{font-weight:800;font-size:22px;color:var(--primary);padding:4px 8px}
@@ -103,9 +149,10 @@ table{width:100%;border-collapse:collapse;font-size:12.5px}th,td{padding:9px 8px
  .hd{padding:10px 12px}
  .hd b{font-size:17px!important}
  .wrap{padding:14px 12px 130px}
- .hero{padding:24px 12px;gap:16px}
- .hero h1{font-size:23px;max-width:100%}
- .hero .hc{width:100%;max-width:290px;padding:16px}
+ .hero{padding:34px 14px; gap:20px}
+ .hero h1{font-size:26px;max-width:100%}
+ .hero p{font-size:13px; margin-bottom:16px}
+ .hero .hc{width:100%;max-width:320px;padding:18px}
  .hero .hc .lab{padding:24px 8px;font-size:17px}
  .grid{grid-template-columns:repeat(auto-fill,minmax(108px,1fr));gap:9px}
  .pc{padding:9px}
@@ -126,7 +173,7 @@ table{width:100%;border-collapse:collapse;font-size:12.5px}th,td{padding:9px 8px
 @media(max-width:400px){
  .grid{grid-template-columns:repeat(2,1fr)}
  .stats{grid-template-columns:1fr}
- .hero h1{font-size:20px}
+ .hero h1{font-size:22px}
 }
 
 @media print{body *{visibility:hidden}#rc,#rc *{visibility:visible}#rc{position:absolute;left:0;top:0;width:58mm}}
@@ -179,14 +226,30 @@ function sl(k,arr){const o=P[k];o.p=Math.min(o.p,Math.max(0,Math.ceil(arr.length
 function pager(k,len){const o=P[k];return `<div class="row" style="margin-top:10px"><select style="width:80px" onchange="P.${k}.n=+this.value;P.${k}.p=0;render()">${[5,10,25,50,100].map(n=>`<option ${o.n==n?'selected':''}>${n}</option>`).join('')}</select><span class="row"><button class="b2" onclick="P.${k}.p=Math.max(0,P.${k}.p-1);render()">‹</button><span>${o.p+1}/${Math.max(1,Math.ceil(len/o.n))}</span><button class="b2" onclick="P.${k}.p++;render()">›</button></span></div>`}
 
 /* ===== Pembeli ===== */
-function initCust(){const q=new URLSearchParams(location.search).get('meja')||new URLSearchParams(location.search).get('table');
- if(q){C.table=String(q).padStart(2,'0')}else{M={t:'tbl'}}
- clearInterval(TM);TM=setInterval(()=>{C.idx++;updateShowcaseDOM()},4000)}
+function initCust(){
+ const q=new URLSearchParams(location.search).get('meja')||new URLSearchParams(location.search).get('table');
+ if(q){
+   const parts=String(q).split('-');
+   C.table=parts[0].trim().padStart(2,'0');
+   if(parts.length>1) C.name=parts.slice(1).join('-').trim();
+ } else {
+   M={t:'tbl'};
+ }
+ clearInterval(TM);TM=setInterval(()=>{C.idx++;updateShowcaseDOM()},4000)
+}
+
 const showList=()=>{const a=S.menu.filter(m=>m.active!==false);const b=a.filter(m=>m.badge);return(b.length?b:a).slice(0,4)};
-function updateShowcaseDOM(){const l=showList();if(!l.length||!$('hero'))return;const i=C.idx%l.length,m=l[i];
- $('hero').style.background=BG[i%4];$('hl').textContent=short(m.name);$('hn').textContent=m.name;$('hp').textContent=rp(m.price);
+
+function updateShowcaseDOM(){
+ const l=showList();if(!l.length||!$('hero'))return;
+ const i=C.idx%l.length,m=l[i];
+ $('hero').style.background=BG[i%4];
+ $('hl').textContent=short(m.name);
+ $('hn').textContent=m.name;
+ $('hp').textContent=rp(m.price);
  $('heroIcon').textContent=m.cat.toLowerCase().includes('sate')?'🍢':'🍵';
- [...document.querySelectorAll('.dot')].forEach((d,j)=>d.classList.toggle('on',j===i))}
+ [...document.querySelectorAll('.dot')].forEach((d,j)=>d.classList.toggle('on',j===i))
+}
 
 /* ===== Smooth scroll to catalog + filter by category ===== */
 function scrollToCat(m){
@@ -209,28 +272,30 @@ function rCust(){
  if(C.done)return `<div class="wrap" style="text-align:center;padding-top:60px"><div style="font-size:60px">✅</div><h2 style="margin:10px 0">Pesanan terkirim!</h2><p class="mu" style="margin-bottom:18px">Meja ${esc(C.table)} ${C.name?`(${esc(C.name)})`:''} · ${rp(C.done.total)} · Menunggu pembayaran di kasir.</p><button class="b" onclick="C.done=null;render()">Pesan lagi</button></div>`;
  
  const tableLabel = C.table ? `Meja ${esc(C.table)} ${C.name?`- ${esc(C.name)}`:''}` : '';
- 
+
  return `<header class="hd"><b style="font-size:20px;color:var(--primary)">TUKO <span class="mu" style="font-weight:500">Tuangin · Puterin · Nikmatin</span></b><span class="row">${C.table?`<button class="chip on" onclick="M={t:'tbl'};render()">${tableLabel} ✎</button>`:''}<button class="b2" title="Staff" onclick="M={t:'pin',v:'',staff:1};render()">🔒</button></span></header>
  
  <section class="hero" id="hero" style="background:${BG[i%4]}">
- <div>
-   <h1>Teh teko &amp; sate hangat, <span>langsung dari meja Anda.</span></h1>
-   <p class="mu" style="margin-bottom:14px">Pilih menu, tulis catatan, kirim ke kasir.</p>
-   <a class="b" href="#menu" style="text-decoration:none;display:inline-block">Lihat menu</a>
- </div>
- <div>
-   <div class="hc" onclick="scrollToCat(${JSON.stringify(m).replace(/"/g,'&quot;')})">
-     <span class="bdg">⭐ Best Seller</span>
-     <div class="lab" id="hl" style="margin:16px 0;font-size:20px;padding:34px 8px;position:relative;">
-       <div id="heroIcon" style="position:absolute;top:6px;right:10px;font-size:18px;opacity:0.6;">🍵</div>
-       ${esc(short(m.name))}
-     </div>
-     <b id="hn">${esc(m.name)}</b>
-     <div id="hp" style="font-size:22px;font-weight:800;color:var(--primary)">${rp(m.price)}</div>
-     <button class="b2" style="margin-top:10px;width:100%" onclick="event.stopPropagation();scrollToCat(${JSON.stringify(m).replace(/"/g,'&quot;')})">Pesan Ini</button>
+   <div class="hero-bg-pattern"></div>
+   <div>
+     <h1>Teh teko &amp; sate hangat, <span>langsung dari meja Anda.</span></h1>
+     <p>Pilih menu favorit Anda, tuliskan catatan khusus, dan pesanan akan langsung kami siapkan hangat-hangat untuk Anda nikmati.</p>
+     <a class="b" href="#menu" style="text-decoration:none;display:inline-block">Lihat Katalog Menu</a>
    </div>
-   <div class="dots">${l.map((_,j)=>`<span class="dot ${j===i?'on':''}" onclick="C.idx=${j};updateShowcaseDOM()"></span>`).join('')}</div>
- </div></section>
+   <div>
+     <div class="hc" onclick="scrollToCat(${JSON.stringify(m).replace(/"/g,'&quot;')})">
+       <span class="bdg">⭐ Best Seller</span>
+       <div class="lab" id="hl" style="margin:16px 0;font-size:22px;padding:38px 8px;position:relative;">
+         <div id="heroIcon" style="position:absolute;top:6px;right:10px;font-size:20px;opacity:0.6;">🍵</div>
+         ${esc(short(m.name))}
+       </div>
+       <b id="hn" style="font-size:15px;color:#2D3748">${esc(m.name)}</b>
+       <div id="hp" style="font-size:24px;font-weight:800;color:var(--primary);margin:6px 0 12px;">${rp(m.price)}</div>
+       <button class="b2" style="width:100%;font-weight:700;color:var(--primary);border-color:var(--primary);" onclick="event.stopPropagation();scrollToCat(${JSON.stringify(m).replace(/"/g,'&quot;')})">Pesan Ini</button>
+     </div>
+     <div class="dots">${l.map((_,j)=>`<span class="dot ${j===i?'on':''}" onclick="C.idx=${j};updateShowcaseDOM()"></span>`).join('')}</div>
+   </div>
+ </section>
  
  <div class="wrap" id="menu"><h2 style="margin-bottom:10px">Menu</h2><div class="chips">${CT.map((c,j)=>`<button class="chip ${C.cat===c?'on':''}" onclick="C.cat=CT[${j}];render()">${esc(c)}</button>`).join('')}</div>
  <div class="grid" id="custCatalog">${it.map(m=>`<div class="card pc hv" onclick="cAdd(${m.id})">${m.badge?'<span class="bdg">1 Teko</span>':''}<div class="lab">${esc(short(m.name))}</div><div class="nm">${esc(m.name)}</div><div class="row"><b>${rp(m.price)}</b><span class="pl">+</span></div></div>`).join('')||'<p class="mu">Belum ada menu.</p>'}</div></div>
@@ -246,11 +311,19 @@ function cSend(){if(!C.cart.length)return;if(!C.table){M={t:'tbl'};render();retu
  C.done=tab;C.cart=[];C.name='';C.open=false;render()}
 
 function setTable(){
- const vTable=($('tin').value||'').trim();
- const vName=($('tinName').value||'').trim();
- if(!vTable){toast('Isi nomor meja');return}
- C.table=vTable.padStart(2,'0');
- C.name=vName;
+ const raw=$('tin').value.trim();
+ if(!raw){toast('Isi nomor meja & nama');return}
+ 
+ // Parser: Angka pertama sebagai meja, sisanya sebagai nama
+ const match = raw.match(/^(\d+)[\s\-]*(.*)$/);
+ if(match){
+   C.table = match[1].padStart(2,'0');
+   C.name = match[2].trim();
+ } else {
+   // Jika user hanya mengetik nama tanpa angka, default meja 0
+   C.table = '00';
+   C.name = raw;
+ }
  M=null;render()
 }
 
@@ -543,17 +616,11 @@ function rM(){const t=M.t;let h='',cls='ov';
 
  if(t==='tbl'){
    h=`<h3>🍽️ Data Pesanan</h3>
-   <div class="g" style="margin-bottom:16px">
-     <div class="fg">
-       <label>Nomor Meja</label>
-       <input id="tin" placeholder="03" value="${esc(C.table)}" onkeydown="if(event.key==='Enter')setTable()">
-     </div>
-     <div class="fg">
-       <label>Nama Pemesan (Atas Nama)</label>
-       <input id="tinName" placeholder="Ciki" value="${esc(C.name)}" onkeydown="if(event.key==='Enter')setTable()">
-     </div>
+   <p class="mu" style="margin-bottom:12px">Masukkan nomor meja dan nama Anda (contoh: <b>3 - Ciki</b>).</p>
+   <div class="fg">
+     <input id="tin" placeholder="Contoh: 3 - Ciki" value="${esc(C.table ? `${C.table} ${C.name?'- '+C.name:''}` : '')}" onkeydown="if(event.key==='Enter')setTable()" style="font-size:16px; padding:12px;">
    </div>
-   <div class="row">
+   <div class="row" style="margin-top:16px">
      <button class="b" style="width:100%" onclick="setTable()">Simpan &amp; Mulai Pesan</button>
    </div>`
  }
