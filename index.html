@@ -89,12 +89,11 @@ table{width:100%;border-collapse:collapse;font-size:12.5px}th,td{padding:9px 8px
 
 /* === MOBILE FIX (< 860px) === */
 @media(max-width:860px){
- /* Paksa container utama jadi block, matikan flex desktop */
  #k{display:block!important;min-height:100vh;padding-bottom:70px!important} 
  main{padding:12px 12px 20px!important;width:100%!important}
  .mh{display:flex!important;justify-content:space-between;align-items:center;margin-bottom:12px;gap:8px}
 
- /* Ubah Sidebar jadi Bottom Nav Bar */
+ /* Bottom Nav Bar */
  .side{
   position:fixed!important;
   bottom:0!important; left:0!important; right:0!important; top:auto!important;
@@ -108,9 +107,7 @@ table{width:100%;border-collapse:collapse;font-size:12.5px}th,td{padding:9px 8px
   box-shadow:0 -4px 16px rgba(74,107,93,.08)!important;
   z-index:9999!important;
  }
- /* Sembunyikan elemen desktop di sidebar */
  .side .logo, .side .sb, .side .xt{display:none!important}
- /* Style tombol nav */
  .side .nv{
   flex-direction:column!important;
   gap:4px!important;
@@ -119,7 +116,7 @@ table{width:100%;border-collapse:collapse;font-size:12.5px}th,td{padding:9px 8px
   justify-content:center!important;
   text-align:center!important;
   border-radius:10px!important;
-  flex:1!important; /* Bagi rata lebar */
+  flex:1!important;
  }
  .side .nv span:first-child{font-size:18px!important;margin-bottom:2px!important}
  .side .nv.on{background:var(--primary)!important;color:#fff!important}
@@ -131,7 +128,7 @@ table{width:100%;border-collapse:collapse;font-size:12.5px}th,td{padding:9px 8px
  /* Floating bar bawah */
  .bar{
   display:flex!important;position:fixed!important;
-  left:12px!important; right:12px!important; bottom:80px!important; /* Dinaikkan agar tidak tertutup nav */
+  left:12px!important; right:12px!important; bottom:80px!important;
   z-index:24!important;background:var(--primary)!important;color:#fff!important;
   border-radius:16px!important;padding:13px 18px!important;
   justify-content:space-between!important;font-weight:800!important;
@@ -164,7 +161,8 @@ table{width:100%;border-collapse:collapse;font-size:12.5px}th,td{padding:9px 8px
  .fab{right:12px;bottom:80px;padding:12px 18px;font-size:13px}
  .b,.b2,.bd{padding:9px 12px;font-size:13px}
  .mh b{font-size:18px!important}
- .selbar select{min-width:110px;font-size:12px;padding:8px 10px}
+ .selbar{width:100%;justify-content:space-between}
+ .selbar select{flex:1;min-width:100px;font-size:12px;padding:8px 10px}
 }
 
 /* === EXTRA SMALL (< 400px) === */
@@ -326,55 +324,184 @@ function saveExp(){const e=M.e,d=$('xd').value.trim(),n=+$('xn').value,cat=$('xc
  if(e.id){const o=S.expenses.find(x=>x.id===e.id);o.desc=d;o.amount=n;o.cat=cat}else S.expenses.push({id:Date.now(),desc:d,amount:n,cat,ts:now(),tsRaw:iso(),shiftId:S.shift.id,shiftName:S.shift.name});
  logA('Pengeluaran '+d+' '+rp(n));M=null;render()}
 
-/* ===== 4) Admin ===== */
+/* ===== 4) ADMIN (Dirapikan) ===== */
 function vAdm(){
  if(!AU)return `<div class="empty"><div style="font-size:40px">🛡️</div><b>Akses Admin Terkunci</b><p class="mu" style="margin-bottom:14px">Masukkan PIN Admin untuk membuka laporan.</p><button class="b" onclick="M={t:'pin',v:'',staff:0};render()">Masukkan PIN</button></div>`;
- const days=[...new Set([...S.trans.map(day),...S.expenses.map(day)])].filter(Boolean).sort().reverse(),mons=[...new Set(days.map(d=>d.slice(0,7)))];
+ 
+ // Ambil semua bulan yang ada datanya
+ const days=[...new Set([...S.trans.map(day),...S.expenses.map(day)])].filter(Boolean).sort().reverse();
+ const mons=[...new Set(days.map(d=>d.slice(0,7)))];
  if(!MON||!mons.includes(MON))MON=mons[0]||'';
- const mt=S.trans.filter(t=>day(t).slice(0,7)===MON),me=S.expenses.filter(e=>day(e).slice(0,7)===MON),mo=sum(mt,t=>t.total),mx=sum(me,e=>e.amount),mn=mo-mx;
- const ks=[...new Set(S.shiftHistory.map(s=>s.cashierName))],sh=S.shiftHistory.filter(s=>(!HF.d||(s.startedAt||'').slice(0,10)===HF.d)&&(!HF.k||s.cashierName===HF.k));
- const so=sold();
- const dayRows=days.filter(d=>d.slice(0,7)===MON).slice(0,31).map(d=>{const t=S.trans.filter(x=>day(x)===d),o=sum(t,x=>x.total),x=sum(S.expenses.filter(e=>day(e)===d),e=>e.amount);return `<tr><td>${d}</td><td class="r">${rp(o)}</td><td class="r rd">${rp(x)}</td><td class="r"><b>${rp(o-x)}</b></td><td class="r">${t.length}</td><td><button class="b2" onclick="M={t:'detDaily',d:'${d}',trans:S.trans.filter(z=>day(z)==='${d}'),exps:S.expenses.filter(z=>day(z)==='${d}')};render()">Lihat</button></td></tr>`}).join('');
- return `<div class="row wr" style="margin-bottom:12px"><b style="font-size:18px">Admin &amp; Laporan</b><span class="row"><button class="b2" onclick="M={t:'set'};render()">⚙️ Pengaturan Toko</button><button class="b2" onclick="AU=false;render()">Kunci</button></span></div>
- <div class="stats"><div class="st">Omzet Kotor<b>${rp(gross())}</b></div><div class="st">Total Pengeluaran<b class="rd">${rp(totEx())}</b></div><div class="st">Laba Bersih<b class="${net()>=0?'gr':'rd'}">${rp(net())}</b></div><div class="st" style="background:var(--primary);color:#fff">Alokasi Dividen<b>${rp(Math.max(0,net())*S.dividendPct/100)}</b></div></div>
- <div class="card"><canvas id="ch" height="110"></canvas></div>
- <div class="card row wr"><b>Excel (7 sheet)</b><span class="row"><button class="b" onclick="expXls()">⬇ Export</button><label class="b2">⬆ Import<input type="file" accept=".xlsx" class="hidden" onchange="impXls(this)"></label></span></div>
+ 
+ // Filter data sesuai bulan terpilih
+ const mt=S.trans.filter(t=>day(t).slice(0,7)===MON);
+ const me=S.expenses.filter(e=>day(e).slice(0,7)===MON);
+ const mo=sum(mt,t=>t.total); // Omzet
+ const mx=sum(me,e=>e.amount); // Pengeluaran
+ const mn=mo-mx; // Laba
+ const mTxCount=mt.length; // Jml Transaksi
+ const mDiv=Math.max(0,mn)*S.dividendPct/100; // Dividen
 
- <div class="card">
-   <div class="row wr" style="margin-bottom:10px">
-     <b>Ringkasan Bulanan</b>
+ const ks=[...new Set(S.shiftHistory.map(s=>s.cashierName))];
+ const sh=S.shiftHistory.filter(s=>(!HF.d||(s.startedAt||'').slice(0,10)===HF.d)&&(!HF.k||s.cashierName===HF.k));
+ const so=sold();
+ const dayRows=days.filter(d=>d.slice(0,7)===MON).slice(0,31).map(d=>{
+   const t=S.trans.filter(x=>day(x)===d),o=sum(t,x=>x.total),x=sum(S.expenses.filter(e=>day(e)===d),e=>e.amount);
+   return `<tr><td>${d}</td><td class="r">${rp(o)}</td><td class="r rd">${rp(x)}</td><td class="r"><b>${rp(o-x)}</b></td><td class="r">${t.length}</td><td><button class="b2" onclick="M={t:'detDaily',d:'${d}',trans:S.trans.filter(z=>day(z)==='${d}'),exps:S.expenses.filter(z=>day(z)==='${d}')};render()">Lihat</button></td></tr>`
+ }).join('');
+
+ return `
+ <!-- HEADER ADMIN -->
+ <div class="row wr" style="margin-bottom:14px; align-items:flex-start;">
+   <div style="flex:1; min-width:200px;">
+     <b style="font-size:20px; color:var(--primary);">Admin &amp; Laporan</b>
+     <div class="mu" style="margin-top:2px;">Kelola laporan bulanan, shift, dan menu.</div>
+   </div>
+   <div class="row wr" style="gap:8px; justify-content:flex-end;">
+     <button class="b2" onclick="M={t:'set'};render()">⚙️ Pengaturan</button>
+     <button class="b2" onclick="AU=false;render()">🔒 Kunci</button>
+   </div>
+ </div>
+
+ <!-- LAPORAN BULANAN (UTAMA) -->
+ <div class="card" style="border:2px solid var(--primary);">
+   <div class="row wr" style="margin-bottom:12px; border-bottom:1px dashed var(--line); padding-bottom:12px;">
+     <div>
+       <b style="font-size:16px; color:var(--primary);">📊 Ringkasan Bulanan</b>
+       <div class="mu">Pilih bulan untuk memfilter seluruh data di bawah ini.</div>
+     </div>
      <div class="selbar">
-       <select onchange="MON=this.value;render()">
-         ${mons.map(m=>`<option value="${m}" ${m===MON?'selected':''}>${m}</option>`).join('')||'<option value="">-</option>'}
+       <select onchange="MON=this.value;render()" style="font-weight:700; background:#F7F3EB;">
+         ${mons.map(m=>`<option value="${m}" ${m===MON?'selected':''}>${m}</option>`).join('')||'<option value="">Tidak ada data</option>'}
        </select>
      </div>
    </div>
-   <div class="stats" style="margin-top:10px">
-     <div class="st">Omzet<b>${rp(mo)}</b></div>
-     <div class="st">Pengeluaran<b class="rd">${rp(mx)}</b></div>
-     <div class="st">Laba Bersih<b class="${mn>=0?'gr':'rd'}">${rp(mn)}</b></div>
-     <div class="st">Jumlah Transaksi<b>${mt.length}</b></div>
+
+   <!-- STAT CARDS TER-FILTER -->
+   <div class="stats" style="margin-bottom:16px;">
+     <div class="st" style="border-left:4px solid var(--primary);">Omzet Kotor<b>${rp(mo)}</b></div>
+     <div class="st" style="border-left:4px solid var(--red);">Pengeluaran<b class="rd">${rp(mx)}</b></div>
+     <div class="st" style="border-left:4px solid var(--accent);">Laba Bersih<b class="${mn>=0?'gr':'rd'}">${rp(mn)}</b></div>
+     <div class="st" style="border-left:4px solid var(--blue);">Transaksi<b>${mTxCount}</b></div>
+     <div class="st" style="background:var(--primary); color:#fff; border:none;">Alokasi Dividen<b>${rp(mDiv)}</b></div>
    </div>
-   <div class="mu">Bahan Baku: <b>${rp(sum(me.filter(e=>e.cat==='bahan'),e=>e.amount))}</b> · Operasional: <b>${rp(sum(me.filter(e=>e.cat==='ops'),e=>e.amount))}</b> · Lainnya: <b>${rp(sum(me.filter(e=>e.cat==='lainnya'),e=>e.amount))}</b></div>
-   <div class="mu" style="margin-top:6px">Dividen: <b id="dv">${S.dividendPct}%</b> = <b id="dva">${rp(Math.max(0,mn)*S.dividendPct/100)}</b></div>
-   <input type="range" min="0" max="100" value="${S.dividendPct}" oninput="S.dividendPct=+this.value;save();$('dv').textContent=this.value+'%';$('dva').textContent=rp(Math.max(0,${mn})*this.value/100)">
+
+   <!-- CHART TER-FILTER -->
+   <div style="background:#FAFAFA; border-radius:12px; padding:12px; margin-bottom:16px;">
+     <canvas id="ch" height="120"></canvas>
+   </div>
+
+   <!-- SLIDER DIVIDEN -->
+   <div style="background:#FEF3C7; border-radius:12px; padding:12px; margin-bottom:16px;">
+     <div class="row" style="margin-bottom:6px;">
+       <span style="font-weight:700; font-size:12px;">Atur Persentase Dividen</span>
+       <b style="color:var(--accent);" id="dvLabel">${S.dividendPct}%</b>
+     </div>
+     <input type="range" min="0" max="100" value="${S.dividendPct}" oninput="S.dividendPct=+this.value;save();$('dvLabel').textContent=this.value+'%';$('dvaLabel').textContent=rp(Math.max(0,${mn})*this.value/100)">
+     <div class="mu" style="margin-top:6px; text-align:right;">Nilai: <b id="dvaLabel" style="color:var(--accent);">${rp(mDiv)}</b></div>
+   </div>
+
+   <!-- TABEL RINCIAN HARIAN -->
+   <div class="sc">
+     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+       <b>Rincian Per Tanggal (${MON})</b>
+     </div>
+     <table>
+       <tr><th>Tanggal</th><th class="r">Omzet Kotor</th><th class="r">Pengeluaran</th><th class="r">Laba Bersih</th><th class="r">Jml Transaksi</th><th>Detail</th></tr>
+       ${dayRows||'<tr><td colspan="6" class="mu" style="text-align:center; padding:20px;">Belum ada data di bulan ini.</td></tr>'}
+     </table>
+   </div>
  </div>
 
- <div class="card sc"><b>Rincian Per Tanggal</b><table><tr><th>Tanggal</th><th class="r">Omzet Kotor</th><th class="r">Pengeluaran</th><th class="r">Laba Bersih</th><th class="r">Jml Transaksi</th><th>Detail</th></tr>
- ${dayRows||'<tr><td colspan="6" class="mu">Belum ada data</td></tr>'}</table></div>
+ <!-- EXCEL & SHIFT -->
+ <div class="card row wr" style="margin-top:20px;">
+   <div>
+     <b>Export / Import Excel</b>
+     <div class="mu">Backup data (7 sheet) atau restore.</div>
+   </div>
+   <div class="row" style="gap:8px;">
+     <button class="b" onclick="expXls()">⬇ Export</button>
+     <label class="b2" style="cursor:pointer; margin:0;">⬆ Import<input type="file" accept=".xlsx" class="hidden" onchange="impXls(this)"></label>
+   </div>
+ </div>
 
- <div class="card"><div class="row wr"><b>Riwayat Shift</b><span class="row"><input type="date" style="width:auto" value="${HF.d}" onchange="HF.d=this.value;render()"><select style="width:auto" onchange="HF.k=this.value;render()"><option value="">Semua kasir</option>${ks.map(k=>`<option ${HF.k===k?'selected':''}>${esc(k)}</option>`).join('')}</select></span></div>
- <div class="stats" style="margin-top:10px"><div class="st">Jumlah Shift<b>${sh.length}</b></div><div class="st">Omzet<b>${rp(sum(sh,s=>s.grossRevenue))}</b></div><div class="st">Laba<b>${rp(sum(sh,s=>s.netProfit))}</b></div><div class="st">Total Selisih<b class="${sum(sh,s=>s.variance)<0?'rd':'gr'}">${rp(sum(sh,s=>s.variance))}</b></div></div>
- ${sh.map((s,i)=>`<div class="card" style="margin:8px 0"><div class="row"><b>${esc(s.name)}</b><button class="b2" onclick="M={t:'det',r:S.shiftHistory[${S.shiftHistory.indexOf(s)}]};render()">Detail</button></div><div class="mu">${esc(s.cashierName)} · ${s.startedAtLabel} → ${s.closedAtLabel}</div><div class="row wr mu" style="margin-top:6px"><span>Modal ${rp(s.openingCash)}</span><span>Cash ${rp(s.cashSales)}</span><span>QRIS ${rp(s.qrisSales)}</span><span>Keluar ${rp(s.expenseTotal)}</span><span>Setor ${rp(s.actualCash)}</span><span class="${s.variance?'rd':'gr'}">Selisih ${rp(s.variance)}</span></div>${s.note?`<div class="nt">${esc(s.note)}</div>`:''}</div>`).join('')||'<p class="mu">Belum ada riwayat shift.</p>'}</div>
- <div class="card sc"><b>Item Terjual</b><table><tr><th>Menu</th><th class="r">Qty</th><th class="r">Omzet</th></tr>${sl('sold',so).map(s=>`<tr><td>${esc(s.name)}</td><td class="r">${s.qty}</td><td class="r">${rp(s.rev)}</td></tr>`).join('')||'<tr><td colspan="3" class="mu">Belum ada</td></tr>'}</table>${pager('sold',so.length)}</div>
- <div class="card sc"><div class="row"><b>Manajemen Menu</b><button class="b" onclick="M={t:'menu',m:{cat:'Teh/Teko',active:true}};render()">+ Menu</button></div><table><tr><th>Nama</th><th>Kategori</th><th class="r">Harga</th><th>Status</th><th></th></tr>
- ${S.menu.map(m=>`<tr><td>${esc(m.name)}</td><td>${esc(m.cat)}</td><td class="r">${rp(m.price)}</td><td><button class="tag" style="${m.active!==false?'':'background:#FEE9E9;color:#C25454'}" onclick="togM(${m.id})">${m.active!==false?'Aktif':'Habis'}</button></td><td><button onclick="M={t:'menu',m:S.menu.find(x=>x.id===${m.id})};render()">✏️</button><button onclick="M={t:'del',id:${m.id}};render()">🗑️</button></td></tr>`).join('')}</table></div>
- <div class="card"><b>Riwayat Transaksi</b>${[...S.trans].reverse().slice(0,15).map(t=>`<div class="row" style="padding:7px 0;border-bottom:1px dashed var(--line)"><span class="mu">${t.ts} · ${esc(t.table||'-')} · ${t.method}</span><span><b>${rp(t.total)}</b> <button class="b2" onclick="M={t:'rc',r:S.trans.find(x=>x.id===${t.id})};render()">Struk</button></span></div>`).join('')||'<p class="mu">Belum ada transaksi.</p>'}</div>
- <div class="card"><b>Log Aktivitas</b>${S.log.slice(0,12).map(l=>`<div class="mu">${l.ts} — ${esc(l.a)}</div>`).join('')||'<p class="mu">Kosong</p>'}</div>
- <div class="card" style="border-color:var(--red)"><b class="rd">⚠️ Danger Zone</b><p class="mu" style="margin:6px 0 10px">Hapus data tertentu secara permanen.</p><button class="bd" onclick="M={t:'rst'};render()">Reset Data Selektif</button></div>`}
+ <div class="card">
+   <div class="row wr">
+     <b>Riwayat Shift</b>
+     <span class="row">
+       <input type="date" style="width:auto; font-size:12px;" value="${HF.d}" onchange="HF.d=this.value;render()">
+       <select style="width:auto; font-size:12px;" onchange="HF.k=this.value;render()">
+         <option value="">Semua kasir</option>${ks.map(k=>`<option ${HF.k===k?'selected':''}>${esc(k)}</option>`).join('')}
+       </select>
+     </span>
+   </div>
+   <div class="stats" style="margin-top:10px;">
+     <div class="st">Jumlah Shift<b>${sh.length}</b></div>
+     <div class="st">Omzet<b>${rp(sum(sh,s=>s.grossRevenue))}</b></div>
+     <div class="st">Laba<b>${rp(sum(sh,s=>s.netProfit))}</b></div>
+     <div class="st">Total Selisih<b class="${sum(sh,s=>s.variance)<0?'rd':'gr'}">${rp(sum(sh,s=>s.variance))}</b></div>
+   </div>
+   ${sh.map((s,i)=>`<div class="card" style="margin:8px 0; background:#FAFAFA;"><div class="row"><b>${esc(s.name)}</b><button class="b2" onclick="M={t:'det',r:S.shiftHistory[${S.shiftHistory.indexOf(s)}]};render()">Detail</button></div><div class="mu">${esc(s.cashierName)} · ${s.startedAtLabel} → ${s.closedAtLabel}</div><div class="row wr mu" style="margin-top:6px"><span>Modal ${rp(s.openingCash)}</span><span>Cash ${rp(s.cashSales)}</span><span>QRIS ${rp(s.qrisSales)}</span><span>Keluar ${rp(s.expenseTotal)}</span><span>Setor ${rp(s.actualCash)}</span><span class="${s.variance?'rd':'gr'}">Selisih ${rp(s.variance)}</span></div>${s.note?`<div class="nt">${esc(s.note)}</div>`:''}</div>`).join('')||'<p class="mu">Belum ada riwayat shift.</p>'}
+ </div>
+
+ <!-- MANAJEMEN MENU -->
+ <div class="card sc">
+   <div class="row" style="margin-bottom:10px;">
+     <b>Manajemen Menu</b>
+     <button class="b" onclick="M={t:'menu',m:{cat:'Teh/Teko',active:true}};render()">+ Menu</button>
+   </div>
+   <table>
+     <tr><th>Nama</th><th>Kategori</th><th class="r">Harga</th><th>Status</th><th></th></tr>
+     ${S.menu.map(m=>`<tr><td>${esc(m.name)}</td><td>${esc(m.cat)}</td><td class="r">${rp(m.price)}</td><td><button class="tag" style="${m.active!==false?'':'background:#FEE9E9;color:#C25454'}" onclick="togM(${m.id})">${m.active!==false?'Aktif':'Habis'}</button></td><td><button onclick="M={t:'menu',m:S.menu.find(x=>x.id===${m.id})};render()">✏️</button><button onclick="M={t:'del',id:${m.id}};render()">🗑️</button></td></tr>`).join('')}
+   </table>
+ </div>
+
+ <!-- LOG & DANGER -->
+ <div class="card" style="margin-top:20px;">
+   <b>Log Aktivitas Terakhir</b>
+   ${S.log.slice(0,10).map(l=>`<div class="mu" style="border-bottom:1px dashed var(--line); padding:6px 0;">${l.ts} — ${esc(l.a)}</div>`).join('')||'<p class="mu">Kosong</p>'}
+ </div>
+ <div class="card" style="border-color:var(--red);">
+   <b class="rd">⚠️ Danger Zone</b>
+   <p class="mu" style="margin:6px 0 10px;">Hapus data tertentu secara permanen. Tindakan ini tidak bisa dibatalkan.</p>
+   <button class="bd" onclick="M={t:'rst'};render()">Reset Data Selektif</button>
+ </div>
+ `;
+}
 function togM(id){const m=S.menu.find(x=>x.id===id);m.active=m.active===false;save();render()}
-function drawChart(){if(chart){chart.destroy();chart=null}const c=$('ch');if(!c||typeof Chart==='undefined')return;
- chart=new Chart(c,{type:'bar',data:{labels:['Omzet','Pengeluaran','Laba'],datasets:[{data:[gross(),totEx(),net()],backgroundColor:['#4A6B5D','#C25454','#D97706'],borderRadius:8}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}})}
+
+/* UPDATE CHART: Hanya menampilkan data BULAN TERPILIH */
+function drawChart(){
+ if(chart){chart.destroy();chart=null}
+ const c=$('ch');if(!c||typeof Chart==='undefined')return;
+ 
+ const mt=S.trans.filter(t=>day(t).slice(0,7)===MON);
+ const me=S.expenses.filter(e=>day(e).slice(0,7)===MON);
+ const o=sum(mt,t=>t.total), x=sum(me,e=>e.amount), l=o-x;
+
+ chart=new Chart(c,{
+   type:'bar',
+   data:{
+     labels:['Omzet','Pengeluaran','Laba Bersih'],
+     datasets:[{
+       data:[o, x, l],
+       backgroundColor:['#4A6B5D','#C25454','#D97706'],
+       borderRadius:6,
+       maxBarThickness:60
+     }]
+   },
+   options:{
+     responsive:true,
+     maintainAspectRatio:false,
+     plugins:{legend:{display:false}},
+     scales:{
+       y:{beginAtZero:true, ticks:{callback:v=>rp(v).replace('Rp','')}},
+       x:{grid:{display:false}}
+     }
+   }
+ })
+}
+
 function saveMenu(){const m=M.m,n=$('mn').value.trim(),p=+$('mp').value,c=$('mc').value.trim();if(!n||!(p>=0)||!c){toast('Lengkapi form');return}
  if(m.id){const o=S.menu.find(x=>x.id===m.id);Object.assign(o,{name:n,price:p,cat:c,badge:$('mb').checked,active:$('ma').checked})}else S.menu.push({id:Date.now(),name:n,price:p,hpp:0,cat:c,badge:$('mb').checked,active:$('ma').checked});
  logA('Menu: '+n);M=null;render()}
